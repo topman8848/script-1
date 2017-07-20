@@ -1,2 +1,1 @@
-# script
-Some scripts collection
+# Some scripts collection
