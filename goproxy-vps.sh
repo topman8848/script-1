@@ -1,4 +1,6 @@
 #!/bin/bash
+# Usage:
+#   curl https://raw.githubusercontent.com/mixool/script/master/goproxy-vps.sh | bash
 
 set -e
 
