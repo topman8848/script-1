@@ -48,7 +48,7 @@ systemctl start $NAME.service
 
 if systemctl status $NAME >/dev/null; then
 	echo "$NAME started."
-	echo -e "${green}vi /etc/systemd/system/$NAME.service${plain} as needed."
+	echo -e "${green}vi /etc/systemd/system/$NAME.service${plain} or run this script again as needed."
 	echo -e "${green}killall -9 $NAME${plain} for restart."
 else
 	echo "$NAME start failed."

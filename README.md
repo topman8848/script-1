@@ -15,4 +15,6 @@ wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/mast
 chmod +x easystart.sh
 ./easystart.sh
 ```
-> 按照提示依次输入下载地址，程序名称，启动命令  
+* 按照提示依次输入下载地址，程序名称，启动命令.  
+
+
