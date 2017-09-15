@@ -14,6 +14,7 @@ apt-get update
 apt-get install apache2 unzip php5-common libapache2-mod-php5  php5-gd php5-mcrypt -y
 
 echo "2. Download nibbleblog-markdown from $RINET_URL and setup"
+rm -rf /var/www/html/*
 curl -L "${URL}" >/var/www/html/nibbleblog-markdown.zip
 unzip /var/www/html/nibbleblog-markdown.zip
 mv /var/www/html/nibbleblog-markdown/* /var/www/html/
