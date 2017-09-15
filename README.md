@@ -14,5 +14,5 @@ apt-get install curl wget -y
 `curl https://raw.githubusercontent.com/mixool/script/master/nibbleblog-v4.0.2-markdown.sh | bash`  
   
 #### 二进制程序加入开机启动  
-`curl https://raw.githubusercontent.com/mixool/script/source/gost | bash`  
+`curl https://raw.githubusercontent.com/mixool/script/master/easystart.sh | bash`  
 * 按照提示依次输入下载地址，程序名称，启动命令.  
