@@ -18,8 +18,9 @@ echo "2. Download nibbleblog-markdown from $RINET_URL and setup"
 rm -rf /var/www/html/*
 curl -L "${URL}" >/var/www/html/nibbleblog-markdown.zip
 unzip /var/www/html/nibbleblog-markdown.zip
+sleep 10
 mv /var/www/html/nibbleblog-markdown/* /var/www/html/
-rm -rf /var/www/html/nibbleblog-markdown /var/www/html/index.html /var/www/html/nibbleblog-markdown.zip -y
+rm -rf /var/www/html/nibbleblog-markdown /var/www/html/index.html /var/www/html/nibbleblog-markdown.zip
 chmod 777 /var/www/html/content
 service apache2 restart
 
