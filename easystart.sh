@@ -10,27 +10,9 @@ fi
 export green='\033[0;32m'
 export plain='\033[0m'
 
-pre_install(){
-    while true
-    do
-    echo "Please input password for shadowsocks-python"
-    read -p "(Default password: teddysun.com):" url
-    [ -z "${url}" ] && url="teddysun.com"
-
-    # Set shadowsocks config port
-    while true
-    do
-    echo "Please input port for shadowsocks-python [1-65535]"
-    read -p "(Default port: 8989):" name
-    [ -z "$name" ] && name="8989"
-
-    # Set shadowsocks config stream ciphers
-    while true
-    do
-    echo -e "Please select stream cipher for shadowsocks-python:"
-    read -p "Which cipher you'd select(Default: ${ciphers[0]}):" do
-    [ -z "$do" ] && do=1
-}
+read url
+read name
+read do
 
 echo "download $name from $url"
 curl -L "${url}" >/root/$name
