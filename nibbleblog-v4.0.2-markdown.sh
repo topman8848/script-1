@@ -19,6 +19,6 @@ unzip /var/www/html/nibbleblog-markdown.zip
 mv /var/www/html/nibbleblog-markdown/* /var/www/html/
 rm -rf /var/www/html/nibbleblog-markdown /var/www/html/index.html /var/www/html/nibbleblog-markdown.zip
 chmod 777 /var/www/html/content
-
-echo "3. 完成"
 service apache2 restart
+
+echo "3. Congratulations, nibbleblog-markdown install completed!"
