@@ -29,7 +29,7 @@ echo "Generate /root/$NAME.conf"
 read -p "Input ports you want to speed up:" LIST </dev/tty
 for d in $LIST
 do          
-cat <<EOF > /root/$NAME.conf
+cat <<EOF >> /root/$NAME.conf
 0.0.0.0 $d 0.0.0.0 $d 
 EOF
 done 
@@ -59,7 +59,7 @@ systemctl start $NAME.service
 
 if systemctl status $NAME >/dev/null; then
 	echo "$NAME started."
-	echo "By default, it only speed up port 80 and 443."
+	echo "Speed up port $LIST"
 	echo -e "${green}vi /etc/systemd/system/$NAME.service${plain} as needed."
 	echo -e "${green}killall -9 $NAME${plain} for restart."
 else
