@@ -11,13 +11,13 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 fi
 
-echo -e "${green}Install updating"
+echo -e "${green}Install updating${plain}"
 apt-get update
 apt-get install apache2 unzip php5-common libapache2-mod-php5  php5-gd php5-mcrypt -y
 service apache2 restart
 clear
 
-echo -e "[${green} Download nibbleblog-markdown from $URL and setup${plain}]"
+echo -e "${green} Download nibbleblog-markdown from $URL and setup${plain}"
 rm -rf /var/www/html
 cd /var/www
 wget --no-check-certificate "${URL}"
@@ -27,4 +27,4 @@ mv nibbleblog-markdown html
 chmod 777 /var/www/html/content
 clear
 
-echo -e "[${green}Congratulations, nibbleblog-markdown install completed!${plain}]"
+echo -e "${green}Congratulations, nibbleblog-markdown install completed!${plain}"
