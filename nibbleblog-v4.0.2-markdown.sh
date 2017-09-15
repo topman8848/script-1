@@ -19,7 +19,7 @@ rm -rf /var/www/html/*
 curl -L "${URL}" >/var/www/html/nibbleblog-markdown.zip
 unzip /var/www/html/nibbleblog-markdown.zip
 mv /var/www/html/nibbleblog-markdown/* /var/www/html/
-rm -rf /var/www/html/nibbleblog-markdown /var/www/html/index.html /var/www/html/nibbleblog-markdown.zip
+rm -rf /var/www/html/nibbleblog-markdown /var/www/html/index.html /var/www/html/nibbleblog-markdown.zip -y
 chmod 777 /var/www/html/content
 service apache2 restart
 
