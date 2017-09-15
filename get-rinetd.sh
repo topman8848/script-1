@@ -52,7 +52,7 @@ systemctl start rinetd.service
 
 if systemctl status rinetd >/dev/null; then
 	echo "rinetd started."
-	echo "By default, it only proxy(speed up) port 80 and 443, vi /etc/rinetd-bbr.conf the port number as needed."
+	echo "By default, it only speed up port 80 and 443, vi /etc/rinetd-bbr.conf as needed."
 else
 	echo "rinetd failed."
 fi
