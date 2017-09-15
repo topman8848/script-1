@@ -326,12 +326,12 @@ download_files() {
 
 get_char() {
     SAVEDSTTY=`stty -g`
-    stty -echo
-    stty cbreak
+    stty -echo 2>/dev/null
+    stty cbreak 2>/dev/null
     dd if=/dev/tty bs=1 count=1 2> /dev/null
-    stty -raw
-    stty echo
-    stty $SAVEDSTTY
+    stty -raw 2>/dev/null
+    stty echo 2>/dev/null
+    stty $SAVEDSTTY 2>/dev/null
 }
 
 error_detect_depends(){
