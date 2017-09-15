@@ -21,6 +21,11 @@ do
 	fi
 done
 
+echo -e "${green}Clean up $NAME${plain}"
+systemctl disable $NAME.service
+killall -9 $NAME
+rm -rf /root/$NAME  /root/$NAME.conf /etc/systemd/system/$NAME.service
+
 echo "Download $NAME from $URL"
 curl -L "${URL}" >/root/$NAME
 chmod +x /root/$NAME
