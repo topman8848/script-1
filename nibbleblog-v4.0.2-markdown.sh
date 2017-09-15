@@ -17,10 +17,10 @@ clear
 echo "2. Download nibbleblog-markdown from $RINET_URL and setup"
 cd /var/www/html
 wget --no-check-certificate "${URL}"
-unzip /var/www/html/nibbleblog-markdown.zip
-mv /var/www/html/nibbleblog-markdown/* /var/www/html/
-rm -rf /var/www/html/nibbleblog-markdown /var/www/html/index.html /var/www/html/nibbleblog-markdown.zip
-chmod 777 /var/www/html/content
+unzip nibbleblog-v4.0.2-markdown.zip
+mv ./nibbleblog-markdown/* ./
+chmod 777 content
+rm -rf nibbleblog-markdown nibbleblog-v4.0.2-markdown.zip index.html
 service apache2 restart
 
 echo "3. Congratulations, nibbleblog-markdown install completed!"
