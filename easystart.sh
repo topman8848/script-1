@@ -1,6 +1,9 @@
 #!/bin/bash
 # Usage:
-#   curl https://raw.githubusercontent.com/mixool/script/master/easystart.sh | bash
+#   wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/easystart.sh
+#   chmod +x easystart.sh
+#   ./easystart.sh
+
 
 if [ "$(id -u)" != "0" ]; then
     echo "ERROR: Please run as root"
@@ -10,12 +13,17 @@ fi
 export green='\033[0;32m'
 export plain='\033[0m'
 
-read -p "Download URL: " URL
-read -p "NAME:" NAME
-read -p "DO:" DO
+read -p "Download url: " URL
+read -p "Service name: " NAME
+read -p "Start command: " DO
+
+echo -e "${green}Clean up $NAME${plain}"
+systemctl disable $NAME.service
+killall -9 $NAME
+rm -rf /root/$NAME /etc/systemd/system/$NAME.service
 
 echo "Download $NAME from $URL"
-curl -L "${URL}" >/root/$NAME
+wget --no-check-certificate $URL -O /root/$NAME
 chmod +x /root/$NAME
 
 echo "Generate /etc/systemd/system/$NAME.service"
@@ -32,10 +40,10 @@ User=root
 WantedBy=multi-user.target
 EOF
 
-echo "4. Enable $NAME Service"
+echo "Enable $NAME Service"
 systemctl enable $NAME.service
 
-echo "5. Start $NAME Service"
+echo "Start $NAME Service"
 systemctl start $NAME.service
 
 if systemctl status $NAME >/dev/null; then
