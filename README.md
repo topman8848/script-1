@@ -1,4 +1,8 @@
 ### Some scripts collection
+```bash
+apt-get update
+apt-get install curl wget -y
+```
 
 #### VPS BBR
 `curl https://raw.githubusercontent.com/mixool/script/master/rinetd.sh | bash`
