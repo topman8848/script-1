@@ -22,7 +22,7 @@ echo "1. Download rinetd from $RINET_URL"
 curl -L "${RINET_URL}" >/root/rinetd
 chmod +x /root/rinetd
 
-echo "2. Generate /root/rinetd-bbr.conf"
+echo "2. Generate /root/rinetd.conf"
 cat <<EOF > /root/rinetd.conf
 # bindadress bindport connectaddress connectport
 0.0.0.0 443 0.0.0.0 443
@@ -31,7 +31,7 @@ EOF
 
 IFACE=$(ip -4 addr | awk '{if ($1 ~ /inet/ && $NF ~ /^[ve]/) {a=$NF}} END{print a}')
 echo "3. Generate /etc/systemd/system/rinetd-bbr.service"
-cat <<EOF > /etc/systemd/system/rinetd-bbr.service
+cat <<EOF > /etc/systemd/system/rinetd.service
 [Unit]
 Description=rinetd with bbr
 Documentation=https://github.com/linhua55/lkl_study
