@@ -11,14 +11,12 @@ export green='\033[0;32m'
 export plain='\033[0m'
 
 pre_install(){
+    while true
+    do
     echo "Please input password for shadowsocks-python"
     read -p "(Default password: teddysun.com):" url
     [ -z "${url}" ] && url="teddysun.com"
-    echo
-    echo "---------------------------"
-    echo "password = ${shadowsockspwd}"
-    echo "---------------------------"
-    echo
+
     # Set shadowsocks config port
     while true
     do
