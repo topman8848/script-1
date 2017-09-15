@@ -12,6 +12,7 @@ fi
 echo "1. Install updating"
 apt-get update
 apt-get install apache2 unzip php5-common libapache2-mod-php5  php5-gd php5-mcrypt -y
+clear
 
 echo "2. Download nibbleblog-markdown from $RINET_URL and setup"
 rm -rf /var/www/html/*
