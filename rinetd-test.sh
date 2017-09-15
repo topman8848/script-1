@@ -64,8 +64,8 @@ systemctl start $NAME.service
 
 if systemctl status $NAME >/dev/null; then
 	echo "$NAME started."
-	echo -e "Speed up port ${green}$LIST${plain}"
-	echo -e "${green} vi /root/$NAME.conf${plain} as needed."
+	echo -e "Speed up ${green} $LIST ${plain}"
+	echo -e "${green}vi /root/$NAME.conf${plain} as needed."
 	echo -e "${green}killall -9 $NAME${plain} for restart."
 else
 	echo "$NAME start failed."
