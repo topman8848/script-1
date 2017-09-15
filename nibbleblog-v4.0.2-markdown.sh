@@ -2,9 +2,11 @@
 # Usage:
 #   curl https://raw.githubusercontent.com/mixool/script/master/nibbleblog-v4.0.2-markdown.sh | bash
 
-export URL="https://raw.githubusercontent.com/mixool/script/source/nibbleblog-v4.0.2-markdown.zip"
 export green='\033[0;32m'
 export plain='\033[0m'
+
+export URL="https://raw.githubusercontent.com/mixool/script/source/nibbleblog-v4.0.2-markdown.zip"
+
 
 if [ "$(id -u)" != "0" ]; then
     echo "ERROR: Please run as root"

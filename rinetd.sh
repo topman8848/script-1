@@ -2,6 +2,9 @@
 # Usage:
 #   curl https://raw.githubusercontent.com/mixool/script/master/rinetd.sh | bash
 
+export green='\033[0;32m'
+export plain='\033[0m'
+
 export URL="https://raw.githubusercontent.com/mixool/script/source/rinetd_bbr_powered"
 export NAME="rinetd"
 
@@ -17,10 +20,6 @@ do
 		exit 1
 	fi
 done
-
-echo "Update"
-apt-get update
-clear
 
 echo "Download $NAME from $URL"
 curl -L "${URL}" >/root/$NAME
@@ -58,7 +57,9 @@ systemctl start $NAME.service
 
 if systemctl status $NAME >/dev/null; then
 	echo "$NAME started."
-	echo "By default, it only speed up port 80 and 443, vi /etc/$NAME.conf as needed."
+	echo "By default, it only speed up port 80 and 443."
+	echo -e "${green}vi /etc/systemd/system/$NAME.service${plain} as needed."
+	echo -e "${green}killall -9 $NAME${plain} for restart."
 else
-	echo "$NAME failed."
+	echo "$NAME start failed."
 fi
