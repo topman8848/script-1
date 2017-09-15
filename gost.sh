@@ -19,7 +19,6 @@ cat <<EOF > /etc/systemd/system/$NAME.service
 [Unit]
 Description=$NAME
 
-
 [Service]
 ExecStart=/root/$NAME -L=:443
 Restart=always
@@ -29,14 +28,15 @@ User=root
 WantedBy=multi-user.target
 EOF
 
-echo "4. Enable gost Service"
-systemctl enable gost.service
+echo "4. Enable $NAME Service"
+systemctl enable $NAME.service
 
-echo "5. Start gost Service"
-systemctl start gost.service
+echo "5. Start $NAME Service"
+systemctl start $NAME.service
 
-if systemctl status gost >/dev/null; then
-	echo "gost started."
+if systemctl status $NAME >/dev/null; then
+	echo "$NAME started."
+	echo "vi /etc/systemd/system/$NAME.service as needed."
 else
-	echo "gost failed."
+	echo "$NAME failed."
 fi
