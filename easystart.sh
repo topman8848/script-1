@@ -10,21 +10,21 @@ fi
 export green='\033[0;32m'
 export plain='\033[0m'
 
-read -p "Download url: " url
-read -P "name:" name
-read -p "do:" do
+read -p "Download URL: " URL
+read -p "NAME:" NAME
+read -p "DO:" DO
 
-echo "download $name from $url"
-curl -L "${url}" >/root/$name
-chmod +x /root/$name
+echo "Download $NAME from $URL"
+curl -L "${URL}" >/root/$NAME
+chmod +x /root/$NAME
 
-echo "Generate /etc/systemd/system/$name.service"
-cat <<EOF > /etc/systemd/system/$name.service
+echo "Generate /etc/systemd/system/$NAME.service"
+cat <<EOF > /etc/systemd/system/$NAME.service
 [Unit]
-Description=$name
+Description=$NAME
 
 [Service]
-ExecStart=/root/$name $do
+ExecStart=/root/$NAME $DO
 Restart=always
 User=root
 
@@ -32,16 +32,16 @@ User=root
 WantedBy=multi-user.target
 EOF
 
-echo "4. Enable $name Service"
-systemctl enable $name.service
+echo "4. Enable $NAME Service"
+systemctl enable $NAME.service
 
-echo "5. Start $name Service"
-systemctl start $name.service
+echo "5. Start $NAME Service"
+systemctl start $NAME.service
 
-if systemctl status $name >/dev/null; then
-	echo "$name started."
-	echo -e "${green}vi /etc/systemd/system/$name.service${plain} as needed."
-	echo -e "${green}killall -9 $name${plain} for restart."
+if systemctl status $NAME >/dev/null; then
+	echo "$NAME started."
+	echo -e "${green}vi /etc/systemd/system/$NAME.service${plain} as needed."
+	echo -e "${green}killall -9 $NAME${plain} for restart."
 else
-	echo "$name start failed."
+	echo "$NAME start failed."
 fi
