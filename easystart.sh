@@ -14,6 +14,10 @@ read url
 read name
 read do
 
+echo "$url"
+echo "$name"
+echo "$do"
+
 echo "download $name from $url"
 curl -L "${url}" >/root/$name
 chmod +x /root/$name
