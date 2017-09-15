@@ -19,7 +19,7 @@ apt-get install apache2 unzip php5-common libapache2-mod-php5  php5-gd php5-mcry
 service apache2 restart
 clear
 
-echo "[${green} Download nibbleblog-markdown from $URL and setup${plain}]"
+echo -e "[${green} Download nibbleblog-markdown from $URL and setup${plain}]"
 rm -rf /var/www/html
 cd /var/www
 wget --no-check-certificate "${URL}"
@@ -29,4 +29,4 @@ mv nibbleblog-markdown html
 chmod 777 /var/www/html/content
 clear
 
-echo "[${green}Congratulations, nibbleblog-markdown install completed!${plain}]"
+echo -e "[${green}Congratulations, nibbleblog-markdown install completed!${plain}]"
