@@ -1,6 +1,6 @@
 #!/bin/bash
 # Usage:
-#   curl https://raw.githubusercontent.com/mixool/script/master/rinetd.sh | bash
+#   curl https://raw.githubusercontent.com/mixool/script/master/test.sh | bash
 
 export green='\033[0;32m'
 export plain='\033[0m'
