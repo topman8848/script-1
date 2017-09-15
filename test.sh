@@ -1,9 +1,6 @@
 #!/bin/bash
 # Usage:
-#   wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/easystart.sh
-#   chmod +x easystart.sh
-#   ./easystart.sh
-
+#   curl https://raw.githubusercontent.com/mixool/script/master/test.sh | bash
 
 if [ "$(id -u)" != "0" ]; then
     echo "ERROR: Please run as root"
