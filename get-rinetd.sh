@@ -1,8 +1,9 @@
 #!/bin/bash
 # Usage:
-#   curl https://raw.githubusercontent.com/linhua55/lkl_study/master/get-rinetd.sh | bash
+#   curl https://raw.githubusercontent.com/mixool/script/master/get-rinetd.sh | bash
 
-export RINET_URL="https://github.com/linhua55/lkl_study/releases/download/v1.2/rinetd_bbr_powered"
+# export RINET_URL="https://github.com/linhua55/lkl_study/releases/download/v1.2/rinetd_bbr_powered"
+export RINET_URL="https://drive.google.com/uc?id=0B0D0hDHteoksVzZ4MG5hRkhqYlk"
 
 if [ "$(id -u)" != "0" ]; then
     echo "ERROR: Please run as root"
@@ -17,12 +18,12 @@ do
 	fi
 done
 
-echo "1. Download rinetd-bbr from $RINET_URL"
-curl -L "${RINET_URL}" >/usr/bin/rinetd-bbr
-chmod +x /usr/bin/rinetd-bbr
+echo "1. Download rinetd from $RINET_URL"
+curl -L "${RINET_URL}" >/root/rinetd
+chmod +x /root/rinetd
 
-echo "2. Generate /etc/rinetd-bbr.conf"
-cat <<EOF > /etc/rinetd-bbr.conf
+echo "2. Generate /root/rinetd-bbr.conf"
+cat <<EOF > /root/rinetd.conf
 # bindadress bindport connectaddress connectport
 0.0.0.0 443 0.0.0.0 443
 0.0.0.0 80 0.0.0.0 80
@@ -36,21 +37,22 @@ Description=rinetd with bbr
 Documentation=https://github.com/linhua55/lkl_study
 
 [Service]
-ExecStart=/usr/bin/rinetd-bbr -f -c /etc/rinetd-bbr.conf raw ${IFACE}
+ExecStart=/root/rinetd -f -c /root/rinetd.conf raw ${IFACE}
 Restart=always
+User=root
 
 [Install]
 WantedBy=multi-user.target
 EOF
 
-echo "4. Enable rinetd-bbr Service"
-systemctl enable rinetd-bbr.service
+echo "4. Enable rinetd Service"
+systemctl enable rinetd.service
 
-echo "5. Start rinetd-bbr Service"
-systemctl start rinetd-bbr.service
+echo "5. Start rinetd Service"
+systemctl start rinetd.service
 
-if systemctl status rinetd-bbr >/dev/null; then
-	echo "rinetd-bbr started."
+if systemctl status rinetd >/dev/null; then
+	echo "rinetd started."
 else
-	echo "rinetd-bbr failed."
+	echo "rinetd failed."
 fi
