@@ -14,9 +14,9 @@ export green='\033[0;32m'
 export plain='\033[0m'
 
 read_p=$(test -n "$BASH_VERSION" && echo 'read -ep' || echo 'read -p')
-$read_p "Download url: " URL
-$read_p "Service name: " NAME
-$read_p "Start command: " DO
+$read_p "Download url: " URL </dev/tty
+$read_p "Service name: " NAME </dev/tty
+$read_p "Start command: " DO </dev/tty
 
 echo -e "${green}Clean up ${NAME}${plain}"
 systemctl disable ${NAME}.service
