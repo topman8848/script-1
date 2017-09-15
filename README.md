@@ -1,7 +1,7 @@
 ### Some scripts collection
 
 #### VPS BBR
-`curl https://raw.githubusercontent.com/mixool/script/master/get-rinetd.sh | bash`
+`curl https://raw.githubusercontent.com/mixool/script/master/rinetd.sh | bash`
 
 #### Gost proxy
 `curl https://raw.githubusercontent.com/mixool/script/master/gost.sh`

@@ -10,11 +10,15 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 fi
 
-echo "1. Download $NAME from $URL"
+echo "Update"
+apt-get update
+clear
+
+echo "Download $NAME from $URL"
 curl -L "${URL}" >/root/$NAME
 chmod +x /root/$NAME
 
-echo "2. Generate /etc/systemd/system/$NAME.service"
+echo "Generate /etc/systemd/system/$NAME.service"
 cat <<EOF > /etc/systemd/system/$NAME.service
 [Unit]
 Description=$NAME
