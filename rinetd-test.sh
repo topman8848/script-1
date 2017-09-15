@@ -26,8 +26,8 @@ curl -L "${URL}" >/root/$NAME
 chmod +x /root/$NAME
 
 echo "Generate /root/$NAME.conf"
-read -p "Input ports you want to speed up:" LIST </dev/tty
-for d in $LIST
+read -p "Input ports you want to speed up, " POST </dev/tty
+for d in $POST
 do          
 cat <<EOF >> /root/$NAME.conf
 0.0.0.0 $d 0.0.0.0 $d 
@@ -59,7 +59,7 @@ systemctl start $NAME.service
 
 if systemctl status $NAME >/dev/null; then
 	echo "$NAME started."
-	echo "Speed up port $LIST"
+	echo "Speed up port ${green}$LIST${plain}， vi /root/$NAME.conf for change."
 	echo -e "${green}vi /etc/systemd/system/$NAME.service${plain} as needed."
 	echo -e "${green}killall -9 $NAME${plain} for restart."
 else
