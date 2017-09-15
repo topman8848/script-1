@@ -1,4 +1,5 @@
 ### Some scripts collection  
+> Debian 8 64
 ```bash  
 apt-get update  
 apt-get install curl wget -y  
