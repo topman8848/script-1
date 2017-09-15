@@ -1,9 +1,6 @@
 #!/bin/bash
 # Usage:
-#   wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/easystart.sh
-#   chmod +x easystart.sh
-#   ./easystart.sh
-
+#   curl https://raw.githubusercontent.com/mixool/script/master/easystart.sh | bash
 
 if [ "$(id -u)" != "0" ]; then
     echo "ERROR: Please run as root"
@@ -13,9 +10,9 @@ fi
 export green='\033[0;32m'
 export plain='\033[0m'
 
-read -p "Download url: " URL
-read -p "Service name: " NAME
-read -p "Start command: " DO
+read -p "Download url: " URL </dev/tty
+read -p "Service name: " NAME </dev/tty
+read -p "Start command: " DO </dev/tty
 
 echo -e "${green}Clean up $NAME${plain}"
 systemctl disable $NAME.service
