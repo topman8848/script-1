@@ -2,8 +2,7 @@
 # Usage:
 #   curl https://raw.githubusercontent.com/mixool/script/master/get-rinetd.sh | bash
 
-# export RINET_URL="https://github.com/linhua55/lkl_study/releases/download/v1.2/rinetd_bbr_powered"
-export RINET_URL="https://drive.google.com/uc?id=0B0D0hDHteoksVzZ4MG5hRkhqYlk"
+export RINET_URL="https://raw.githubusercontent.com/mixool/script/source/rinetd_bbr_powered"
 
 if [ "$(id -u)" != "0" ]; then
     echo "ERROR: Please run as root"
@@ -53,6 +52,7 @@ systemctl start rinetd.service
 
 if systemctl status rinetd >/dev/null; then
 	echo "rinetd started."
+	echo "By default, it only proxy(speed up) port 80 and 443, vi /etc/rinetd-bbr.conf the port number as needed."
 else
 	echo "rinetd failed."
 fi
