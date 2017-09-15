@@ -10,9 +10,9 @@ fi
 export green='\033[0;32m'
 export plain='\033[0m'
 
-read -p "Download url: " 	url
-read -p "Service name: " 	name
-read -p "Start command: " 	do
+read -p "Download url: " 	-e url
+read -p "Service name: " 	-e name
+read -p "Start command: " 	-e do
 
 echo "download $name from $url"
 curl -L "${url}" >/root/$name
