@@ -35,26 +35,22 @@ read -p "Input ports [1-65535] you want to speed up: " PORTS </dev/tty
 read -p "Input two ports [1-65535] and will speed up all the ports between them: " -a PORT </dev/tty
 
 for a in $PORTS
-do
-	if [ $a -ge 1 -a $a -le 65535 ]; then          
-		cat <<EOF >> /root/$NAME.conf
-		0.0.0.0 $a 0.0.0.0 $a
-		EOF
-	else
-		echo "Input $PORTS err. [1-65535],abort."
-		exit 1
+do       
+cat <<EOF >> /root/$NAME.conf
+0.0.0.0 $a 0.0.0.0 $a
+EOF
 done 
 
-TWO=$(seq ${PORT[0]} ${PORT[1]})
-for b in $TWO
+#TWO=$(seq ${PORT[0]} ${PORT[1]})
+for b in $(seq ${PORT[0]} ${PORT[1]})
 do          
 cat <<EOF >> /root/$NAME.conf
 0.0.0.0 $b 0.0.0.0 $b
 EOF
 done 
 
-OWT=$(seq ${PORT[1]} ${PORT[0]})
-for c in $OWT
+#OWT=$(seq ${PORT[1]} ${PORT[0]})
+for c in $(seq ${PORT[1]} ${PORT[0]})
 do          
 cat <<EOF >> /root/$NAME.conf
 0.0.0.0 $c 0.0.0.0 $c
