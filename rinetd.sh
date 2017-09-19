@@ -31,13 +31,24 @@ curl -L "${URL}" >/root/$NAME
 chmod +x /root/$NAME
 
 echo "Generate /root/$NAME.conf"
-read -p "Input ports you want to speed up: " PORTS </dev/tty
-for d in $PORTS
+read -p "Input ports [1-65535] you want to speed up: " PORTS </dev/tty
+read -p "Input ports [1-65535] you want to speed up: " -a PORT </dev/tty
+
+for a in $PORTS
 do          
 cat <<EOF >> /root/$NAME.conf
-0.0.0.0 $d 0.0.0.0 $d 
+0.0.0.0 $a 0.0.0.0 $a
 EOF
 done 
+
+for b in ( (seq $PORT{[0]} $PORT{[1]}) (seq $PORT{[1]} $PORT{[0]}) )
+do          
+cat <<EOF >> /root/$NAME.conf
+0.0.0.0 $b 0.0.0.0 $b
+EOF
+done 
+
+sort -u -n -k 2 /root/$NAME.conf -o /root/$NAME.conf
 
 IFACE=$(ip -4 addr | awk '{if ($1 ~ /inet/ && $NF ~ /^[ve]/) {a=$NF}} END{print a}')
 
