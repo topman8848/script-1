@@ -41,7 +41,6 @@ cat <<EOF >> /root/$NAME.conf
 EOF
 done 
 
-#TWO=$(seq ${PORT[0]} ${PORT[1]})
 for b in $(seq ${PORT[0]} ${PORT[1]})
 do          
 cat <<EOF >> /root/$NAME.conf
@@ -49,7 +48,6 @@ cat <<EOF >> /root/$NAME.conf
 EOF
 done 
 
-#OWT=$(seq ${PORT[1]} ${PORT[0]})
 for c in $(seq ${PORT[1]} ${PORT[0]})
 do          
 cat <<EOF >> /root/$NAME.conf
