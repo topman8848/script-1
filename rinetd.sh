@@ -41,7 +41,8 @@ cat <<EOF >> /root/$NAME.conf
 EOF
 done 
 
-for b in $( $(seq $PORT{[0]} $PORT{[1]}) $(seq $PORT{[1]} $PORT{[0]}) )
+# TWO=( $(seq ${PORT[0]} ${PORT[1]}) $(seq ${PORT[1]} ${PORT[0]}) )
+for b in $( $( $(seq ${PORT[0]} ${PORT[1]}) $(seq ${PORT[1]} ${PORT[0]}) )
 do          
 cat <<EOF >> /root/$NAME.conf
 0.0.0.0 $b 0.0.0.0 $b
