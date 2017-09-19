@@ -40,9 +40,10 @@ do
 		cat <<EOF >> /root/$NAME.conf
 		0.0.0.0 $a 0.0.0.0 $a
 		EOF
-	fi
+	else
 		echo "Input $PORTS err. [1-65535],abort."
 		exit 1
+	fi
 done 
 
 TWO=$(seq ${PORT[0]} ${PORT[1]})
