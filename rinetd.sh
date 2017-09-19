@@ -43,7 +43,6 @@ do
 	else
 		echo "Input $PORTS err. [1-65535],abort."
 		exit 1
-	fi
 done 
 
 TWO=$(seq ${PORT[0]} ${PORT[1]})
