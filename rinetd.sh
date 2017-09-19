@@ -24,7 +24,7 @@ done
 echo -e "${green}Clean up $NAME${plain}"
 systemctl disable $NAME.service
 killall -9 $NAME
-rm -rf /root/$NAME  /root/$NAME.conf /etc/systemd/system/$NAME.service
+rm -rf /root/$NAME /etc/systemd/system/$NAME.service
 
 echo "Download $NAME from $URL"
 curl -L "${URL}" >/root/$NAME
@@ -32,7 +32,7 @@ chmod +x /root/$NAME
 
 echo "Generate /root/$NAME.conf"
 read -p "Input ports [1-65535] you want to speed up: " PORTS </dev/tty
-read -p "Input ports [1-65535] you want to speed up: " -a PORT </dev/tty
+read -p "Input two ports [1-65535] and will speed up all the ports between them: " -a PORT </dev/tty
 
 for a in $PORTS
 do          
@@ -41,11 +41,19 @@ cat <<EOF >> /root/$NAME.conf
 EOF
 done 
 
-TWO=( $(seq ${PORT[0]} ${PORT[1]}) $(seq ${PORT[1]} ${PORT[0]}) )
+TWO=$(seq ${PORT[0]} ${PORT[1]})
 for b in $TWO
 do          
 cat <<EOF >> /root/$NAME.conf
 0.0.0.0 $b 0.0.0.0 $b
+EOF
+done 
+
+OWT=$(seq ${PORT[1]} ${PORT[0]})
+for c in $OWT
+do          
+cat <<EOF >> /root/$NAME.conf
+0.0.0.0 $c 0.0.0.0 $c
 EOF
 done 
 
