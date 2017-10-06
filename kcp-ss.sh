@@ -1,6 +1,6 @@
 #!/bin/bash
 # Usage:
-#   curl https://raw.githubusercontent.com/mixool/script/master/kcp.sh | bash
+#   curl https://raw.githubusercontent.com/mixool/script/master/kcp-ss.sh | bash
 
 export green='\033[0;32m'
 export plain='\033[0m'
@@ -50,11 +50,12 @@ echo "Start $NAME Service"
 systemctl start $NAME.service
 
 if systemctl status $NAME >/dev/null; then
-	echo "$NAME started."
+	echo "shadowsocks-libev started:"
+	echo -e "config: ${green}vi /etc/shadowsocks-libev/config.json${plain}"
+	echo -e "command: ${green}systemctl start/stop/restart/status shadowsocks-libev${plain}"
+	echo "$NAME started:"
 	echo -e "${green}vi /etc/systemd/system/$NAME.service${plain} as needed."
 	echo -e "${green}killall -9 $NAME${plain} for restart."
-	echo -e "ss-libev config: ${green}vi /etc/shadowsocks-libev/config.json${plain}"
-	echo -e "ss-libev command: ${green}systemctl start/stop/restart/status shadowsocks-libev${plain}"
 else
 	echo "$NAME start failed."
 fi
