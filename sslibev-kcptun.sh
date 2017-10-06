@@ -228,7 +228,7 @@ if systemctl status $NAME >/dev/null; then
 	echo -e "Your Server Port      : \033[41;37m ${kport} \033[0m"
 	echo -e "Speedup Port          : \033[41;37m ${shadowsocksport} \033[0m"
 	echo -e "Change run mode       : \033[41;37m vi /etc/systemd/system/$NAME.service \033[0m"
-	echo -e "Restart kcptun server : \033[41;37m killall -9 $NAME$ \033[0m"
+	echo -e "Restart kcptun server : \033[41;37m killall -9 $NAME \033[0m"
 else
 	echo "$NAME start failed."
 fi
