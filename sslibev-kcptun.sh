@@ -121,6 +121,29 @@ get_ipv6(){
     echo
     break
     done
+    
+# Set kcptun config port
+while true
+do
+	echo -e "Please input port for kcptun [1-65535]:"
+	read -p "(Default port: 8443):" kport </dev/tty
+	[ -z "$kport" ] && kport="8443"
+	expr ${kport} + 1 &>/dev/null
+	if [ $? -eq 0 ]; then
+        	if [ ${kport} -ge 1 ] && [ ${kport} -le 65535 ]; then
+            		echo
+            		echo "---------------------------"
+            		echo "your kcptun port = ${kport}"
+            		echo "---------------------------"
+            		echo
+            		break
+        	else
+            		echo -e "[${red}Error${plain}] Input error, please input a number between 1 and 65535"
+       		fi
+    	else
+        	echo -e "[${red}Error${plain}] Input error, please input a number between 1 and 65535"
+    	fi
+done
 
 # Config shadowsocks
 config_shadowsocks(){
@@ -162,29 +185,6 @@ echo "Download $NAME from $URL"
 curl -L "${URL}" >/root/$NAME
 chmod +x /root/$NAME
 
-# Set kcptun config port
-while true
-do
-	echo -e "Please input port for kcptun [1-65535]:"
-	read -p "(Default port: 8443):" kport </dev/tty
-	[ -z "$kport" ] && kport="8443"
-	expr ${kport} + 1 &>/dev/null
-	if [ $? -eq 0 ]; then
-        	if [ ${kport} -ge 1 ] && [ ${kport} -le 65535 ]; then
-            		echo
-            		echo "---------------------------"
-            		echo "your kcptun port = ${kport}"
-            		echo "---------------------------"
-            		echo
-            		break
-        	else
-            		echo -e "[${red}Error${plain}] Input error, please input a number between 1 and 65535"
-       		fi
-    	else
-        	echo -e "[${red}Error${plain}] Input error, please input a number between 1 and 65535"
-    	fi
-done
-	
 echo "Generate /etc/systemd/system/$NAME.service"
 
 cat <<EOF > /etc/systemd/system/$NAME.service
