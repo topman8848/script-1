@@ -14,6 +14,11 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 fi
 
+echo "install shadowsocks-libev from jessie-backports-sloppy"
+sh -c 'printf "deb http://deb.debian.org/debian jessie-backports main\n" > /etc/apt/sources.list.d/jessie-backports.list'
+sh -c 'printf "deb http://deb.debian.org/debian jessie-backports-sloppy main" >> /etc/apt/sources.list.d/jessie-backports.list'
+apt update
+apt -t jessie-backports-sloppy install shadowsocks-libev -y
 
 echo -e "${green}Clean up $NAME${plain}"
 systemctl disable $NAME.service
@@ -48,6 +53,8 @@ if systemctl status $NAME >/dev/null; then
 	echo "$NAME started."
 	echo -e "${green}vi /etc/systemd/system/$NAME.service${plain} as needed."
 	echo -e "${green}killall -9 $NAME${plain} for restart."
+	echo -e "ss-libev config: ${green}vi /etc/shadowsocks-libev/config.json${plain}"
+	echo -e "ss-libev command: ${green}systemctl start/stop/restart/status shadowsocks-libev${plain}"
 else
 	echo "$NAME start failed."
 fi
