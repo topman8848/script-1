@@ -155,7 +155,7 @@ config_shadowsocks(){
     if [ ! -d /etc/shadowsocks-libev ]; then
         mkdir -p /etc/shadowsocks-libev
     fi
-    cat <<EOF > /etc/shadowsocks-libev/config.json
+    cat > /etc/shadowsocks-libev/config.json<<-EOF
 {
     "server":${server_value},
     "server_port":${shadowsocksport},
