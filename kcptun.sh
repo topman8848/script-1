@@ -1,6 +1,6 @@
 #!/bin/bash
 # Usage:
-#   curl https://raw.githubusercontent.com/mixool/script/master/kcp.sh | bash
+#   curl https://raw.githubusercontent.com/mixool/script/master/kcptun.sh | bash
 
 # Color
 export green='\033[0;32m'
