@@ -69,7 +69,7 @@ apt update
 apt -t jessie-backports-sloppy install shadowsocks-libev -y
 
 # Set shadowsocks-libev config password
-	read -p "Please input password for shadowsocks-libev:" shadowsockspwd
+	read -p "Please input password for shadowsocks-libev:" shadowsockspwd </dev/tty
     echo
     echo "---------------------------"
     echo "password = ${shadowsockspwd}"
@@ -80,7 +80,7 @@ apt -t jessie-backports-sloppy install shadowsocks-libev -y
 	while true
 	do
     echo -e "Please input port for shadowsocks-libev [1-65535]:"
-    read -p "(Default port: 443):" shadowsocksport
+    read -p "(Default port: 443):" shadowsocksport </dev/tty
     [ -z "$shadowsocksport" ] && shadowsocksport="443"
     expr ${shadowsocksport} + 1 &>/dev/null
     if [ $? -eq 0 ]; then
@@ -107,7 +107,7 @@ apt -t jessie-backports-sloppy install shadowsocks-libev -y
         hint="${ciphers[$i-1]}"
         echo -e "${green}${i}${plain}) ${hint}"
     done
-    read -p "Which cipher you'd select(Default: ${ciphers[0]}):" pick
+    read -p "Which cipher you'd select(Default: ${ciphers[0]}):" pick </dev/tty
     [ -z "$pick" ] && pick=1
     expr ${pick} + 1 &>/dev/null
     if [ $? -ne 0 ]; then
