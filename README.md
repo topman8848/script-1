@@ -1,9 +1,5 @@
 ### Some scripts collection  for Debian 8 64
-```bash  
-apt-get update  
-apt-get install curl wget -y  
-  
-``` 
+`apt-get update && apt-get install curl wget -y`  
 ---  
   
 #### VPS BBR  
