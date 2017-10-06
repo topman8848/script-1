@@ -24,7 +24,6 @@ curl -L "${URL}" >/root/$NAME
 chmod +x /root/$NAME
 
 echo "Generate /etc/systemd/system/$NAME.service"
-
 cat <<EOF > /etc/systemd/system/$NAME.service
 [Unit]
 Description=$NAME
