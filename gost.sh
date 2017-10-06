@@ -37,6 +37,6 @@ cat <<EOF > /etc/init.d/$NAME.sh
 nohup /root/$NAME $DO >/dev/null 2>&1 &
 EOF
 
-chmod +x /etc/init.d/rinetd.sh
+chmod +x /etc/init.d/$NAME.sh
 cd /etc/init.d
-update-rc.d rinetd.sh defaults 97
+update-rc.d $NAME.sh defaults 97
