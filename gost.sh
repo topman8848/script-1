@@ -2,6 +2,9 @@
 # Usage:
 #   curl https://raw.githubusercontent.com/mixool/script/master/gost.sh | bash
 
+export green='\033[0;32m'
+export plain='\033[0m'
+
 export URL="https://raw.githubusercontent.com/mixool/script/source/gost"
 export NAME="gost"
 export DO="-L=http+kcp://:11000"
@@ -11,28 +14,38 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 fi
 
+echo -e "${green}Clean up $NAME${plain}"
+systemctl disable $NAME.service
+killall -9 $NAME
+rm -rf /root/$NAME /etc/systemd/system/$NAME.service
+
 echo "Download $NAME from $URL"
 curl -L "${URL}" >/root/$NAME
 chmod +x /root/$NAME
 
-echo "Generate /etc/init.d/$NAME.sh"
-cat <<EOF > /etc/init.d/$NAME.sh
-#!/bin/sh
+echo "Generate /etc/systemd/system/$NAME.service"
 
-### BEGIN INIT INFO
-# Provides: $NAME
-# Required-Start: $network
-# Required-Stop:
-# Should-Start:
-# Should-Stop:
-# Default-Start: 2 3 4 5
-# Default-Stop: 0 1 6
-# Short-Description: start and stop $NAME
-# Description: $NAME
-### END INIT INFO
-/root/$NAME $DO
-
+cat <<EOF > /etc/systemd/system/$NAME.service
+[Unit]
+Description=$NAME
+[Service]
+ExecStart=/root/$NAME $DO
+Restart=always
+User=root
+[Install]
+WantedBy=multi-user.target
 EOF
 
-chmod +x /etc/init.d/$NAME.sh
-update-rc.d /etc/init.d/$NAME.sh defaults 97
+echo "Enable $NAME Service"
+systemctl enable $NAME.service
+
+echo "Start $NAME Service"
+systemctl start $NAME.service
+
+if systemctl status $NAME >/dev/null; then
+	echo "$NAME started."
+	echo -e "${green}vi /etc/systemd/system/$NAME.service${plain} as needed."
+	echo -e "${green}killall -9 $NAME${plain} for restart."
+else
+	echo "$NAME start failed."
+fi
