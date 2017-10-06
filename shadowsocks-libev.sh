@@ -27,9 +27,7 @@ rc4-md5
 # Color
 red='\033[0;31m'
 green='\033[0;32m'
-yellow='\033[0;33m'
 plain='\033[0m'
-
 
 # Make sure only root can run this script
 if [ "$(id -u)" != "0" ]; then
@@ -160,11 +158,10 @@ if systemctl status shadowsocks-libev >/dev/null; then
     echo -e "Your Server Port      : \033[41;37m ${shadowsocksport} \033[0m"
     echo -e "Your Password         : \033[41;37m ${shadowsockspwd} \033[0m"
     echo -e "Your Encryption Method: \033[41;37m ${shadowsockscipher} \033[0m"
-	echo  
-	echo -e "config file: ${green}vi /etc/shadowsocks-libev/config.json${plain}"
-	echo -e "command: ${green}systemctl start/stop/restart/status shadowsocks-libev${plain}"
-	
+    echo  
+    echo -e "SS-libev config       : \033[41;37m /etc/shadowsocks-libev/config.json \033[0m"
+    echo -e "SS-libev command      : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev \033[0m"
 else
-	echo "ss-server start failed."
+    echo "ss-server start failed."
 fi
 
