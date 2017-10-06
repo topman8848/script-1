@@ -7,7 +7,7 @@ export plain='\033[0m'
 
 export URL="https://raw.githubusercontent.com/mixool/script/source/gost"
 export NAME="gost"
-export DO="-L=:443"
+export DO="-L=http+kcp://:11000"
 
 if [ "$(id -u)" != "0" ]; then
     echo "ERROR: Please run as root"
@@ -18,30 +18,25 @@ echo "Download $NAME from $URL"
 curl -L "${URL}" >/root/$NAME
 chmod +x /root/$NAME
 
-echo "Generate /etc/systemd/system/$NAME.service"
-cat <<EOF > /etc/systemd/system/$NAME.service
-[Unit]
-Description=$NAME
+echo "Generate /etc/init.d/$NAME.sh"
+cat <<EOF > /etc/init.d/$NAME.sh
+#!/bin/sh
 
-[Service]
-ExecStart=/root/$NAME $DO
-Restart=always
-User=root
+### BEGIN INIT INFO
+# Provides: $NAME
+# Required-Start: $network
+# Required-Stop:
+# Should-Start:
+# Should-Stop:
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: start and stop $NAME
+# Description: $NAME
+### END INIT INFO
 
-[Install]
-WantedBy=multi-user.target
+nohup /root/$NAME $DO >/dev/null 2>&1 &
 EOF
 
-echo "4. Enable $NAME Service"
-systemctl enable $NAME.service
-
-echo "5. Start $NAME Service"
-systemctl start $NAME.service
-
-if systemctl status $NAME >/dev/null; then
-	echo "$NAME started."
-	echo -e "${green}vi /etc/systemd/system/$NAME.service${plain} as needed."
-	echo -e "${green}killall -9 $NAME${plain} for restart."
-else
-	echo "$NAME start failed."
-fi
+chmod +x /etc/init.d/rinetd.sh
+cd /etc/init.d
+update-rc.d rinetd.sh defaults 97
