@@ -7,7 +7,7 @@ export plain='\033[0m'
 
 export URL="https://raw.githubusercontent.com/mixool/script/source/gost"
 export NAME="gost"
-export DO="-L=kcp+ss://chacha20:123456@:11000"
+export DO="-L=kcp://:11000"
 
 if [ "$(id -u)" != "0" ]; then
     echo "ERROR: Please run as root"
