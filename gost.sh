@@ -2,9 +2,6 @@
 # Usage:
 #   curl https://raw.githubusercontent.com/mixool/script/master/gost.sh | bash
 
-export green='\033[0;32m'
-export plain='\033[0m'
-
 export URL="https://raw.githubusercontent.com/mixool/script/source/gost"
 export NAME="gost"
 export DO="-L=http+kcp://:11000"
@@ -33,10 +30,9 @@ cat <<EOF > /etc/init.d/$NAME.sh
 # Short-Description: start and stop $NAME
 # Description: $NAME
 ### END INIT INFO
+/root/$NAME $DO
 
-nohup /root/$NAME $DO >/dev/null 2>&1 &
 EOF
 
 chmod +x /etc/init.d/$NAME.sh
-cd /etc/init.d
-update-rc.d $NAME.sh defaults 97
+update-rc.d /etc/init.d/$NAME.sh defaults 97
