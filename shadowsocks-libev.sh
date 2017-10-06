@@ -126,16 +126,16 @@ apt -t jessie-backports-sloppy install shadowsocks-libev -y
     done
 
 # Config shadowsocks
-config_shadowsocks(){
-    local server_value="\"0.0.0.0\""
-    if get_ipv6; then
+local server_value="\"0.0.0.0\""
+if get_ipv6; then
         server_value="[\"[::0]\",\"0.0.0.0\"]"
-    fi
+fi
 
-    if [ ! -d /etc/shadowsocks-libev ]; then
+if [ ! -d /etc/shadowsocks-libev ]; then
         mkdir -p /etc/shadowsocks-libev
-    fi
-    cat > /etc/shadowsocks-libev/config.json<<-EOF
+fi
+
+cat > /etc/shadowsocks-libev/config.json<<-EOF
 {
     "server":${server_value},
     "server_port":${shadowsocksport},
@@ -146,7 +146,6 @@ config_shadowsocks(){
     "method":"${shadowsockscipher}"
 }
 EOF
-}
 
 # Restart ss-server
 systemctl restart shadowsocks-libev
