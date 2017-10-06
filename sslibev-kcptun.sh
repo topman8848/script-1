@@ -209,8 +209,11 @@ systemctl enable $NAME.service
 echo "Start $NAME Service"
 systemctl start $NAME.service
 
+clear
+
 #Informations
 if systemctl status shadowsocks-libev >/dev/null; then
+    echo
     echo -e "Congratulations, Shadowsocks-libev server install completed!"
     echo -e "Your Server IP        : \033[41;37m $(get_ip) \033[0m"
     echo -e "Your Server Port      : \033[41;37m ${shadowsocksport} \033[0m"
@@ -224,6 +227,7 @@ else
 fi
 
 if systemctl status $NAME >/dev/null; then
+	echo 
 	echo -e "Congratulations, Kcptun server install completed!"
 	echo -e "Your Server IP        : \033[41;37m $(get_ip) \033[0m"
 	echo -e "Your Server Port      : \033[41;37m ${kport} \033[0m"
