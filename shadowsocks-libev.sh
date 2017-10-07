@@ -126,7 +126,7 @@ apt -t jessie-backports-sloppy install shadowsocks-libev -y
     done
 
 # Config shadowsocks
-local server_value="\"0.0.0.0\""
+server_value="\"0.0.0.0\""
 if get_ipv6; then
         server_value="[\"[::0]\",\"0.0.0.0\"]"
 fi
