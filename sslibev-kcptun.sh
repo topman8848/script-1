@@ -204,7 +204,7 @@ systemctl enable $NAME.service
 
 echo "Start Service"
 systemctl start $NAME.service
-systemctl start shadowsocks-libev
+systemctl restart shadowsocks-libev
 
 clear
 
