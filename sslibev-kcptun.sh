@@ -202,8 +202,9 @@ EOF
 echo "Enable $NAME Service"
 systemctl enable $NAME.service
 
-echo "Start $NAME Service"
+echo "Start Service"
 systemctl start $NAME.service
+systemctl start shadowsocks-libev
 
 clear
 
