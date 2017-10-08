@@ -13,6 +13,7 @@ apt-get install php5-gd php5-curl -y
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python get-pip.py
 pip install requests beautifulsoup4
+rm get-pip.py
 
 #timezone
 echo "Asia/Shanghai" > /etc/timezone
