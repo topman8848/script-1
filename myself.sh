@@ -3,7 +3,7 @@
 #   curl https://raw.githubusercontent.com/mixool/script/master/myself.sh | bash
 
 #tools
-apt-get install cron curl wget lrzsz -y
+apt-get install cron curl wget lrzsz fail2ban -y
 
 #php
 apt-get install php5-common  php5-cli -y
@@ -43,4 +43,5 @@ echo -e "30 */4 * * * root curl -X POST \"https://openapi.daocloud.io/v1/apps/ae
 echo "#" >> /etc/crontab
 
 #Informations
+date
 echo "All done!"
