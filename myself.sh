@@ -16,10 +16,7 @@ pip install requests beautifulsoup4
 rm get-pip.py
 
 #timezone
-rm -rf /etc/timezone
-echo "Asia/Shanghai" >> /etc/timezone
-sleep 3
-dpkg-reconfigure -f noninteractive tzdata
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 #mkdir 
 mkdir /root/hostloc
