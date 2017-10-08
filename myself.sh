@@ -3,7 +3,7 @@
 #   curl https://raw.githubusercontent.com/mixool/script/master/myself.sh | bash
 
 #tools
-apt-get install cron curl wget lrzsz fail2ban -y
+apt-get install cron wget lrzsz fail2ban -y
 
 #php
 apt-get install php5-common  php5-cli -y
