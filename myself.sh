@@ -43,5 +43,6 @@ echo -e "30 */4 * * * root curl -X POST \"https://openapi.daocloud.io/v1/apps/ae
 echo "#" >> /etc/crontab
 
 #Informations
+clear
 date
 echo "All done!"
