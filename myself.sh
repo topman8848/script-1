@@ -16,7 +16,8 @@ pip install requests beautifulsoup4
 rm get-pip.py
 
 #timezone
-echo "Asia/Shanghai" > /etc/timezone
+rm -rf /etc/timezone
+echo "Asia/Shanghai" >> /etc/timezone
 sleep 3
 dpkg-reconfigure -f noninteractive tzdata
 
