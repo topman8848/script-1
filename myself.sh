@@ -21,7 +21,7 @@ ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 #mkdir 
 mkdir /root/hostloc
 mkdir /root/BilibiliHelper
-mkdir /root/BilibiliHelper/log.txt
+touch /root/BilibiliHelper/log.txt
 
 #hostloc
 wget https://raw.githubusercontent.com/mixool/script/master/hostloc.py -O /root/hostloc/hostloc.py
