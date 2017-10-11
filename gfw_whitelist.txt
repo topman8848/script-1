@@ -5,20 +5,26 @@
 *.io +direct
 *.cc +direct
 *.edu +direct
+
 *.baidu.com +direct
 *.bilibili.com +direct
 *.douban.com +direct
 *.douban.fm +direct
 *.v2ex.com +direct
+*.alipay.com +direct
+
+*.youku.com +direct
+*.flyvp.com +direct
+*.qq.com +direct
+*.jd.com +direct
+*.163.com +direct
+*.zhihu.com +direct
+
+*.lowendtalk.com +direct
 *.namecheap.com +direct
 *.web-hosting.com +direct
 *.hostloc.com +direct
 *.daocloud.io +direct
-*.youku.com +direct
-*.qq.com +direct
-*.jd.com +direct
-*.163.com +direct
 *.aliyun.com +direct
-*.zhihu.com +direct
 
 * +SOCKS5
