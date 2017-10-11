@@ -11,5 +11,6 @@
 *.jd.com +direct
 *.163.com +direct
 *.aliyun.com +direct
+*.zhihu.com
 
 * +SOCKS5
