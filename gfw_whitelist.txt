@@ -1,6 +1,8 @@
 [SwitchyOmega Conditions]
 @with result
 
+Keyword: v2ex +direct
+
 *.cn +direct
 *.namecheap.com +direct
 *.web-hosting.com +direct
