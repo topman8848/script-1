@@ -1,9 +1,15 @@
 [SwitchyOmega Conditions]
 @with result
 
-Keyword: v2ex +direct
-
 *.cn +direct
+*.io +direct
+*.cc +direct
+*.edu +direct
+*.baidu.com +direct
+*.bilibili.com +direct
+*.douban.com +direct
+*.douban.fm +direct
+*.v2ex.com +direct
 *.namecheap.com +direct
 *.web-hosting.com +direct
 *.hostloc.com +direct
