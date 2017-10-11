@@ -1,1 +1,15 @@
-W01jbCBTd2l0Y2h5T21lZ2FdCiEtLS0tLS0tLS0tLS0tLS0tLS0tLS1FT0YtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQp8fGRyb3BweS5jbgp8fG5hbWVjaGVhcC5jb20KfHxob3N0bG9jLmNvbQp8fGRhb2Nsb3VkLmlvCnx8eW91a3UuY29tCnx8cXEuY29tCnx8amQuY29tCnx8MTYzLmNvbQp8fGFsaXl1bi5jb20KIS0tLS0tLS0tLS0tLS0tLS0tLS0tLUVPRi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+[SwitchyOmega Conditions]
+@with result
+
+*.droppy.cn +direct
+*.namecheap.com +direct
+*.web-hosting.com +direct
+*.hostloc.com +direct
+*.daocloud.io +direct
+*.youku.com +direct
+*.qq.com +direct
+*.jd.com +direct
+*.163.com +direct
+*.aliyun.com +direct
+
+* +SOCKS5
