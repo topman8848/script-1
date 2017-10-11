@@ -1,7 +1,7 @@
 [SwitchyOmega Conditions]
 @with result
 
-*.droppy.cn +direct
+*.cn +direct
 *.namecheap.com +direct
 *.web-hosting.com +direct
 *.hostloc.com +direct
