@@ -65,8 +65,10 @@ LOCALVERSION=$(./promvps -version 2>/dev/null || :)
 echo "0. Local Prom VPS version ${LOCALVERSION}"
 
 echo "1. Checking Prom VPS Version"
-curl -kL https://github.com/phuslu/promci/releases >promci.txt
-RELEASETAG=$(cat promci.txt | grep -m1 -oE 'promci/releases/tag/[0-9A-Za-z]+' | awk -F/ '{print $NF}')
+curl -kL https://bitbucket.org/phuslu/promvps/downloads/ >promci.txt
+# curl -kL https://github.com/phuslu/promvps/releases >promci.txt
+# RELEASETAG=$(cat promci.txt | grep -m1 -oE 'promci/releases/tag/[0-9A-Za-z]+' | awk -F/ '{print $NF}')
+RELEASETAG=promvps
 FILENAME=$(cat promci.txt | grep -oE "${FILENAME_PREFIX}-r[0-9]+.[0-9a-z\.]+" | head -1)
 REMOTEVERSION=$(echo ${FILENAME} | awk -F'.' '{print $1}' | awk -F'-' '{print $2}')
 rm -rf promci.txt
@@ -81,7 +83,8 @@ if [[ ${LOCALVERSION#r*} -ge ${REMOTEVERSION#r*} ]]; then
 fi
 
 echo "2. Downloading ${FILENAME}"
-curl -kL https://github.com/phuslu/promci/releases/download/${RELEASETAG}/${FILENAME} >${FILENAME}.tmp
+curl -kL https://bitbucket.org/phuslu/promvps/downloads/${FILENAME} >${FILENAME}.tmp
+# curl -kL https://github.com/phuslu/promvps/releases/download/${RELEASETAG}/${FILENAME} >${FILENAME}.tmp
 mv -f ${FILENAME}.tmp ${FILENAME}
 
 echo "3. Extracting ${FILENAME}"
@@ -115,6 +118,7 @@ if [ ! -f promvps.user.toml ]; then
 [default]
 log_level = 2
 reject_nil_sni = true
+verify_client_cert = false
 
 [[http2]]
 listen = ":443"
