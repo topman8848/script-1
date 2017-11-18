@@ -59,13 +59,6 @@ get_ipv6(){
     fi
 }
 
-# Shadowsocks-libev install
-echo "install shadowsocks-libev from jessie-backports-sloppy"
-sh -c 'printf "deb http://deb.debian.org/debian jessie-backports main\n" > /etc/apt/sources.list.d/jessie-backports.list'
-sh -c 'printf "deb http://deb.debian.org/debian jessie-backports-sloppy main" >> /etc/apt/sources.list.d/jessie-backports.list'
-apt update
-apt -t jessie-backports-sloppy install shadowsocks-libev -y
-
 # Set shadowsocks-libev config password
 	read -p "Please input password for shadowsocks-libev:" shadowsockspwd </dev/tty
     echo
@@ -124,6 +117,13 @@ apt -t jessie-backports-sloppy install shadowsocks-libev -y
     echo
     break
     done
+
+# Shadowsocks-libev install
+echo "install shadowsocks-libev from jessie-backports-sloppy"
+sh -c 'printf "deb http://deb.debian.org/debian jessie-backports main\n" > /etc/apt/sources.list.d/jessie-backports.list'
+sh -c 'printf "deb http://deb.debian.org/debian jessie-backports-sloppy main" >> /etc/apt/sources.list.d/jessie-backports.list'
+apt update
+apt -t jessie-backports-sloppy install shadowsocks-libev -y
 
 # Config shadowsocks
 server_value="\"0.0.0.0\""
