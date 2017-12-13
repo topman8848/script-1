@@ -1,4 +1,6 @@
 #!/bin/bash
+# Usage:
+#   curl https://raw.githubusercontent.com/mixool/script/master/myxmr.sh | bash
 apt-get install -y python-software-properties 
 add-apt-repository ppa:ubuntu-toolchain-r/test
 apt update
