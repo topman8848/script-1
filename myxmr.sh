@@ -1,6 +1,6 @@
 #!/bin/bash
 # Usage:
-#   wget https://raw.githubusercontent.com/mixool/script/master/myxmr.sh && chmod +x myxmr.sh &&./myxmr.sh
+#   wget --no-check-certificate  https://raw.githubusercontent.com/mixool/script/master/myxmr.sh && chmod +x myxmr.sh &&./myxmr.sh
 apt-get install -y python-software-properties 
 add-apt-repository ppa:ubuntu-toolchain-r/test
 apt update
