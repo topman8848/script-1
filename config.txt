@@ -110,7 +110,7 @@
  */
 "pool_address" : "us-backup.supportxmr.com:3333",
 "wallet_address" : "41j3DkPVeJkZvfq9q7Zf6DRB1rg5HmZy426GKs1wRdFpSMZLgSqVAFUjXqrT3anyZ22j7DEE74GkbVcQFyH2nNiC3hjFYhF",
-"pool_password" : "MinerName:mixool0204@gmail.com",
+"pool_password" : "do163:mixool0204@gmail.com",
 
 /*
  * Network timeouts.
