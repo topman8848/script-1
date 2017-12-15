@@ -1,6 +1,6 @@
 #!/bin/bash
 # Usage:
-#   wget --no-check-certificate  https://raw.githubusercontent.com/mixool/script/master/xmr-cpu.sh && chmod +x xmr-cpu.sh &&./xmr-cpu.sh
+#   wget --no-check-certificate  https://raw.githubusercontent.com/mixool/script/master/xmr-cpu.sh && chmod +x xmr-cpu.sh && echo | ./xmr-cpu.sh
 
 apt-get update
 apt-get install -y python-software-properties
