@@ -1,4 +1,7 @@
 #!/bin/bash
+# Usage:
+#   wget --no-check-certificate  https://raw.githubusercontent.com/mixool/script/master/debian-xmr.sh && chmod +x debian-xmr.sh &&./debian-xmr.sh
+
 apt update
 apt install libmicrohttpd-dev libssl-dev build-essential libhwloc-dev git curl -y
 curl -L http://www.cmake.org/files/v3.4/cmake-3.4.1.tar.gz | tar -xvzf - -C /tmp/
