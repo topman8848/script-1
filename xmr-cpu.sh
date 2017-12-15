@@ -37,4 +37,6 @@ EOF
 cpulimit --exe xmr-stak --limit 60 -b
 nohup /root/xmr-stak/build/bin/xmr-stak -o $UP -u $WA -p $PW &
 
-
+#Done
+clear
+echo "Happy Mining !"
