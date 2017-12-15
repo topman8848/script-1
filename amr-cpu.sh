@@ -25,7 +25,7 @@ cmake .. -DCUDA_ENABLE=OFF  -DOpenCL_ENABLE=OFF
 make install
 
 #My cpu.txt
-cat <<EOF >> /root/xmr-stak/build/bin/cpu.txt
+cat <<EOF >> $HOME/xmr-stak/build/bin/cpu.txt
 "cpu_threads_conf" :
 [
     { "low_power_mode" : true, "no_prefetch" : true, "affine_to_cpu" : 0 },
@@ -34,7 +34,7 @@ cat <<EOF >> /root/xmr-stak/build/bin/cpu.txt
 EOF
 
 #My config.txt
-cat <<EOF >> /root/xmr-stak/build/bin/config.txt
+cat <<EOF >> $HOME/xmr-stak/build/bin/config.txt
 "pool_list" :
 [
 	{"pool_address" : "$UP", "wallet_address" : "$WA", "pool_password" : "$PW", "use_nicehash" : false, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },
@@ -74,6 +74,7 @@ EOF
 
 
 #Run xmr-stak 
+cd $HOME
 nohup $HOME/xmr-stak/build/bin/xmr-stak -c $HOME/xmr-stak/build/bin/config.txt &
 sleep 5
 
