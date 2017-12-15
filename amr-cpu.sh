@@ -37,7 +37,7 @@ EOF
 cat <<EOF >> $HOME/xmr-stak/build/bin/config.txt
 "pool_list" :
 [
-	{"pool_address" : "$UP", "wallet_address" : "$WA", "pool_password" : "$PW", "use_nicehash" : false, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },
+	{"pool_address" : "{$UP}", "wallet_address" : "{$WA}", "pool_password" : "{$PW}", "use_nicehash" : false, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },
 ],
 
 "currency" : "monero",
