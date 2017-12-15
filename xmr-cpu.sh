@@ -33,9 +33,51 @@ cat <<EOF >> /root/xmr-stak/build/bin/cpu.txt
 ],
 EOF
 
+#My config.txt
+cat <<EOF >> /root/xmr-stak/build/bin/config.txt
+"pool_list" :
+[
+	{"pool_address" : "$UP", "wallet_address" : "$WA", "pool_password" : "$PW", "use_nicehash" : false, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },
+],
+
+"currency" : "monero",
+
+"call_timeout" : 10,
+"retry_time" : 30,
+"giveup_limit" : 0,
+
+"verbose_level" : 3,
+"print_motd" : true,
+
+"h_print_time" : 60,
+
+"aes_override" : null,
+
+"use_slow_memory" : "warn",
+
+"tls_secure_algo" : true,
+
+"daemon_mode" : true,
+
+"flush_stdout" : false,
+
+"output_file" : "",
+
+"httpd_port" : 0,
+
+"http_login" : "",
+"http_pass" : "",
+
+"prefer_ipv4" : true,
+
+EOF
+
+
 #Run xmr-stak and cpulimit
 cpulimit --exe xmr-stak --limit 60 -b
-nohup /root/xmr-stak/build/bin/xmr-stak -o $UP -u $WA -p $PW &
+sleep 5
+nohup /root/xmr-stak/build/bin/xmr-stak -c /root/xmr-stak/build/bin/config.txt &
+sleep 5
 
 #Done
 clear
