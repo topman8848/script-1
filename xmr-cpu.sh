@@ -1,7 +1,9 @@
 #!/bin/bash
 # Usage:
-#   wget --no-check-certificate  https://raw.githubusercontent.com/mixool/script/master/debian-xmr.sh && chmod +x debian-xmr.sh &&./debian-xmr.sh
+#   wget --no-check-certificate  https://raw.githubusercontent.com/mixool/script/master/xmr-cpu.sh && chmod +x xmr-cpu.sh &&./xmr-cpu.sh
 
+apt-get update
+apt-get install -y python-software-properties
 add-apt-repository ppa:ubuntu-toolchain-r/test
 apt update
 apt install -y gcc-5 g++-5 make curl git cpulimit
@@ -14,4 +16,3 @@ git clone https://github.com/fireice-uk/xmr-stak-cpu xmr-stak
 cd xmr-stak
 cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/xmr-stak-cpu
 make install
-
