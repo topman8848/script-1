@@ -4,7 +4,7 @@
 
 apt-get update
 apt-get install -y python-software-properties
-add-apt-repository ppa:ubuntu-toolchain-r/test
+echo | add-apt-repository ppa:ubuntu-toolchain-r/test
 apt update
 apt install -y gcc-5 g++-5 make curl git cpulimit
 update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 1 --slave /usr/bin/g++ g++ /usr/bin/g++-5
