@@ -76,8 +76,8 @@ EOF
 
 #Run xmr-stak and cpulimit
 cd
-# cpulimit --exe xmr-stak --limit 80 -b
-# sleep 5
+cpulimit --exe xmr-stak --limit 130 -b
+sleep 5
 nohup $HOME/xmr-stak/build/bin/xmr-stak -c $HOME/xmr-stak/build/bin/config.txt &
 sleep 5
 
