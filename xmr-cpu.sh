@@ -5,7 +5,7 @@
 #Set export
 export UP="phx02.supportxmr.com:5555"
 export WA="41j3DkPVeJkZvfq9q7Zf6DRB1rg5HmZy426GKs1wRdFpSMZLgSqVAFUjXqrT3anyZ22j7DEE74GkbVcQFyH2nNiC3hjFYhF"
-export PW="2G"
+export PW="Miner-1"
 
 #Compile xmr-stak for Ubuntu 14.04
 apt-get update
@@ -77,7 +77,7 @@ EOF
 #Run xmr-stak and cpulimit
 cd
 # cpulimit --exe xmr-stak --limit 80 -b
-sleep 5
+# sleep 5
 nohup $HOME/xmr-stak/build/bin/xmr-stak -c $HOME/xmr-stak/build/bin/config.txt &
 sleep 5
 
