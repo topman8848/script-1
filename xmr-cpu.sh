@@ -5,7 +5,7 @@
 #Set export
 export UP="us-backup.supportxmr.com:5555"
 export WA="41j3DkPVeJkZvfq9q7Zf6DRB1rg5HmZy426GKs1wRdFpSMZLgSqVAFUjXqrT3anyZ22j7DEE74GkbVcQFyH2nNiC3hjFYhF"
-export PW="2G"
+export PW="8G"
 
 #Compile xmr-stak for Ubuntu 14.04
 apt-get update
