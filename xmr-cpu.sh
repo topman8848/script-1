@@ -3,9 +3,9 @@
 #   wget --no-check-certificate  https://raw.githubusercontent.com/mixool/script/master/xmr-cpu.sh && chmod +x xmr-cpu.sh && echo | ./xmr-cpu.sh
 
 #Set export
-export UP="us-backup.supportxmr.com:5555"
+export UP="phx02.supportxmr.com:5555"
 export WA="41j3DkPVeJkZvfq9q7Zf6DRB1rg5HmZy426GKs1wRdFpSMZLgSqVAFUjXqrT3anyZ22j7DEE74GkbVcQFyH2nNiC3hjFYhF"
-export PW="8G"
+export PW="2G"
 
 #Compile xmr-stak for Ubuntu 14.04
 apt-get update
@@ -56,9 +56,9 @@ cat <<EOF >> /root/xmr-stak/build/bin/config.txt
 
 "use_slow_memory" : "warn",
 
-"tls_secure_algo" : true,
+"tls_secure_algo" : false,
 
-"daemon_mode" : true,
+"daemon_mode" : false,
 
 "flush_stdout" : false,
 
