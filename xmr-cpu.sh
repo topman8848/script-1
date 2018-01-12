@@ -4,7 +4,7 @@
 
 #Set export
 export UP="phx02.supportxmr.com:5555"
-export WA="41j3DkPVeJkZvfq9q7Zf6DRB1rg5HmZy426GKs1wRdFpSMZLgSqVAFUjXqrT3anyZ22j7DEE74GkbVcQFyH2nNiC3hjFYhF"
+export WA="etnkNcPVLHggBC2MufrhVvVYELn2YhTv7cdLgFENP5B3EczRZ8Fg3HJFu8hFQhwEEM3YFwKYYDxPGT9b3RtzWdkV6znq5JWYZf"
 export PW="Miner-2"
 
 #Compile xmr-stak for Ubuntu 14.04
