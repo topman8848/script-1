@@ -3,9 +3,9 @@
 #   wget --no-check-certificate  https://raw.githubusercontent.com/mixool/script/master/xmr-cpu.sh && chmod +x xmr-cpu.sh && echo | ./xmr-cpu.sh
 
 #Set export
-export UP="etn.crypto-coins.club:6666"
-export WA="etnkNcPVLHggBC2MufrhVvVYELn2YhTv7cdLgFENP5B3EczRZ8Fg3HJFu8hFQhwEEM3YFwKYYDxPGT9b3RtzWdkV6znq5JWYZf"
-export PW="ETN-3"
+export UP="phx02.supportxmr.com:5555"
+export WA="41j3DkPVeJkZvfq9q7Zf6DRB1rg5HmZy426GKs1wRdFpSMZLgSqVAFUjXqrT3anyZ22j7DEE74GkbVcQFyH2nNiC3hjFYhF"
+export PW="ETN-1"
 
 #Compile xmr-stak for Ubuntu 14.04
 apt-get update
