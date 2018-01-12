@@ -5,7 +5,7 @@
 #Set export
 export UP="etn.crypto-coins.club:6666"
 export WA="etnkNcPVLHggBC2MufrhVvVYELn2YhTv7cdLgFENP5B3EczRZ8Fg3HJFu8hFQhwEEM3YFwKYYDxPGT9b3RtzWdkV6znq5JWYZf"
-export PW="Miner-1"
+export PW="ETN-3"
 
 #Compile xmr-stak for Ubuntu 14.04
 apt-get update
