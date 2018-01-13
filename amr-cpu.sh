@@ -3,9 +3,11 @@
 #   wget --no-check-certificate  https://raw.githubusercontent.com/mixool/script/master/amr-cpu.sh && chmod +x amr-cpu.sh && echo | ./amr-cpu.sh
 
 #Set export
-export UP="us-backup.supportxmr.com:3333"
+export UP="phx02.supportxmr.com:5555"
 export WA="41j3DkPVeJkZvfq9q7Zf6DRB1rg5HmZy426GKs1wRdFpSMZLgSqVAFUjXqrT3anyZ22j7DEE74GkbVcQFyH2nNiC3hjFYhF"
-export PW="asw"
+
+#set export password
+read -p "Input your password-MinerIdentifier: " PW </dev/tty
 
 #Compile xmr-stak for Ubuntu 14.04
 apt-get update
