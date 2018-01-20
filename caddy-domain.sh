@@ -29,7 +29,7 @@ mkdir /etc/caddy
 cat > /etc/caddy/Caddyfile<<-EOF
 ${domain} {
  basicauth / ${user} ${passwd}
- proxy / ${romain}
+ proxy / https://${romain}
 }
 EOF
 
