@@ -49,16 +49,16 @@ User=root
 WantedBy=multi-user.target
 EOF
 
-echo "Enable caddy.service"
+# Enable caddy.service
 systemctl enable caddy.service
 
-# start caddy
+# Start caddy.service
 killall -9 apache2 nginx
 systemctl start caddy.service
 
 if systemctl status caddy >/dev/null; then
         echo "caddy.service started. config file: /etc/caddy/Caddyfile"
-        echo -e "Restart: systemctl daemon-reload && systemctl restart caddy.service."
+        echo "Restart: systemctl daemon-reload && systemctl restart caddy.service."
         echo -e "Your site: ${domain}"
 else
         echo "caddy.service start failed."
