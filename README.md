@@ -15,8 +15,8 @@ apt-get update && apt-get install curl -y
 #### Speed up shadowsocks-libev with kcptun  
 `curl https://raw.githubusercontent.com/mixool/script/master/sslibev-kcptun.sh | bash`  
   
-#### 使用Caddy反代网站
-curl https://raw.githubusercontent.com/mixool/script/master/caddy-domain.sh | bash
+#### 使用Caddy反代网站  
+`curl https://raw.githubusercontent.com/mixool/script/master/caddy-domain.sh | bash`  
   
 #### 二进制程序加入开机启动  
 `curl https://raw.githubusercontent.com/mixool/script/master/easystart.sh | bash`  
