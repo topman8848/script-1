@@ -23,8 +23,9 @@ https://${domain} {
 EOF
 
 # start caddy
-apt-get remove --purge apache2 nginx -y
-nohup caddy -conf /root/Caddyfile &
+killall -9 apache2 nginx
+nohup caddy -conf /root/Caddyfile >/dev/null 2>&1 &
 
 #Informations
-echo "All done!"
+sleep 5
+echo -e "Your site: https://${domain}"
