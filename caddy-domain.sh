@@ -25,6 +25,7 @@ read -p "Please input your password:" passwd </dev/tty
 curl https://getcaddy.com | bash -s personal
 
 # Generate Caddyfile
+mkdir /etc/caddy
 cat > /etc/caddy/Caddyfile<<-EOF
 ${domain} {
  basicauth / ${user} ${passwd}
