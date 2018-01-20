@@ -9,7 +9,7 @@ read -p "Please input your user name:" user </dev/tty
 read -p "Please input your password:" passwd </dev/tty
 
 # caddy install
-curl https://getcaddy.com | bash -s personal http.filemanager
+curl https://getcaddy.com | bash -s personal
 
 # Config Caddyfile
 cat > /root/Caddyfile<<-EOF
