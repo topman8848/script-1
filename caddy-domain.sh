@@ -2,6 +2,19 @@
 # Usage:
 #   curl https://raw.githubusercontent.com/mixool/script/master/caddy-domain.sh | bash
 
+if [ "$(id -u)" != "0" ]; then
+    echo "ERROR: Please run as root"
+    exit 1
+fi
+
+for CMD in curl  systemctl
+do
+	if ! type -p ${CMD}; then
+		echo -e "\e[1;31mtool ${CMD} is not installed, abort.\e[0m"
+		exit 1
+	fi
+done
+
 # Informations
 read -p "Please input your domain name for vps:" domain </dev/tty
 read -p "Please input reverse proxy domain:" romain </dev/tty
@@ -11,7 +24,7 @@ read -p "Please input your password:" passwd </dev/tty
 # caddy install
 curl https://getcaddy.com | bash -s personal
 
-# Config Caddyfile
+# Generate Caddyfile
 cat > /etc/caddy/Caddyfile<<-EOF
 ${domain} {
  basicauth / ${user} ${passwd}
@@ -19,8 +32,7 @@ ${domain} {
 }
 EOF
 
-echo "Generate /etc/systemd/system/caddy.service"
-
+# Generate /etc/systemd/system/caddy.service
 cat <<EOF > /etc/systemd/system/caddy.service
 [Unit]
 Description=Caddy HTTP/2 web server
