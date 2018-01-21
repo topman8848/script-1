@@ -12,6 +12,7 @@ read -p "Input your password-MinerIdentifier: " PW </dev/tty
 #Compile xmr-stak for Ubuntu 14.04
 apt-get update
 apt-get install -y python-software-properties
+apt-get install -y software-properties-common
 add-apt-repository ppa:ubuntu-toolchain-r/test
 apt update
 apt install -y gcc-5 g++-5 make curl git
