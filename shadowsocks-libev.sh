@@ -164,10 +164,11 @@ systemctl restart shadowsocks-libev
 #Informations
 if systemctl status shadowsocks-libev >/dev/null; then
     echo -e "Congratulations, Shadowsocks-libev server install completed!"
-    echo -e "Your Server IP        : \033[41;37m $(get_ip) \033[0m"
-    echo -e "Your Server Port      : \033[41;37m ${shadowsocksport} \033[0m"
-    echo -e "Your Password         : \033[41;37m ${shadowsockspwd} \033[0m"
-    echo -e "Your Encryption Method: \033[41;37m ${shadowsockscipher} \033[0m"
+    echo -e "Server IP        : \033[41;37m $(get_ip) \033[0m"
+    echo -e "Server Port      : \033[41;37m ${shadowsocksport} \033[0m"
+    echo -e "Password         : \033[41;37m ${shadowsockspwd} \033[0m"
+    echo -e "Encryption Method: \033[41;37m ${shadowsockscipher} \033[0m"
+    echo -e "Simple-Obfs         : \033[41;37m TLS \033[0m"
     echo  
     echo -e "SS-libev config       : \033[41;37m /etc/shadowsocks-libev/config.json \033[0m"
     echo -e "SS-libev command      : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev \033[0m"
