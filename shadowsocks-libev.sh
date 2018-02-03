@@ -158,21 +158,20 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
 }
 EOF
 
-# Restart ss-server
-systemctl restart shadowsocks-libev
+# Start ss-server
+systemctl enable shadowsocks-libev && systemctl restart shadowsocks-libev
 
 #Informations
 if systemctl status shadowsocks-libev >/dev/null; then
-    echo -e "Congratulations, Shadowsocks-libev server install completed!"
+    echo -e "Congratulations, shadowsocks-libev server install completed!"
     echo -e "Server IP        : \033[41;37m $(get_ip) \033[0m"
     echo -e "Server Port      : \033[41;37m ${shadowsocksport} \033[0m"
     echo -e "Password         : \033[41;37m ${shadowsockspwd} \033[0m"
     echo -e "Encryption Method: \033[41;37m ${shadowsockscipher} \033[0m"
     echo -e "Simple-Obfs         : \033[41;37m TLS \033[0m"
     echo  
-    echo -e "SS-libev config       : \033[41;37m /etc/shadowsocks-libev/config.json \033[0m"
-    echo -e "SS-libev command      : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev \033[0m"
+    echo -e "Config       : \033[41;37m /etc/shadowsocks-libev/config.json \033[0m"
+    echo -e "Command      : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev \033[0m"
 else
-    echo "ss-server start failed."
+    echo "shadowsocks-libev start failed."
 fi
-
