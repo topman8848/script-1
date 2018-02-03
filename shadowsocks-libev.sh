@@ -168,10 +168,10 @@ if systemctl status shadowsocks-libev >/dev/null; then
     echo -e "Server Port      : \033[41;37m ${shadowsocksport} \033[0m"
     echo -e "Password         : \033[41;37m ${shadowsockspwd} \033[0m"
     echo -e "Encryption Method: \033[41;37m ${shadowsockscipher} \033[0m"
-    echo -e "Simple-Obfs         : \033[41;37m TLS \033[0m"
+    echo -e "Simple-Obfs      : \033[41;37m TLS \033[0m"
     echo  
-    echo -e "Config       : \033[41;37m /etc/shadowsocks-libev/config.json \033[0m"
-    echo -e "Command      : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev \033[0m"
+    echo -e "Config File      : \033[41;37m /etc/shadowsocks-libev/config.json \033[0m"
+    echo -e "Command          : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev \033[0m"
 else
     echo "shadowsocks-libev start failed."
 fi
