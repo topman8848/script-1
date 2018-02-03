@@ -125,6 +125,15 @@ sh -c 'printf "deb http://deb.debian.org/debian jessie-backports-sloppy main" >>
 apt update
 apt -t jessie-backports-sloppy install shadowsocks-libev -y
 
+# Simple-obfs install
+apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto automake -y
+git clone https://github.com/shadowsocks/simple-obfs.git
+cd simple-obfs
+git submodule update --init --recursive
+./autogen.sh
+./configure && make
+make install
+
 # Config shadowsocks
 server_value="\"0.0.0.0\""
 if get_ipv6; then
@@ -143,7 +152,8 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
     "local_port":1080,
     "password":"${shadowsockspwd}",
     "timeout":600,
-    "method":"${shadowsockscipher}"
+    "method":"${shadowsockscipher}",
+    "plugin":"/usr/local/bin/obfs-server --obfs tls"
 }
 EOF
 
