@@ -4,5 +4,4 @@
 
 read -p "Input url: " MYURL </dev/tty
 
-curl -k  $MYURL | grep -oE "ssr?\://.*" | awk '{print $1}' | awk -F\" '{print $1}' | awk -F\< '{print $1}' | awk -F\\ '{print $1}' | sort -u >thanks.ss
-cat thanks.ss
+curl -k  $MYURL | grep -oE "ssr?\://.*" | awk '{print $1}' | awk -F\" '{print $1}' | awk -F\< '{print $1}' | awk -F\\ '{print $1}' | sort -u
