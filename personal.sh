@@ -2,9 +2,9 @@
 # Usage:
 #   curl https://raw.githubusercontent.com/mixool/script/master/personal.sh | bash
 
-read -p "Input url: " myurl </dev/tty
+read -p "Input url: " MYURL </dev/tty
 
-curl -k  myurl -o 0.conf
+curl -k  $MYURL -o 0.conf
 
 grep -oE "ssr?\://.*" 0.conf >1.conf
 
