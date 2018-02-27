@@ -16,6 +16,4 @@ awk -F\< '{print $1}' 3.conf  >4.conf
 
 awk -F\\ '{print $1}' 4.conf  >ok.conf
 
-sort -u ok.conf -o >ok.conf
-
-cat ok.conf | base64 >index.html
+sort -u ok.conf | base64 >index.html
