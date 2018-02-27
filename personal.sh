@@ -14,8 +14,8 @@ awk -F\" '{print $1}' 2.conf >3.conf
 
 awk -F\< '{print $1}' 3.conf  >4.conf
 
-awk -F\\ '{print $1}' 4.conf  >5.conf
+awk -F\\ '{print $1}' 4.conf  >ok.conf
 
-sort -u 5.conf -o >ok.conf
+sort -u ok.conf -o >ok.conf
 
 cat ok.conf
