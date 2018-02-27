@@ -18,4 +18,4 @@ awk -F\\ '{print $1}' 4.conf  >ok.conf
 
 sort -u ok.conf -o >ok.conf
 
-cat ok.conf
+cat ok.conf | base64 >index.html
