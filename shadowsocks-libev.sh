@@ -161,6 +161,12 @@ EOF
 # Start ss-server
 systemctl enable shadowsocks-libev && systemctl restart shadowsocks-libev
 
+#Auto status
+wget --no-check-certificate -O /opt/shadowsocks-crond.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-crond.sh
+chmod 755 /opt/shadowsocks-crond.sh
+/opt/shadowsocks-crond.sh
+(crontab -l ; echo "*/5 * * * * /opt/shadowsocks-crond.sh") | crontab -
+
 #Informations
 if systemctl status shadowsocks-libev >/dev/null; then
     echo -e "Congratulations, shadowsocks-libev server install completed!"
@@ -170,6 +176,8 @@ if systemctl status shadowsocks-libev >/dev/null; then
     echo -e "Encryption Method: \033[41;37m ${shadowsockscipher} \033[0m"
     echo -e "Simple-Obfs      : \033[41;37m TLS \033[0m"
     echo  
+    echo -e "Crontab logs      : \033[41;37m /var/log/shadowsocks-crond.log \033[0m"
+    echo
     echo -e "Config File      : \033[41;37m /etc/shadowsocks-libev/config.json \033[0m"
     echo -e "Command          : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev \033[0m"
 else
