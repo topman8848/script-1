@@ -165,7 +165,7 @@ systemctl enable shadowsocks-libev && systemctl restart shadowsocks-libev
 wget --no-check-certificate -O /opt/shadowsocks-crond.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-crond.sh
 chmod 755 /opt/shadowsocks-crond.sh
 /opt/shadowsocks-crond.sh
-(crontab -l ; echo "*/5 * * * * /opt/shadowsocks-crond.sh") | crontab -
+(crontab -l ; echo "0 */2 * * * /opt/shadowsocks-crond.sh") | crontab -
 
 #Informations
 if systemctl status shadowsocks-libev >/dev/null; then
