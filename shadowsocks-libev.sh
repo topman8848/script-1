@@ -127,7 +127,7 @@ apt -t jessie-backports-sloppy install shadowsocks-libev -y
 
 # Simple-obfs install
 apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev libpcre3-dev libev-dev asciidoc xmlto automake -y
-apt-get install git vim -y
+apt-get install git vim cron -y
 git clone https://github.com/shadowsocks/simple-obfs.git
 cd simple-obfs
 git submodule update --init --recursive
@@ -161,7 +161,7 @@ EOF
 # Start ss-server
 systemctl enable shadowsocks-libev && systemctl restart shadowsocks-libev
 
-#Auto status
+#Monitor
 wget --no-check-certificate -O /opt/shadowsocks-crond.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-crond.sh
 chmod 755 /opt/shadowsocks-crond.sh
 /opt/shadowsocks-crond.sh
@@ -176,7 +176,7 @@ if systemctl status shadowsocks-libev >/dev/null; then
     echo -e "Encryption Method: \033[41;37m ${shadowsockscipher} \033[0m"
     echo -e "Simple-Obfs      : \033[41;37m TLS \033[0m"
     echo  
-    echo -e "Crontab logs      : \033[41;37m /var/log/shadowsocks-crond.log \033[0m"
+    echo -e "Monitor logs     : \033[41;37m /var/log/shadowsocks-crond.log \033[0m"
     echo
     echo -e "Config File      : \033[41;37m /etc/shadowsocks-libev/config.json \033[0m"
     echo -e "Command          : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev \033[0m"
