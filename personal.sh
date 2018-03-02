@@ -4,4 +4,4 @@
 
 read -p "Input url: " URL </dev/tty
 
-curl -k  $URL | grep -oE "ssr?://[^x][a-zA-Z0-9][a-zA-Z0-9]*" | sort -u
+curl -k  $URL | grep -oE "ssr?://[^x][a-zA-Z0-9]+" | sort -u
