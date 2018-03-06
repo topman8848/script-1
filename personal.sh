@@ -5,8 +5,8 @@
 read -p "Input url: " URL </dev/tty
 #read -p "Save as: " SA </dev/tty
 
-curl -k  $URL | grep -oE "ssr?://[^x][a-zA-Z0-9_]+" | sort -u
-#curl -k  $URL | grep -oE "ssr?://[^x][a-zA-Z0-9_]+" | sort -u >>$SA
+curl -k  $URL | grep -oE "ssr?://\w{18,}" | sort -u
+#curl -k  $URL | grep -oE "ssr?://\w{18,}" | sort -u >>$SA
 
 # Crontab
-#(crontab -l ; echo -e "0 * * * * curl -k  $URL | grep -oE "ssr?://[^x][a-zA-Z0-9_]+" | sort -u >>$SA") | crontab -
+#(crontab -l ; echo -e "0 * * * * curl -k  $URL | grep -oE "ssr?://\w{18,}" | sort -u >>$SA") | crontab -
