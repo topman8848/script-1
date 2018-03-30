@@ -15,7 +15,10 @@ RUN apk add --no-cache --virtual=.build-dependencies go gcc git libc-dev ca-cert
 RUN apk --no-cache add tor
 
 COPY torrc.default /etc/tor/torrc.default
-    
+COPY entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
 EXPOSE 8080 8088/udp 8338 9050
 
-ENTRYPOINT ["/usr/local/bin/gost"]
+CMD /entrypoint.sh
