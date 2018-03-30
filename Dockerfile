@@ -19,6 +19,6 @@ COPY entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh
 
-EXPOSE 8080 8088/udp 8338 9050
+EXPOSE 8080 9050
 
-CMD /entrypoint.sh
+ENTRYPOINT  /entrypoint.sh
