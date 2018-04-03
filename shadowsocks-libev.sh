@@ -144,11 +144,13 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
     "password":"${shadowsockspwd}",
     "timeout":600,
     "method":"${shadowsockscipher}",
-    "plugin":"/usr/bin/obfs-server --obfs tls"
+    "plugin": "obfs-server",
+    "plugin_opts": "obfs=tls"
 }
 EOF
 
 # Start ss-server
+setcap cap_net_bind_service+ep /usr/bin/obfs-server
 systemctl enable shadowsocks-libev && systemctl start shadowsocks-libev
 
 #Monitor
