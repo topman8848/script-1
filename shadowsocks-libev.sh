@@ -118,7 +118,7 @@ get_ipv6(){
     break
     done
 
-# Shadowsocks-libev-obfs-install
+# shadowsocks-libev and simple-obfs install
 echo "install shadowsocks-libev from jessie-backports-sloppy"
 sh -c 'printf "deb http://deb.debian.org/debian jessie-backports main\n" > /etc/apt/sources.list.d/jessie-backports.list'
 sh -c 'printf "deb http://deb.debian.org/debian jessie-backports-sloppy main" >> /etc/apt/sources.list.d/jessie-backports.list'
@@ -144,12 +144,12 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
     "password":"${shadowsockspwd}",
     "timeout":600,
     "method":"${shadowsockscipher}",
-    "plugin":"/usr/local/bin/obfs-server --obfs tls"
+    "plugin":"/usr/bin/obfs-server --obfs tls"
 }
 EOF
 
 # Start ss-server
-systemctl enable shadowsocks-libev && systemctl restart shadowsocks-libev
+systemctl enable shadowsocks-libev && systemctl start shadowsocks-libev
 
 #Monitor
 wget --no-check-certificate -O /opt/shadowsocks-crond.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-crond.sh
