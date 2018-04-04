@@ -145,7 +145,6 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
     "timeout":300,
     "method":"${shadowsockscipher}",
     "reuse_port":true,
-    "no_delay":true,
     "plugin": "obfs-server",
     "plugin_opts": "obfs=tls"
 }
