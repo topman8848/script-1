@@ -144,7 +144,8 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
     "password":"${shadowsockspwd}",
     "timeout":300,
     "method":"${shadowsockscipher}",
-    "nameserver":"8.8.8.8",
+    "reuse_port":true,
+    "no_delay":true,
     "plugin": "obfs-server",
     "plugin_opts": "obfs=tls"
 }
