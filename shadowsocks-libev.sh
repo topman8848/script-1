@@ -142,8 +142,9 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
     "local_address":"127.0.0.1",
     "local_port":1080,
     "password":"${shadowsockspwd}",
-    "timeout":600,
+    "timeout":300,
     "method":"${shadowsockscipher}",
+    "nameserver":"8.8.8.8",
     "plugin": "obfs-server",
     "plugin_opts": "obfs=tls"
 }
