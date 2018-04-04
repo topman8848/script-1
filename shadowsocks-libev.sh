@@ -146,7 +146,8 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
     "method":"${shadowsockscipher}",
     "reuse_port":true,
     "plugin": "obfs-server",
-    "plugin_opts": "obfs=tls"
+    "plugin_opts": "obfs=tls",
+    "nameserver":"8.8.8.8"
 }
 EOF
 
