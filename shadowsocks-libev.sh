@@ -153,7 +153,7 @@ EOF
 
 # Start ss-server
 setcap cap_net_bind_service+ep /usr/bin/obfs-server
-systemctl enable shadowsocks-libev && systemctl start shadowsocks-libev
+systemctl enable shadowsocks-libev && systemctl start shadowsocks-libev && systemctl restart shadowsocks-libev
 
 #Monitor
 wget --no-check-certificate -O /opt/shadowsocks-crond.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-crond.sh
