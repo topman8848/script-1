@@ -13,7 +13,7 @@ read -p "Please input the public key:" key </dev/tty
 
 # Add key
 mkdir -p ~/.ssh && chmod 700 ~/.ssh
-echo &key >> ~/.ssh/authorized_keys
+echo $key >> ~/.ssh/authorized_keys
 
 # Config 
 cp /etc/ssh/sshd_config /etc/ssh/sshd_config_bak
