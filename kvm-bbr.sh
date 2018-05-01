@@ -21,6 +21,7 @@ sysctl -p >/dev/null 2>&1
 read -p "The system needs to reboot.Do you want to restart system? [y/n]" is_reboot </dev/tty
 
 if [[ ${is_reboot} == "y" || ${is_reboot} == "Y" ]]; then
+        echo "Rebooting..."
         reboot
     else
         echo "Reboot has been canceled..."
