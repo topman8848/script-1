@@ -71,14 +71,37 @@ get_ipv6(){
 	while true
 	do
     echo -e "Please input port for shadowsocks-libev [1-65535]:"
-    read -p "(Default port: 443):" shadowsocksport </dev/tty
-    [ -z "$shadowsocksport" ] && shadowsocksport="443"
+    read -p "(Default port: 8443):" shadowsocksport </dev/tty
+    [ -z "$shadowsocksport" ] && shadowsocksport="8443"
     expr ${shadowsocksport} + 1 &>/dev/null
     if [ $? -eq 0 ]; then
         if [ ${shadowsocksport} -ge 1 ] && [ ${shadowsocksport} -le 65535 ]; then
             echo
             echo "---------------------------"
             echo "port = ${shadowsocksport}"
+            echo "---------------------------"
+            echo
+            break
+        else
+            echo -e "[${red}Error${plain}] Input error, please input a number between 1 and 65535"
+        fi
+    else
+        echo -e "[${red}Error${plain}] Input error, please input a number between 1 and 65535"
+    fi
+    done
+
+# Set obfs-server port
+	while true
+	do
+    echo -e "Please input port for obfs-server [1-65535]:"
+    read -p "(Default port: 443):" obfs-serverport </dev/tty
+    [ -z "$obfs-serverport" ] && obfs-serverport="443"
+    expr ${obfs-serverport} + 1 &>/dev/null
+    if [ $? -eq 0 ]; then
+        if [ ${obfs-serverport} -ge 1 ] && [ ${obfs-serverport} -le 65535 ]; then
+            echo
+            echo "---------------------------"
+            echo "port = ${obfs-serverport}"
             echo "---------------------------"
             echo
             break
@@ -140,14 +163,29 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
     "server":${server_value},
     "server_port":${shadowsocksport},
     "password":"${shadowsockspwd}",
-    "method":"${shadowsockscipher}",
-    "plugin":"obfs-server --obfs tls"
+    "method":"${shadowsockscipher}"
 }
 EOF
 
-# Start ss-server
-setcap cap_net_bind_service+ep /usr/bin/obfs-server
+# start ss-server
 systemctl enable shadowsocks-libev && systemctl start shadowsocks-libev && systemctl restart shadowsocks-libev
+
+#start obfs-server
+setcap cap_net_bind_service+ep /usr/bin/obfs-server
+cat <<EOF > /etc/systemd/system/obfs-server.service
+[Unit]
+Description=obfs-server
+
+[Service]
+ExecStart=/usr/bin/obfs-server -s 0.0.0.0 -p ${obfs-serverport} -r 127.0.0.1:${shadowsocksport} --obfs tls
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl enable obfs-server.service && systemctl start obfs-server.service && systemctl restart obfs-server.service
 
 #Monitor
 rm -rf /opt/shadowsocks-crond.sh
@@ -163,13 +201,16 @@ if systemctl status shadowsocks-libev >/dev/null; then
     echo -e "Server Port      : \033[41;37m ${shadowsocksport} \033[0m"
     echo -e "Password         : \033[41;37m ${shadowsockspwd} \033[0m"
     echo -e "Encryption Method: \033[41;37m ${shadowsockscipher} \033[0m"
-    echo -e "Simple-Obfs      : \033[41;37m TLS \033[0m"
+    echo -e "SS Config File   : \033[41;37m /etc/shadowsocks-libev/config.json \033[0m"
     echo  
     echo -e "Monitor logs     : \033[41;37m /var/log/shadowsocks-crond.log \033[0m"
     echo -e "Crontab Check    : \033[41;37m crontab -e \033[0m"
     echo
-    echo -e "Config File      : \033[41;37m /etc/shadowsocks-libev/config.json \033[0m"
-    echo -e "Command          : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev \033[0m"
+    echo -e "Simple-Obfs      : \033[41;37m TLS \033[0m"
+    echo -e "Config File      : \033[41;37m /etc/systemd/system/obfs-server \033[0m"
+    echo
+    echo -e "Command          : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev/obfs-server \033[0m"
 else
     echo "shadowsocks-libev start failed."
+    echo "https://github.com/mixool/script/blob/master/shadowsocks-libev.sh"
 fi
