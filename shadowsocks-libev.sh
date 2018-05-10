@@ -207,7 +207,8 @@ if systemctl status shadowsocks-libev >/dev/null; then
     echo -e "Monitor logs     : \033[41;37m /var/log/shadowsocks-crond.log \033[0m"
     echo -e "Crontab Check    : \033[41;37m crontab -e \033[0m"
     echo
-    echo -e "Simple-Obfs      : \033[41;37m TLS \033[0m"
+    echo -e "Simple-Obfs-M     : \033[41;37m TLS \033[0m"
+    echo -e "Simple-Obfs-Port : \033[41;37m ${obfsport} \033[0m"
     echo -e "Config File      : \033[41;37m /etc/systemd/system/obfs-server \033[0m"
     echo
     echo -e "Command          : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev/obfs-server \033[0m"
