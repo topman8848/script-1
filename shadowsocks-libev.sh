@@ -94,14 +94,14 @@ get_ipv6(){
 	while true
 	do
     echo -e "Please input port for obfs-server [1-65535]:"
-    read -p "(Default port: 443):" obfs-serverport </dev/tty
-    [ -z "$obfs-serverport" ] && obfs-serverport="443"
-    expr ${obfs-serverport} + 1 &>/dev/null
+    read -p "(Default port: 443):" obfsport </dev/tty
+    [ -z "$obfsport" ] && obfsport="443"
+    expr ${obfsport} + 1 &>/dev/null
     if [ $? -eq 0 ]; then
-        if [ ${obfs-serverport} -ge 1 ] && [ ${obfs-serverport} -le 65535 ]; then
+        if [ ${obfsport} -ge 1 ] && [ ${obfsport} -le 65535 ]; then
             echo
             echo "---------------------------"
-            echo "port = ${obfs-serverport}"
+            echo "port = ${obfsport}"
             echo "---------------------------"
             echo
             break
@@ -177,7 +177,7 @@ cat <<EOF > /etc/systemd/system/obfs-server.service
 Description=obfs-server
 
 [Service]
-ExecStart=/usr/bin/obfs-server -s 0.0.0.0 -p ${obfs-serverport} -r 127.0.0.1:${shadowsocksport} --obfs tls
+ExecStart=/usr/bin/obfs-server -s 0.0.0.0 -p ${obfsport} -r 127.0.0.1:${shadowsocksport} --obfs tls
 Restart=always
 User=root
 
