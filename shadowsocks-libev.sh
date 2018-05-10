@@ -172,7 +172,7 @@ systemctl enable shadowsocks-libev && systemctl start shadowsocks-libev && syste
 
 #start obfs-server
 setcap cap_net_bind_service+ep /usr/bin/obfs-server
-cat <<EOF > /etc/systemd/system/obfs-server.service
+cat > /etc/systemd/system/obfs-server.service<<EOF 
 [Unit]
 Description=obfs-server
 
@@ -209,7 +209,7 @@ if systemctl status shadowsocks-libev >/dev/null; then
     echo
     echo -e "Simple-Obfs-M     : \033[41;37m TLS \033[0m"
     echo -e "Simple-Obfs-Port : \033[41;37m ${obfsport} \033[0m"
-    echo -e "Config File      : \033[41;37m /etc/systemd/system/obfs-server \033[0m"
+    echo -e "Config File      : \033[41;37m /etc/systemd/system/obfs-server.service \033[0m"
     echo
     echo -e "Command          : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev/obfs-server \033[0m"
 else
