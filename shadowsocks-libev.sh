@@ -146,7 +146,7 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
     "method":"${shadowsockscipher}",
     "fast_open":true,
     "reuse_port":true,
-    "plugin":"obfs-server --obfs tls --failover cmonitor.iqiyi.com:443",
+    "plugin":"obfs-server --obfs tls",
     "nameserver":"8.8.8.8"
 }
 EOF
