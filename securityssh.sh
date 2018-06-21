@@ -17,7 +17,7 @@ echo $key >> ~/.ssh/authorized_keys
 
 # Config 
 cp /etc/ssh/sshd_config /etc/ssh/sshd_config_bak
-sed -i "s/Port.*/Port $port/g;s/PermitRootLogin.*/PermitRootLogin without-password/g" /etc/ssh/sshd_config
+sed -i "s/#?Port.*/Port $port/g;s/PermitRootLogin.*/PermitRootLogin without-password/g" /etc/ssh/sshd_config
 
 # Active
 systemctl reload sshd.service
