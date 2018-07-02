@@ -17,7 +17,7 @@ echo $key >> ~/.ssh/authorized_keys
 
 # Config 
 cp /etc/ssh/sshd_config /etc/ssh/sshd_config_bak
-echo "Port 22" >> /etc/ssh/sshd_config
+echo -e "Port ${port}" >> /etc/ssh/sshd_config
 sed -i "s/PermitRootLogin.*/PermitRootLogin without-password/g" /etc/ssh/sshd_config
 
 # Active
