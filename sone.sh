@@ -90,7 +90,7 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
     "password":"${shadowsockspwd}",
     "method":"chacha20-ietf-poly1305",
     "reuse-port":true,
-    "fast_open":true,
+    "fast-open":true,
     "plugin":"obfs-server",
     "plugin_opts":"obfs=tls"
 }
