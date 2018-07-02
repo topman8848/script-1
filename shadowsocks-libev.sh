@@ -1,28 +1,6 @@
 #!/bin/bash
 # Usage:
-#   curl https://raw.githubusercontent.com/mixool/script/master/shadowsocks-libev.sh | bash
-
-# Stream Ciphers
-ciphers=(
-aes-256-gcm
-aes-192-gcm
-aes-128-gcm
-aes-256-ctr
-aes-192-ctr
-aes-128-ctr
-aes-256-cfb
-aes-192-cfb
-aes-128-cfb
-camellia-128-cfb
-camellia-192-cfb
-camellia-256-cfb
-xchacha20-ietf-poly1305
-chacha20-ietf-poly1305
-chacha20-ietf
-chacha20
-salsa20
-rc4-md5
-)
+#   curl https://raw.githubusercontent.com/mixool/script/debian-9/shadowsocks-libev.sh | bash
 
 # Color
 red='\033[0;31m'
@@ -34,14 +12,6 @@ if [ "$(id -u)" != "0" ]; then
     echo "ERROR: Please run as root"
     exit 1
 fi
-
-# Disable selinux
-disable_selinux(){
-    if [ -s /etc/selinux/config ] && grep 'SELINUX=enforcing' /etc/selinux/config; then
-        sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
-        setenforce 0
-    fi
-}
 
 get_ip(){
     local IP=$( ip addr | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | egrep -v "^192\.168|^172\.1[6-9]\.|^172\.2[0-9]\.|^172\.3[0-2]\.|^10\.|^127\.|^255\.|^0\." | head -n 1 )
@@ -90,63 +60,11 @@ get_ipv6(){
     fi
     done
 
-# Set obfs-server port
-	while true
-	do
-    echo -e "Please input port for obfs-server [1-65535]:"
-    read -p "(Default port: 443):" obfsport </dev/tty
-    [ -z "$obfsport" ] && obfsport="443"
-    expr ${obfsport} + 1 &>/dev/null
-    if [ $? -eq 0 ]; then
-        if [ ${obfsport} -ge 1 ] && [ ${obfsport} -le 65535 ]; then
-            echo
-            echo "---------------------------"
-            echo "port = ${obfsport}"
-            echo "---------------------------"
-            echo
-            break
-        else
-            echo -e "[${red}Error${plain}] Input error, please input a number between 1 and 65535"
-        fi
-    else
-        echo -e "[${red}Error${plain}] Input error, please input a number between 1 and 65535"
-    fi
-    done
-
-    # Set shadowsocks config stream ciphers
-    while true
-    do
-    echo -e "Please select stream cipher for shadowsocks-libev:"
-    for ((i=1;i<=${#ciphers[@]};i++ )); do
-        hint="${ciphers[$i-1]}"
-        echo -e "${green}${i}${plain}) ${hint}"
-    done
-    read -p "Which cipher you'd select(Default: ${ciphers[13]}):" pick </dev/tty
-    [ -z "$pick" ] && pick=14
-    expr ${pick} + 1 &>/dev/null
-    if [ $? -ne 0 ]; then
-        echo -e "[${red}Error${plain}] Input error, please input a number"
-        continue
-    fi
-    if [[ "$pick" -lt 1 || "$pick" -gt ${#ciphers[@]} ]]; then
-        echo -e "[${red}Error${plain}] Input error, please input a number between 1 and ${#ciphers[@]}"
-        continue
-    fi
-    shadowsockscipher=${ciphers[$pick-1]}
-    echo
-    echo "---------------------------"
-    echo "cipher = ${shadowsockscipher}"
-    echo "---------------------------"
-    echo
-    break
-    done
-
 # shadowsocks-libev and simple-obfs install 
 echo "install shadowsocks-libev from jessie-backports-sloppy"
-sh -c 'printf "deb http://deb.debian.org/debian jessie-backports main\n" > /etc/apt/sources.list.d/jessie-backports.list'
-sh -c 'printf "deb http://deb.debian.org/debian jessie-backports-sloppy main" >> /etc/apt/sources.list.d/jessie-backports.list'
+sh -c 'printf "deb http://deb.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/stretch-backports.list'
 apt update
-apt -t jessie-backports-sloppy install shadowsocks-libev simple-obfs -y
+apt -t stretch-backports install shadowsocks-libev simple-obfs haveged -y
 
 # Config shadowsocks
 server_value="\"0.0.0.0\""
@@ -163,37 +81,20 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
     "server":${server_value},
     "server_port":${shadowsocksport},
     "password":"${shadowsockspwd}",
-    "method":"${shadowsockscipher}"
+    "method":"chacha20-ietf-poly1305",
+    "reuse-port":"true",
+    "fast_open":"true",
+    "plugin":"obfs-server",
+    "plugin_opts":"obfs=tls"
 }
 EOF
+
+# start haveged
+systemctl enable haveged && systemctl start haveged
 
 # start ss-server
 systemctl enable shadowsocks-libev && systemctl start shadowsocks-libev && systemctl restart shadowsocks-libev
 
-#start obfs-server
-setcap cap_net_bind_service+ep /usr/bin/obfs-server
-cat > /etc/systemd/system/obfs-server.service<<EOF 
-[Unit]
-Description=obfs-server
-
-[Service]
-ExecStart=/usr/bin/obfs-server -s 0.0.0.0 -p ${obfsport} -r 127.0.0.1:${shadowsocksport} --obfs tls
-Restart=always
-User=root
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-systemctl enable obfs-server.service && systemctl start obfs-server.service && systemctl restart obfs-server.service
-
-#Monitor
-apt-get install cron -y
-rm -rf /opt/shadowsocks-crond.sh
-wget --no-check-certificate -O /opt/shadowsocks-crond.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-crond.sh
-chmod 755 /opt/shadowsocks-crond.sh
-/opt/shadowsocks-crond.sh
-(crontab -l ; echo "0 */2 * * * /opt/shadowsocks-crond.sh") | crontab -
 
 #Informations
 if systemctl status shadowsocks-libev >/dev/null; then
@@ -204,15 +105,7 @@ if systemctl status shadowsocks-libev >/dev/null; then
     echo -e "Encryption Method: \033[41;37m ${shadowsockscipher} \033[0m"
     echo -e "SS Config File   : \033[41;37m /etc/shadowsocks-libev/config.json \033[0m"
     echo  
-    echo -e "Monitor logs     : \033[41;37m /var/log/shadowsocks-crond.log \033[0m"
-    echo -e "Crontab Check    : \033[41;37m crontab -e \033[0m"
-    echo
-    echo -e "Simple-Obfs-M     : \033[41;37m TLS \033[0m"
-    echo -e "Simple-Obfs-Port : \033[41;37m ${obfsport} \033[0m"
-    echo -e "Config File      : \033[41;37m /etc/systemd/system/obfs-server.service \033[0m"
-    echo
-    echo -e "Command          : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev/obfs-server \033[0m"
+    echo -e "Command          : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev \033[0m"
 else
     echo "shadowsocks-libev start failed."
-    echo "https://github.com/mixool/script/blob/master/shadowsocks-libev.sh"
 fi
