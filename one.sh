@@ -1,6 +1,6 @@
 #!/bin/bash
 # Usage:
-#   curl https://raw.githubusercontent.com/mixool/script/debian-9/shadowsocks-libev.sh | bash
+#   curl https://raw.githubusercontent.com/mixool/script/debian-9/one.sh | bash
 
 # Color
 red='\033[0;31m'
@@ -11,6 +11,60 @@ plain='\033[0m'
 if [ "$(id -u)" != "0" ]; then
     echo "ERROR: Please run as root"
     exit 1
+fi
+
+#BBR
+modprobe tcp_bbr
+echo "tcp_bbr" >> /etc/modules-load.d/modules.conf
+echo "net.core.default_qdisc = fq" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control = bbr" >> /etc/sysctl.conf
+sysctl -p
+
+# shadowsocks-libev and simple-obfs and haveged install 
+echo "install shadowsocks-libev from jessie-backports-sloppy"
+sh -c 'printf "deb http://deb.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/stretch-backports.list'
+apt update
+apt -t stretch-backports install shadowsocks-libev simple-obfs haveged -y
+
+# Config shadowsocks with encrypt_method chacha20-ietf-poly1305 and obfs-tls
+server_value="\"0.0.0.0\""
+if get_ipv6; then
+        server_value="[\"[::0]\",\"0.0.0.0\"]"
+fi
+
+if [ ! -d /etc/shadowsocks-libev ]; then
+        mkdir -p /etc/shadowsocks-libev
+fi
+
+cat > /etc/shadowsocks-libev/config.json<<-EOF
+{
+    "server":${server_value},
+    "server_port":${shadowsocksport},
+    "password":"${shadowsockspwd}",
+    "method":"chacha20-ietf-poly1305",
+    "reuse-port":true,
+    "fast_open":true,
+    "plugin":"obfs-server",
+    "plugin_opts":"obfs=tls"
+}
+EOF
+
+# start haveged and ss-server
+systemctl enable haveged shadowsocks-libev && systemctl start haveged shadowsocks-libev
+
+#Informations
+if systemctl status shadowsocks-libev >/dev/null; then
+    echo -e "Congratulations, shadowsocks-libev server install completed!"
+    echo -e "Server IP        : \033[41;37m $(get_ip) \033[0m"
+    echo -e "Server Port      : \033[41;37m ${shadowsocksport} \033[0m"
+    echo -e "Password         : \033[41;37m ${shadowsockspwd} \033[0m"
+    echo -e "Encryption Method: \033[41;37m chacha20-ietf-poly1305 \033[0m"
+    echo -e "SS Config File   : \033[41;37m /etc/shadowsocks-libev/config.json \033[0m"
+    echo  
+    echo -e "Command          : \033[41;37m systemctl status/start/stop/restart shadowsocks-libev \033[0m"
+else
+    echo -e "shadowsocks-libev start failed."
+    echo -e "To check         : \033[41;37m systemctl status shadowsocks-libev \033[0m"
 fi
 
 get_ip(){
@@ -59,50 +113,3 @@ get_ipv6(){
         echo -e "[${red}Error${plain}] Input error, please input a number between 1 and 65535"
     fi
     done
-
-# shadowsocks-libev and simple-obfs and haveged install 
-echo "install shadowsocks-libev from jessie-backports-sloppy"
-sh -c 'printf "deb http://deb.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/stretch-backports.list'
-apt update
-apt -t stretch-backports install shadowsocks-libev simple-obfs haveged -y
-
-# Config shadowsocks with encrypt_method chacha20-ietf-poly1305 and obfs-tls
-server_value="\"0.0.0.0\""
-if get_ipv6; then
-        server_value="[\"[::0]\",\"0.0.0.0\"]"
-fi
-
-if [ ! -d /etc/shadowsocks-libev ]; then
-        mkdir -p /etc/shadowsocks-libev
-fi
-
-cat > /etc/shadowsocks-libev/config.json<<-EOF
-{
-    "server":${server_value},
-    "server_port":${shadowsocksport},
-    "password":"${shadowsockspwd}",
-    "method":"chacha20-ietf-poly1305",
-    "reuse-port":true,
-    "fast_open":true,
-    "plugin":"obfs-server",
-    "plugin_opts":"obfs=tls"
-}
-EOF
-
-# start haveged and ss-server
-systemctl enable haveged shadowsocks-libev && systemctl start haveged shadowsocks-libev
-
-#Informations
-if systemctl status shadowsocks-libev >/dev/null; then
-    echo -e "Congratulations, shadowsocks-libev server install completed!"
-    echo -e "Server IP        : \033[41;37m $(get_ip) \033[0m"
-    echo -e "Server Port      : \033[41;37m ${shadowsocksport} \033[0m"
-    echo -e "Password         : \033[41;37m ${shadowsockspwd} \033[0m"
-    echo -e "Encryption Method: \033[41;37m chacha20-ietf-poly1305 \033[0m"
-    echo -e "SS Config File   : \033[41;37m /etc/shadowsocks-libev/config.json \033[0m"
-    echo  
-    echo -e "Command          : \033[41;37m systemctl status/start/stop/restart shadowsocks-libev \033[0m"
-else
-    echo -e "shadowsocks-libev start failed."
-    echo -e "To check         : \033[41;37m systemctl status shadowsocks-libev \033[0m"
-fi
