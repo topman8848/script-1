@@ -1,6 +1,6 @@
 #!/bin/bash
 # Usage:
-#   curl https://raw.githubusercontent.com/mixool/script/master/securityssh.sh | bash
+#   curl https://raw.githubusercontent.com/mixool/script/debian-9/securityssh.sh | bash
 
 if [ "$(id -u)" != "0" ]; then
     echo "ERROR: Please run as root"
@@ -17,7 +17,8 @@ echo $key >> ~/.ssh/authorized_keys
 
 # Config 
 cp /etc/ssh/sshd_config /etc/ssh/sshd_config_bak
-sed -i "s/Port.*/Port $port/g;s/PermitRootLogin.*/PermitRootLogin without-password/g" /etc/ssh/sshd_config
+echo "Port 22" >> /etc/ssh/sshd_config
+sed -i "s/PermitRootLogin.*/PermitRootLogin without-password/g" /etc/ssh/sshd_config
 
 # Active
 systemctl reload sshd.service
