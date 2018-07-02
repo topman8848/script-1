@@ -91,6 +91,7 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
     "method":"chacha20-ietf-poly1305",
     "reuse-port":true,
     "fast-open":true,
+    "no-delay":true,
     "plugin":"obfs-server",
     "plugin_opts":"obfs=tls"
 }
