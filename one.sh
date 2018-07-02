@@ -13,6 +13,53 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 fi
 
+get_ip(){
+    local IP=$( ip addr | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | egrep -v "^192\.168|^172\.1[6-9]\.|^172\.2[0-9]\.|^172\.3[0-2]\.|^10\.|^127\.|^255\.|^0\." | head -n 1 )
+    [ -z ${IP} ] && IP=$( wget -qO- -t1 -T2 ipv4.icanhazip.com )
+    [ -z ${IP} ] && IP=$( wget -qO- -t1 -T2 ipinfo.io/ip )
+    [ ! -z ${IP} ] && echo ${IP} || echo
+}
+
+get_ipv6(){
+    local ipv6=$(wget -qO- -t1 -T2 ipv6.icanhazip.com)
+    if [ -z ${ipv6} ]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+# Set password
+	read -p "Please input password for shadowsocks-libev:" shadowsockspwd </dev/tty
+    echo
+    echo "---------------------------"
+    echo "password = ${shadowsockspwd}"
+    echo "---------------------------"
+    echo
+
+# Set port
+	while true
+	do
+    echo -e "Please input port for shadowsocks-libev [1-65535]:"
+    read -p "(Default port: 8443):" shadowsocksport </dev/tty
+    [ -z "$shadowsocksport" ] && shadowsocksport="8443"
+    expr ${shadowsocksport} + 1 &>/dev/null
+    if [ $? -eq 0 ]; then
+        if [ ${shadowsocksport} -ge 1 ] && [ ${shadowsocksport} -le 65535 ]; then
+            echo
+            echo "---------------------------"
+            echo "port = ${shadowsocksport}"
+            echo "---------------------------"
+            echo
+            break
+        else
+            echo -e "[${red}Error${plain}] Input error, please input a number between 1 and 65535"
+        fi
+    else
+        echo -e "[${red}Error${plain}] Input error, please input a number between 1 and 65535"
+    fi
+    done
+    
 #BBR
 modprobe tcp_bbr
 echo "tcp_bbr" >> /etc/modules-load.d/modules.conf
@@ -66,50 +113,3 @@ else
     echo -e "shadowsocks-libev start failed."
     echo -e "To check         : \033[41;37m systemctl status shadowsocks-libev \033[0m"
 fi
-
-get_ip(){
-    local IP=$( ip addr | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | egrep -v "^192\.168|^172\.1[6-9]\.|^172\.2[0-9]\.|^172\.3[0-2]\.|^10\.|^127\.|^255\.|^0\." | head -n 1 )
-    [ -z ${IP} ] && IP=$( wget -qO- -t1 -T2 ipv4.icanhazip.com )
-    [ -z ${IP} ] && IP=$( wget -qO- -t1 -T2 ipinfo.io/ip )
-    [ ! -z ${IP} ] && echo ${IP} || echo
-}
-
-get_ipv6(){
-    local ipv6=$(wget -qO- -t1 -T2 ipv6.icanhazip.com)
-    if [ -z ${ipv6} ]; then
-        return 1
-    else
-        return 0
-    fi
-}
-
-# Set password
-	read -p "Please input password for shadowsocks-libev:" shadowsockspwd </dev/tty
-    echo
-    echo "---------------------------"
-    echo "password = ${shadowsockspwd}"
-    echo "---------------------------"
-    echo
-
-# Set port
-	while true
-	do
-    echo -e "Please input port for shadowsocks-libev [1-65535]:"
-    read -p "(Default port: 8443):" shadowsocksport </dev/tty
-    [ -z "$shadowsocksport" ] && shadowsocksport="8443"
-    expr ${shadowsocksport} + 1 &>/dev/null
-    if [ $? -eq 0 ]; then
-        if [ ${shadowsocksport} -ge 1 ] && [ ${shadowsocksport} -le 65535 ]; then
-            echo
-            echo "---------------------------"
-            echo "port = ${shadowsocksport}"
-            echo "---------------------------"
-            echo
-            break
-        else
-            echo -e "[${red}Error${plain}] Input error, please input a number between 1 and 65535"
-        fi
-    else
-        echo -e "[${red}Error${plain}] Input error, please input a number between 1 and 65535"
-    fi
-    done
