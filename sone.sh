@@ -1,6 +1,6 @@
 #!/bin/bash
 # Usage:
-#   curl https://raw.githubusercontent.com/mixool/script/debian-9/one.sh | bash
+#   curl https://raw.githubusercontent.com/mixool/script/debian-9/sone.sh | bash
 
 # Color
 red='\033[0;31m'
