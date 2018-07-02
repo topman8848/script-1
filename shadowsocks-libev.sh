@@ -29,7 +29,7 @@ get_ipv6(){
     fi
 }
 
-# Set shadowsocks-libev config password
+# Set password
 	read -p "Please input password for shadowsocks-libev:" shadowsockspwd </dev/tty
     echo
     echo "---------------------------"
@@ -37,7 +37,7 @@ get_ipv6(){
     echo "---------------------------"
     echo
 
-# Set shadowsocks-libev config port
+# Set port
 	while true
 	do
     echo -e "Please input port for shadowsocks-libev [1-65535]:"
@@ -82,8 +82,8 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
     "server_port":${shadowsocksport},
     "password":"${shadowsockspwd}",
     "method":"chacha20-ietf-poly1305",
-    "reuse-port":"true",
-    "fast_open":"true",
+    "reuse-port":true,
+    "fast_open":true,
     "plugin":"obfs-server",
     "plugin_opts":"obfs=tls"
 }
@@ -108,4 +108,7 @@ if systemctl status shadowsocks-libev >/dev/null; then
     echo -e "Command          : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev \033[0m"
 else
     echo "shadowsocks-libev start failed."
+    echo -e "SS Config File   : \033[41;37m /etc/shadowsocks-libev/config.json \033[0m"
+    echo  
+    echo -e "Command          : \033[41;37m systemctl start/stop/restart/status shadowsocks-libev \033[0m"
 fi
