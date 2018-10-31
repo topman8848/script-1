@@ -2,7 +2,7 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 # Usage:
 # Used for https://github.com/shadowsocks/shadowsocks-manager
-#   curl https://raw.githubusercontent.com/mixool/script/master/ssmgr_onekey.sh | bash
+#   wget --no-check-certificate -O shadowsocks-all.sh https://raw.githubusercontent.com/mixool/script/master/ssmgr_onekey.sh && chmod +x ssmgr_onekey.sh && ./ssmgr_onekey.sh 2>&1 | tee ssmgr_onekey.sh.log
 
 # Make sure only root can run this script
 [[ $EUID -ne 0 ]] && echo -e "This script must be run as root!" && exit 1
@@ -269,3 +269,4 @@ install_ssmgr_onekey(){
 
 install_ssmgr_onekey
 print_conf
+echo "Command: pm2 list"
