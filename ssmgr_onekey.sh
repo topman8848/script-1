@@ -15,39 +15,7 @@ disable_selinux(){
     fi
 }
 
-check_conf(){
-    # check configuration information
-    if [ ! -d /root/.ssmgr ];then
-        mkdir /root/.ssmgr/
-        read -p "Do you need to configure some parameters here?(y/n)" config
-        if [ "${config}" == "n" ] || [ "${config}" == "N" ];then
-            return
-        fi
-
-        echo
-        echo "Now start set up some related configuration."
-
-        while :; do
-            get_conf
-            clear
-        echo
-            echo "Please verify the configure you have entered."
-            print_conf
-            read -p "Are you sure to use them?(y/n):" verify
-            if [ "${verify}" == "n" ] || [ "${verify}" == "N" ];then
-                continue
-            else
-                create_file_conf
-                break
-            fi
-        done
-    else
-        ss_libev_port=$(grep "add" /root/.ssmgr/ss.yml |awk -F ':' '{print $NF}' |head -n1)
-        ss_libev_encry="aes-256-gcm"
-    fi
-}
-
-get_conf(){
+preinstall_conf(){
     # set port for shadowsocks-libev
     sleep 1
     while :
@@ -68,7 +36,7 @@ get_conf(){
         echo
         echo "Please enter port for shadowsocks-manager:"
         read -p "(Default prot: 4001):" ssmgr_port 
-        [ -z "${ssmgr_port}" ] && ssmgr_port="4001" </dev/tty
+        [ -z "${ssmgr_port}" ] && ssmgr_port="4001"
         if ! echo ${ssmgr_port} |grep -q '^[0-9]\+$'; then
             echo
             echo -e "You are not enter numbers.,please try again."
@@ -175,28 +143,11 @@ get_ip(){
     [ ! -z ${IP} ] && echo ${IP} || echo
 }
 
-print_conf(){
-    echo
-    echo "+---------------------------------------------------------------+"
-    echo
-    echo -e "        Your ss-libev port:        ${ss_libev_port}"
-    echo -e "        Your ss-mgr port           ${ssmgr_port}"
-    echo -e "        Your ss-mgr passwd         ${ssmgr_passwd}"
-    echo -e "        Your user port ranges:     ${port_ranges}"
-    echo -e "        Your ss-libev-encry:       ${ss_libev_encry}"
-    if [ "${ss_run}" == "webgui" ];then
-        echo -e "        Your mailgun baseUrl:       ${baseUrl}"
-        echo -e "        Your maigun apiKey:        ${apiKey}"
-    fi
-    echo
-    echo "+---------------------------------------------------------------+"
-}
-
 create_file_conf(){
     # shadowsocks-manager configuration
     cat > /root/.ssmgr/ss.yml <<EOF
 type: s
-empty: false
+
 shadowsocks:
     address: 127.0.0.1:${ss_libev_port}
 manager:
@@ -208,38 +159,21 @@ EOF
     if [ "${ss_run}" == "webgui" ];then
         cat > /root/.ssmgr/webgui.yml<<EOF
 type: m
-empty: false
+
 manager:
-    address: ${ipaddr}:${ssmgr_port}
+    address: $(get_ip):${ssmgr_port}
     password: '${ssmgr_passwd}'
 plugins:
-    flowSaver:
-        use: true
-    user:
-        use: true
-    group:
-        use: true
-    account:
-        use: true
-        pay:
-            hour:
-                price: 0.05
-                flow: 500000000
-            day:
-                price: 0.5
-                flow: 7000000000
-            week:
-                price: 3
-                flow: 50000000000
-            month:
-                price: 10
-                flow: 200000000000
-            season:
-                price: 30
-                flow: 200000000000
-            year:
-                price: 120
-                flow: 200000000000
+  flowSaver:
+    use: true
+  user:
+    use: true
+  account:
+    use: true
+  macAccount:
+    use: true
+  group:
+    use: true
     email:
         use: true
         type: 'mailgun'
@@ -254,6 +188,23 @@ plugins:
 db: 'webgui.sqlite'
 EOF
     fi
+}
+
+print_conf(){
+    echo
+    echo "+---------------------------------------------------------------+"
+    echo
+    echo -e "        Your ss-libev port:        ${ss_libev_port}"
+    echo -e "        Your ss-mgr port           ${ssmgr_port}"
+    echo -e "        Your ss-mgr passwd         ${ssmgr_passwd}"
+    echo -e "        Your user port ranges:     ${port_ranges}"
+    echo -e "        Your ss-libev-encry:       ${ss_libev_encry}"
+    if [ "${ss_run}" == "webgui" ];then
+        echo -e "    Your mailgun baseUrl:       ${baseUrl}"
+        echo -e "    Your maigun apiKey:        ${apiKey}"
+    fi
+    echo
+    echo "+---------------------------------------------------------------+"
 }
 
 install_ssmgr(){
@@ -289,8 +240,9 @@ install_ssmgr_onekey(){
     read -p "(choose from webgui or ss,default:ss):" ss_run
     [ -z ${ss_run} ] && ss_run="ss"
     ss_run=$(echo ${ss_run} |tr [A-Z] [a-z])
-    	  disable_selinux
-    	  check_conf
+	  disable_selinux
+	  preinstall_conf
+	  create_file_conf
 	  install_ssmgr
 	  install_pm2
 	  install_shadowsocks_libev
@@ -316,3 +268,4 @@ install_ssmgr_onekey(){
 }
 
 install_ssmgr_onekey
+print_conf
