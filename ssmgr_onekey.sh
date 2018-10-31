@@ -128,11 +128,9 @@ preinstall_conf(){
 
     # set admin maigun
     if [ "${ss_run}" == "webgui" ];then
-		echo
-        echo "Please enter your mailgun baseUrl:"
-        read -p "(For example: https://api.mailgun.net/v3/xx.xxx.xxx):" baseUrl
-		echo "Please enter your maigun apiKey:"
-        read -p "(For example: xxxxxxxxxxxxxxx-xxxxxx-xxxxxxx):" apiKey
+	echo
+        read -p "(Please enter your mailgun baseUrl: https://api.mailgun.net/v3/xx.xxx.xxx):" baseUrl
+        read -p "(Please enter your maigun apiKey: xxxxxxxxxxxxxxx-xxxxxx-xxxxxxx):" apiKey
     fi
     
     # set domain and email for caddyfile
