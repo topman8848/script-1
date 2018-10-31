@@ -210,6 +210,7 @@ print_conf(){
 install_ssmgr(){
     echo "install shadowsocks-manager from npm"
 	sleep 3
+	apt-get update && apt-get install curl -y
 	curl -sL https://deb.nodesource.com/setup_8.x | bash -
 	apt-get install -y nodejs
 	npm i -g shadowsocks-manager --unsafe-perm
