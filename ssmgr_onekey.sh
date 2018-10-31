@@ -1,13 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env bash
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 # Usage:
 # Used for https://github.com/shadowsocks/shadowsocks-manager
 #   curl https://raw.githubusercontent.com/mixool/script/master/ssmgr_onekey.sh | bash
 
 # Make sure only root can run this script
-if [ "$(id -u)" != "0" ]; then
-    echo "ERROR: Please run as root"
-    exit 1
-fi
+[[ $EUID -ne 0 ]] && echo -e "This script must be run as root!" && exit 1
+
+# Disable selinux
+disable_selinux(){
+    if [ -s /etc/selinux/config ] && grep 'SELINUX=enforcing' /etc/selinux/config; then
+        sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+        setenforce 0
+    fi
+}
 
 check_conf(){
     # check configuration information
@@ -283,6 +289,7 @@ install_ssmgr(){
     read -p "(Default:ss):" ss_run
     [ -z ${ss_run} ] && ss_run=ss
     ss_run=$(echo ${ss_run} |tr [A-Z] [a-z])
+    	  disable_selinux
     	  check_conf
 	  install_ssmgr
 	  install_pm2
