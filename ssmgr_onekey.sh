@@ -207,8 +207,9 @@ proxy / http://127.0.0.1:8080 {
 	}
 	gzip
 }
-EOF	
+EOF
     fi
+
 }
 
 print_conf(){
