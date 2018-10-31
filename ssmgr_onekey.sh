@@ -19,7 +19,7 @@ check_conf(){
     # check configuration information
     if [ ! -d /root/.ssmgr ];then
         mkdir /root/.ssmgr/
-        read -p "Do you need to configure some parameters here?(y/n)" config
+        read -p "Do you need to configure some parameters here?(y/n)" config </dev/tty
         if [ "${config}" == "n" ] || [ "${config}" == "N" ];then
             return
         fi
@@ -33,7 +33,7 @@ check_conf(){
         echo
             echo -e "[${green}Info${plain}] Please verify the configure you have entered."
             print_conf
-            read -p "Are you sure to use them?(y/n):" verify
+            read -p "Are you sure to use them?(y/n):" verify </dev/tty
             if [ "${verify}" == "n" ] || [ "${verify}" == "N" ];then
                 continue
             else
@@ -54,11 +54,11 @@ get_conf(){
     do
         echo
         echo "Please enter port for shadowsocks-libev:"
-        read -p "(Default prot: 4000):" ss_libev_port
+        read -p "(Default prot: 4000):" ss_libev_port </dev/tty
         [ -z "${ss_libev_port}" ] && ss_libev_port="4000"
         if ! echo ${ss_libev_port} |grep -q '^[0-9]\+$'; then
             echo
-            echo -e "[${red}Error!${plain}] You are not enter numbers.,please try again."
+            echo -e "You are not enter numbers.,please try again."
         else
             break
         fi
@@ -67,8 +67,8 @@ get_conf(){
     while :;do
         echo
         echo "Please enter port for shadowsocks-manager:"
-        read -p "(Default prot: 4001):" ssmgr_port
-        [ -z "${ssmgr_port}" ] && ssmgr_port="4001"
+        read -p "(Default prot: 4001):" ssmgr_port 
+        [ -z "${ssmgr_port}" ] && ssmgr_port="4001" </dev/tty
         if ! echo ${ssmgr_port} |grep -q '^[0-9]\+$'; then
             echo
             echo -e "[${red}Error!${plain}] You are not enter numbers.,please try again."
@@ -93,11 +93,11 @@ get_conf(){
     while :; do
         echo
         echo "Please enter the port ranges use for user:"
-        read -p "(Default prot: 50000-60000):" port_ranges
+        read -p "(Default prot: 50000-60000):" port_ranges </dev/tty
         [ -z "${port_ranges}" ] && port_ranges=50000-60000
         if ! echo ${port_ranges} |grep -q '^[0-9]\+\-[0-9]\+$'; then
             echo
-            echo -e "[${red}Error!${plain}] You are not enter numbers.,please try again."
+            echo -e "You are not enter numbers.,please try again."
             continue
         fi
         start_port=`echo $port_ranges |awk -F '-' '{print $1}'`
@@ -142,9 +142,9 @@ get_conf(){
     if [ "${ss_run}" == "webgui" ];then
 		echo
         echo "Please enter your mailgun baseUrl:"
-        read -p "(For example: https://api.mailgun.net/v3/mg.xxx.xxx):" baseUrl
+        read -p "(For example: https://api.mailgun.net/v3/mg.xxx.xxx):" baseUrl </dev/tty
 		echo "Please enter your maigun apiKey:"
-        read -p "(For example: bf9048325495ef2c37f9a1248c3359ce-c9270c97-e8f3178e):" apiKey
+        read -p "(For example: bf9048325495ef2c37f9a1248c3359ce-c9270c97-e8f3178e):" apiKey </dev/tty
     fi
 }
 
@@ -279,7 +279,7 @@ install_shadowsocks_libev(){
 	apt -t jessie-backports-sloppy install shadowsocks-libev -y
 }
 
-install_ssmgr(){
+install_ssmgr_onekey(){
     echo
     echo "+---------------------------------------------------------------+"
     echo "One-key for ssmgr"
@@ -316,4 +316,4 @@ install_ssmgr(){
     done
 }
 
-install_ssmgr
+install_ssmgr_onekey
