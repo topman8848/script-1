@@ -107,7 +107,7 @@ preinstall_conf(){
             hint="${encryptions[$i-1]}"
             echo -e "${hint}"
         done
-        read -p "Which encryptions you'd select(Default: ${encryptions[0]}):" pick
+        read -p "Which encryptions you'd select(Default: ${encryptions[12]}):" pick
         [ -z "$pick" ] && pick=13
         expr ${pick} + 1 &>/dev/null
         if [ $? -ne 0 ]; then
