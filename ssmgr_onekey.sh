@@ -254,6 +254,7 @@ plugins:
 db: 'webgui.sqlite'
 EOF
     fi
+}
 
 install_ssmgr(){
     echo "install shadowsocks-manager from npm"
