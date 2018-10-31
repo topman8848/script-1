@@ -214,6 +214,7 @@ install_ssmgr(){
 	curl -sL https://deb.nodesource.com/setup_8.x | bash -
 	apt-get install -y nodejs
 	npm i -g shadowsocks-manager --unsafe-perm
+	mkdir /root/.ssmgr/
 }
 
 install_pm2(){
