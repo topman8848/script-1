@@ -243,10 +243,10 @@ install_ssmgr_onekey(){
     ss_run=$(echo ${ss_run} |tr [A-Z] [a-z])
 	  disable_selinux
 	  preinstall_conf
-	  create_file_conf
 	  install_ssmgr
 	  install_pm2
 	  install_shadowsocks_libev
+	  create_file_conf
     sleep 3
     while :;
     do
@@ -270,4 +270,4 @@ install_ssmgr_onekey(){
 
 install_ssmgr_onekey
 print_conf
-echo "Command: pm2 list"
+pm2 list
