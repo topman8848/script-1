@@ -272,7 +272,7 @@ install_shadowsocks_libev(){
 	apt -t jessie-backports-sloppy install shadowsocks-libev -y
 }
 
-ssmgr_onekey(){
+install_ssmgr(){
     echo
     echo "+---------------------------------------------------------------+"
     echo "One-key for ssmgr"
@@ -308,14 +308,25 @@ ssmgr_onekey(){
     done
 }
 
-action=${1}
-[ -z ${1} ] && action=ssmgr_onekey
+uninstall_ssmgr(){
+    read -p "Are you sure uninstall?(y/n)" answer
+    [ -z ${answer} ] && answer="n"
+    if [ "${answer}" == "y" ] || [ "${answer}" == "Y" ]; then
+        pm2 delete all
+    fi
+    echo
+    echo -e "Thanks for using this script."
+}
 
-case ${action} in
-    ssmgr_onekey|uninstall)
-        ${action}
+# Initialization step
+action=$1
+[ -z $1 ] && action=install
+case "$action" in
+    install|uninstall)
+        ${action}_ssmgr
         ;;
     *)
-        print_error
+        echo "Arguments error! [${action}]"
+        echo "Usage: `basename $0` [install|uninstall]"
         ;;
 esac
