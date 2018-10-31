@@ -310,3 +310,12 @@ ssmgr_onekey(){
 
 action=${1}
 [ -z ${1} ] && action=ssmgr_onekey
+
+case ${action} in
+    ssmgr_onekey|uninstall)
+        ${action}
+        ;;
+    *)
+        print_error
+        ;;
+esac
