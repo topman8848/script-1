@@ -143,6 +143,12 @@ get_ip(){
     [ ! -z ${IP} ] && echo ${IP} || echo
 }
 
+get_domain(){
+    read -p "Please input your domain name for vps:" domain
+    echo ${domain}
+}
+
+
 create_file_conf(){
     # shadowsocks-manager configuration
     cat > /root/.ssmgr/ss.yml <<EOF
@@ -181,9 +187,9 @@ plugins:
     apiKey: '${apiKey}'
   webgui:
     use: true
-    host: '0.0.0.0'
-    port: '80'
-    site: 'http://$(get_ip)'
+    host: '127.0.0.1'
+    port: '8080'
+    site: 'http://$(get_domain)'
 		
 db: 'webgui.sqlite'
 EOF
@@ -232,6 +238,19 @@ install_shadowsocks_libev(){
 	apt -t jessie-backports-sloppy install shadowsocks-libev -y
 }
 
+install_caddy(){
+curl https://getcaddy.com | bash -s personal
+mkdir /etc/caddy
+cat > /etc/caddy/Caddyfile<<-EOF
+$(get_domain) {
+proxy / http://127.0.0.1:8080 {
+	transparent
+	}
+	gzip
+}
+EOF
+}
+
 install_ssmgr_onekey(){
     echo
     echo "+---------------------------------------------------------------+"
@@ -252,9 +271,11 @@ install_ssmgr_onekey(){
     while :;
     do
         if [ "${ss_run}" == "webgui" ] ;then
+			install_caddy
 			pm2 -f -x -n ssmanager    start ss-manager -- -m ${ss_libev_encry} -u --manager-address 127.0.0.1:${ss_libev_port}
 			pm2 -f -x -n ssmgr-ss     start ssmgr      -- -c ss.yml 
 			pm2 -f -x -n ssmgr-webgui start ssmgr      -- -c webgui.yml
+			pm2 -f -x -n caddy        start caddy      -- -conf  /etc/caddy/Caddyfile
 			pm2 startup && pm2 save
             break
         elif [ "${ss_run}" == "ss" ] ;then
