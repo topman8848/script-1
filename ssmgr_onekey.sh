@@ -224,8 +224,8 @@ print_conf(){
     if [ "${ss_run}" == "webgui" ];then
     echo -e "        Your mailgun baseUrl:  ${baseUrl}"
     echo -e "        Your maigun apiKey:    ${apiKey}"
-    echo -e "        Your site:    ${domain}"
-    echo -e "        Your email:    ${email}"
+    echo -e "        Your site:             ${domain}"
+    echo -e "        Your email:            ${email}"
     fi
     echo
     echo "+---------------------------------------------------------------+"
