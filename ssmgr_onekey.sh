@@ -271,6 +271,8 @@ install_ssmgr_onekey(){
     read -p "(choose from webgui or ss,default:ss):" ss_run
     [ -z ${ss_run} ] && ss_run="ss"
         if [ "${ss_run}" == "webgui" ] ;then
+			preinstall_conf
+			create_file_conf
 			install_ssmgr
 			install_pm2
 			install_shadowsocks_libev
@@ -282,6 +284,8 @@ install_ssmgr_onekey(){
 			pm2 startup && pm2 save
             break
         elif [ "${ss_run}" == "ss" ] ;then
+			preinstall_conf
+			create_file_conf
 			install_ssmgr
 			install_pm2
 			install_shadowsocks_libev
@@ -297,8 +301,6 @@ install_ssmgr_onekey(){
 }
 
 disable_selinux
-preinstall_conf
-create_file_conf
 install_ssmgr_onekey
 print_conf
 pm2 list
