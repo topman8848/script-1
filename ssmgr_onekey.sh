@@ -316,25 +316,4 @@ install_ssmgr(){
     done
 }
 
-uninstall_ssmgr(){
-    read -p "Are you sure uninstall?(y/n)" answer
-    [ -z ${answer} ] && answer="n"
-    if [ "${answer}" == "y" ] || [ "${answer}" == "Y" ]; then
-        pm2 delete all
-    fi
-    echo
-    echo -e "Thanks for using this script."
-}
-
-# Initialization step
-action=$1
-[ -z $1 ] && action=install
-case "$action" in
-    install|uninstall)
-        ${action}_ssmgr
-        ;;
-    *)
-        echo "Arguments error! [${action}]"
-        echo "Usage: `basename $0` [install|uninstall]"
-        ;;
-esac
+install_ssmgr
