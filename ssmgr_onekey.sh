@@ -9,44 +9,6 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 fi
 
-ssmgr_onekey(){
-    echo
-    echo "+---------------------------------------------------------------+"
-    echo "One-key for ssmgr"
-    echo "+---------------------------------------------------------------+"
-    echo
-    echo "webgui or only ss?"
-    echo "The M server and S nodes are in the webgui option."
-    read -p "(Default:ss):" ss_run
-    [ -z ${ss_run} ] && ss_run=ss
-    ss_run=$(echo ${ss_run} |tr [A-Z] [a-z])
-    	  check_conf
-	  install_ssmgr
-	  install_pm2
-	  install_shadowsocks_libev
-    sleep 3
-    while :;
-    do
-        if [ "${ss_run}" == "webgui" ] ;then
-			pm2 start ss-manager --name=ssmanager -- -m ${ss_libev_encry} -u --manager-address 127.0.0.1:${ss_libev_port}
-			pm2 --name ssmgr-ss -f start ssmgr -x -- -c ss.yml 
-			pm2 --name ssmgr-webgui -f start ssmgr -x -- -c webgui.yml
-			pm2 save && pm2 startup
-            break
-        elif [ "${ss_run}" == "ss" ] ;then
-			pm2 start ss-manager --name=ssmanager -- -m ${ss_libev_encry} -u --manager-address 127.0.0.1:${ss_libev_port}
-            pm2 --name ssmgr-ss -f start ssmgr -x -- -c ss.yml 
-			pm2 save && pm2 startup
-            break
-        else
-            echo
-            echo "Please enter webgui or ss!"
-        fi
-    done
-}
-
-ssmgr_onekey
-
 check_conf(){
     # check configuration information
     if [ ! -d /root/.ssmgr ];then
@@ -309,3 +271,41 @@ install_shadowsocks_libev(){
 	apt update
 	apt -t jessie-backports-sloppy install shadowsocks-libev -y
 }
+
+ssmgr_onekey(){
+    echo
+    echo "+---------------------------------------------------------------+"
+    echo "One-key for ssmgr"
+    echo "+---------------------------------------------------------------+"
+    echo
+    echo "webgui or only ss?"
+    echo "The M server and S nodes are in the webgui option."
+    read -p "(Default:ss):" ss_run
+    [ -z ${ss_run} ] && ss_run=ss
+    ss_run=$(echo ${ss_run} |tr [A-Z] [a-z])
+    	  check_conf
+	  install_ssmgr
+	  install_pm2
+	  install_shadowsocks_libev
+    sleep 3
+    while :;
+    do
+        if [ "${ss_run}" == "webgui" ] ;then
+			pm2 start ss-manager --name=ssmanager -- -m ${ss_libev_encry} -u --manager-address 127.0.0.1:${ss_libev_port}
+			pm2 --name ssmgr-ss -f start ssmgr -x -- -c ss.yml 
+			pm2 --name ssmgr-webgui -f start ssmgr -x -- -c webgui.yml
+			pm2 save && pm2 startup
+            break
+        elif [ "${ss_run}" == "ss" ] ;then
+			pm2 start ss-manager --name=ssmanager -- -m ${ss_libev_encry} -u --manager-address 127.0.0.1:${ss_libev_port}
+            pm2 --name ssmgr-ss -f start ssmgr -x -- -c ss.yml 
+			pm2 save && pm2 startup
+            break
+        else
+            echo
+            echo "Please enter webgui or ss!"
+        fi
+    done
+}
+
+ssmgr_onekey
