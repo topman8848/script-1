@@ -308,4 +308,5 @@ ssmgr_onekey(){
     done
 }
 
-ssmgr_onekey
+action=${1}
+[ -z ${1} ] && action=ssmgr_onekey
