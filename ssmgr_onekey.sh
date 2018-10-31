@@ -19,7 +19,7 @@ check_conf(){
     # check configuration information
     if [ ! -d /root/.ssmgr ];then
         mkdir /root/.ssmgr/
-        read -p "Do you need to configure some parameters here?(y/n)" config </dev/tty
+        read -p "Do you need to configure some parameters here?(y/n)" config
         if [ "${config}" == "n" ] || [ "${config}" == "N" ];then
             return
         fi
@@ -31,9 +31,9 @@ check_conf(){
             get_conf
             clear
         echo
-            echo -e "[${green}Info${plain}] Please verify the configure you have entered."
+            echo "Please verify the configure you have entered."
             print_conf
-            read -p "Are you sure to use them?(y/n):" verify </dev/tty
+            read -p "Are you sure to use them?(y/n):" verify
             if [ "${verify}" == "n" ] || [ "${verify}" == "N" ];then
                 continue
             else
@@ -54,7 +54,7 @@ get_conf(){
     do
         echo
         echo "Please enter port for shadowsocks-libev:"
-        read -p "(Default prot: 4000):" ss_libev_port </dev/tty
+        read -p "(Default prot: 4000):" ss_libev_port
         [ -z "${ss_libev_port}" ] && ss_libev_port="4000"
         if ! echo ${ss_libev_port} |grep -q '^[0-9]\+$'; then
             echo
@@ -71,10 +71,10 @@ get_conf(){
         [ -z "${ssmgr_port}" ] && ssmgr_port="4001" </dev/tty
         if ! echo ${ssmgr_port} |grep -q '^[0-9]\+$'; then
             echo
-            echo -e "[${red}Error!${plain}] You are not enter numbers.,please try again."
+            echo -e "You are not enter numbers.,please try again."
         elif [ ${ssmgr_port} -eq ${ss_libev_port} ];then
             echo
-            echo -e "[${red}Error!${plain}] This port is already in use,please try again."
+            echo -e "This port is already in use,please try again."
         else
             break
         fi
@@ -93,7 +93,7 @@ get_conf(){
     while :; do
         echo
         echo "Please enter the port ranges use for user:"
-        read -p "(Default prot: 50000-60000):" port_ranges </dev/tty
+        read -p "(Default prot: 50000-60000):" port_ranges
         [ -z "${port_ranges}" ] && port_ranges=50000-60000
         if ! echo ${port_ranges} |grep -q '^[0-9]\+\-[0-9]\+$'; then
             echo
@@ -129,7 +129,7 @@ get_conf(){
         fi
         if [[ "$pick" -lt 1 || "$pick" -gt ${#encryptions[@]} ]]; then
             echo
-            echo -e "[${red}Error!${plain}] Please enter a number between 1 and ${#encryptions[@]}"
+            echo -e "Please enter a number between 1 and ${#encryptions[@]}"
             continue
         fi
         ss_libev_encry=${encryptions[$pick-1]}
@@ -142,9 +142,9 @@ get_conf(){
     if [ "${ss_run}" == "webgui" ];then
 		echo
         echo "Please enter your mailgun baseUrl:"
-        read -p "(For example: https://api.mailgun.net/v3/mg.xxx.xxx):" baseUrl </dev/tty
+        read -p "(For example: https://api.mailgun.net/v3/mg.xxx.xxx):" baseUrl
 		echo "Please enter your maigun apiKey:"
-        read -p "(For example: bf9048325495ef2c37f9a1248c3359ce-c9270c97-e8f3178e):" apiKey </dev/tty
+        read -p "(For example: bf9048325495ef2c37f9a1248c3359ce-c9270c97-e8f3178e):" apiKey
     fi
 }
 
@@ -286,9 +286,8 @@ install_ssmgr_onekey(){
     echo "+---------------------------------------------------------------+"
     echo
     echo "webgui or only ss?"
-    echo "The M server and S nodes are in the webgui option."
-    read -p "(Default:ss):" ss_run
-    [ -z ${ss_run} ] && ss_run=ss
+    read -p "(choose from webgui or ss,default:ss):" ss_run
+    [ -z ${ss_run} ] && ss_run="ss"
     ss_run=$(echo ${ss_run} |tr [A-Z] [a-z])
     	  disable_selinux
     	  check_conf
