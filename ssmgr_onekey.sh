@@ -266,19 +266,14 @@ install_ssmgr_onekey(){
     echo "+---------------------------------------------------------------+"
     echo
     echo "webgui or only ss?"
-    read -p "(choose from webgui or ss,default:ss):" ss_run
-    [ -z ${ss_run} ] && ss_run="ss"
-    ss_run=$(echo ${ss_run} |tr [A-Z] [a-z])
-	  disable_selinux
-	  preinstall_conf
-	  create_file_conf
-	  install_ssmgr
-	  install_pm2
-	  install_shadowsocks_libev
-    sleep 3
     while :;
     do
+    read -p "(choose from webgui or ss,default:ss):" ss_run
+    [ -z ${ss_run} ] && ss_run="ss"
         if [ "${ss_run}" == "webgui" ] ;then
+			install_ssmgr
+			install_pm2
+			install_shadowsocks_libev
 			install_caddy
 			pm2 -f -x -n ssmanager    start ss-manager -- -m ${ss_libev_encry} -u --manager-address 127.0.0.1:${ss_libev_port}
 			pm2 -f -x -n ssmgr-ss     start ssmgr      -- -c ss.yml 
@@ -287,6 +282,9 @@ install_ssmgr_onekey(){
 			pm2 startup && pm2 save
             break
         elif [ "${ss_run}" == "ss" ] ;then
+			install_ssmgr
+			install_pm2
+			install_shadowsocks_libev
 			pm2 -f -x -n ssmanager    start ss-manager -- -m ${ss_libev_encry} -u --manager-address 127.0.0.1:${ss_libev_port}
 			pm2 -f -x -n ssmgr-ss     start ssmgr      -- -c ss.yml 
 			pm2 startup && pm2 save
@@ -298,6 +296,9 @@ install_ssmgr_onekey(){
     done
 }
 
+disable_selinux
+preinstall_conf
+create_file_conf
 install_ssmgr_onekey
 print_conf
 pm2 list
