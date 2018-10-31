@@ -11,14 +11,16 @@ fi
 
 ssmgr_onekey(){
     echo
+    echo "+---------------------------------------------------------------+"
     echo "One-key for ssmgr"
+    echo "+---------------------------------------------------------------+"
     echo
     echo "webgui or only ss?"
     echo "The M server and S nodes are in the webgui option."
     read -p "(Default:ss):" ss_run
     [ -z ${ss_run} ] && ss_run=ss
     ss_run=$(echo ${ss_run} |tr [A-Z] [a-z])
-    check_conf
+    	  check_conf
 	  install_ssmgr
 	  install_pm2
 	  install_shadowsocks_libev
@@ -295,7 +297,7 @@ install_ssmgr(){
 
 install_pm2(){
     echo "install pm2 from npm"
-	sleep 3
+    sleep 3
     npm i -g pm2
 }
 
