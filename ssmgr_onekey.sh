@@ -15,6 +15,26 @@ disable_selinux(){
     fi
 }
 
+# Stream Ciphers
+encryptions=(
+aes-256-gcm
+aes-192-gcm
+aes-128-gcm
+aes-256-ctr
+aes-192-ctr
+aes-128-ctr
+aes-256-cfb
+aes-192-cfb
+aes-128-cfb
+camellia-128-cfb
+camellia-192-cfb
+camellia-256-cfb
+chacha20-ietf-poly1305
+chacha20-ietf
+chacha20
+rc4-md5
+)
+
 preinstall_conf(){
     # set port for shadowsocks-libev
     sleep 1
@@ -51,7 +71,7 @@ preinstall_conf(){
     # set passwd for shadowsocks-manager
     echo
     read -p "Please enter passwd for shadowsocks-manager:" ssmgr_passwd
-	echo
+    echo
     echo "---------------------------"
     echo "password = ${ssmgr_passwd}"
     echo "---------------------------"
@@ -115,26 +135,6 @@ preinstall_conf(){
         read -p "(For example: bf9048325495ef2c37f9a1248c3359ce-c9270c97-e8f3178e):" apiKey
     fi
 }
-
-# Stream Ciphers
-encryptions=(
-aes-256-gcm
-aes-192-gcm
-aes-128-gcm
-aes-256-ctr
-aes-192-ctr
-aes-128-ctr
-aes-256-cfb
-aes-192-cfb
-aes-128-cfb
-camellia-128-cfb
-camellia-192-cfb
-camellia-256-cfb
-chacha20-ietf-poly1305
-chacha20-ietf
-chacha20
-rc4-md5
-)
 
 get_ip(){
     local IP=$( ip addr | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | egrep -v "^192\.168|^172\.1[6-9]\.|^172\.2[0-9]\.|^172\.3[0-2]\.|^10\.|^127\.|^255\.|^0\." | head -n 1 )
