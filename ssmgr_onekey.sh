@@ -200,8 +200,8 @@ print_conf(){
     echo -e "        Your port ranges:      ${port_ranges}"
     echo -e "        Your ss-libev-encry:   ${ss_libev_encry}"
     if [ "${ss_run}" == "webgui" ];then
-        echo -e "    Your mailgun baseUrl:  ${baseUrl}"
-        echo -e "    Your maigun apiKey:    ${apiKey}"
+    echo -e "        Your mailgun baseUrl:  ${baseUrl}"
+    echo -e "        Your maigun apiKey:    ${apiKey}"
     fi
     echo
     echo "+---------------------------------------------------------------+"
