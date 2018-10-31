@@ -161,8 +161,8 @@ EOF
 type: m
 
 manager:
-    address: $(get_ip):${ssmgr_port}
-    password: '${ssmgr_passwd}'
+  address: $(get_ip):${ssmgr_port}
+  password: '${ssmgr_passwd}'
 plugins:
   flowSaver:
     use: true
@@ -174,16 +174,16 @@ plugins:
     use: true
   group:
     use: true
-    email:
-        use: true
-        type: 'mailgun'
-		baseUrl: '${baseUrl}'
-		apiKey: '${apiKey}'
-    webgui:
-        use: true
-        host: '0.0.0.0'
-        port: '80'
-        site: 'http://$(get_ip)'
+  email:
+    use: true
+    type: 'mailgun'
+    baseUrl: '${baseUrl}'
+    apiKey: '${apiKey}'
+  webgui:
+    use: true
+    host: '0.0.0.0'
+    port: '80'
+    site: 'http://$(get_ip)'
 		
 db: 'webgui.sqlite'
 EOF
@@ -194,14 +194,14 @@ print_conf(){
     echo
     echo "+---------------------------------------------------------------+"
     echo
-    echo -e "        Your ss-libev port:        ${ss_libev_port}"
-    echo -e "        Your ss-mgr port           ${ssmgr_port}"
-    echo -e "        Your ss-mgr passwd         ${ssmgr_passwd}"
-    echo -e "        Your user port ranges:     ${port_ranges}"
-    echo -e "        Your ss-libev-encry:       ${ss_libev_encry}"
+    echo -e "        Your ss-libev port:    ${ss_libev_port}"
+    echo -e "        Your ss-mgr port:      ${ssmgr_port}"
+    echo -e "        Your ss-mgr passwd:    ${ssmgr_passwd}"
+    echo -e "        Your port ranges:      ${port_ranges}"
+    echo -e "        Your ss-libev-encry:   ${ss_libev_encry}"
     if [ "${ss_run}" == "webgui" ];then
-        echo -e "    Your mailgun baseUrl:       ${baseUrl}"
-        echo -e "    Your maigun apiKey:        ${apiKey}"
+        echo -e "    Your mailgun baseUrl:  ${baseUrl}"
+        echo -e "    Your maigun apiKey:    ${apiKey}"
     fi
     echo
     echo "+---------------------------------------------------------------+"
