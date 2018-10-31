@@ -255,12 +255,12 @@ install_ssmgr_onekey(){
 			pm2 -f -x -n ssmanager    start ss-manager -- -m ${ss_libev_encry} -u --manager-address 127.0.0.1:${ss_libev_port}
 			pm2 -f -x -n ssmgr-ss     start ssmgr      -- -c ss.yml 
 			pm2 -f -x -n ssmgr-webgui start ssmgr      -- -c webgui.yml
-			pm2 save && pm2 startup
+			pm2 startup && pm2 save
             break
         elif [ "${ss_run}" == "ss" ] ;then
 			pm2 -f -x -n ssmanager    start ss-manager -- -m ${ss_libev_encry} -u --manager-address 127.0.0.1:${ss_libev_port}
 			pm2 -f -x -n ssmgr-ss     start ssmgr      -- -c ss.yml 
-			pm2 save && pm2 startup
+			pm2 startup && pm2 save
             break
         else
             echo
