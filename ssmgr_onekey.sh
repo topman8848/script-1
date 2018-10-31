@@ -250,14 +250,14 @@ install_ssmgr_onekey(){
     while :;
     do
         if [ "${ss_run}" == "webgui" ] ;then
-			pm2 start ss-manager --name=ssmanager -- -m ${ss_libev_encry} -u --manager-address 127.0.0.1:${ss_libev_port}
-			pm2 --name ssmgr-ss -f start ssmgr -x -- -c ss.yml 
-			pm2 --name ssmgr-webgui -f start ssmgr -x -- -c webgui.yml
+			pm2 -f -x -n ssmanager    start ss-manager -- -m ${ss_libev_encry} -u --manager-address 127.0.0.1:${ss_libev_port}
+			pm2 -f -x -n ssmgr-ss     start ssmgr      -- -c ss.yml 
+			pm2 -f -x -n ssmgr-webgui start ssmgr      -- -c webgui.yml
 			pm2 save && pm2 startup
             break
         elif [ "${ss_run}" == "ss" ] ;then
-			pm2 start ss-manager --name=ssmanager -- -m ${ss_libev_encry} -u --manager-address 127.0.0.1:${ss_libev_port}
-            pm2 --name ssmgr-ss -f start ssmgr -x -- -c ss.yml 
+			pm2 -f -x -n ssmanager    start ss-manager -- -m ${ss_libev_encry} -u --manager-address 127.0.0.1:${ss_libev_port}
+			pm2 -f -x -n ssmgr-ss     start ssmgr      -- -c ss.yml 
 			pm2 save && pm2 startup
             break
         else
