@@ -151,6 +151,7 @@ get_domain(){
 
 create_file_conf(){
     # shadowsocks-manager configuration
+    mkdir /root/.ssmgr/
     cat > /root/.ssmgr/ss.yml <<EOF
 type: s
 
@@ -220,7 +221,6 @@ install_ssmgr(){
 	curl -sL https://deb.nodesource.com/setup_8.x | bash -
 	apt-get install -y nodejs
 	npm i -g shadowsocks-manager --unsafe-perm
-	mkdir /root/.ssmgr/
 }
 
 install_pm2(){
@@ -242,7 +242,7 @@ install_caddy(){
 curl https://getcaddy.com | bash -s personal
 mkdir /etc/caddy
 cat > /etc/caddy/Caddyfile<<-EOF
-$(get_domain) {
+${domain} {
 proxy / http://127.0.0.1:8080 {
 	transparent
 	}
@@ -263,10 +263,10 @@ install_ssmgr_onekey(){
     ss_run=$(echo ${ss_run} |tr [A-Z] [a-z])
 	  disable_selinux
 	  preinstall_conf
+	  create_file_conf
 	  install_ssmgr
 	  install_pm2
 	  install_shadowsocks_libev
-	  create_file_conf
     sleep 3
     while :;
     do
