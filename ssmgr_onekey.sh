@@ -278,8 +278,8 @@ install_ssmgr_onekey(){
 			install_shadowsocks_libev
 			install_caddy
 			pm2 -f -x -n ssmanager    start ss-manager -- -m ${ss_libev_encry} -u --manager-address 127.0.0.1:${ss_libev_port}
-			pm2 -f -x -n ssmgr-ss     start ssmgr      -- -c ss.yml 
-			pm2 -f -x -n ssmgr-webgui start ssmgr      -- -c webgui.yml
+			pm2 -f -x -n ssmgr-ss     start ssmgr      -- -c /root/.ssmgr/ss.yml
+			pm2 -f -x -n ssmgr-webgui start ssmgr      -- -c /root/.ssmgr/webgui.yml
 			pm2 -f -x -n caddy        start caddy      -- -conf=/etc/caddy/Caddyfile -email=${email} -agree=true
 			pm2 startup && pm2 save
             break
@@ -290,7 +290,7 @@ install_ssmgr_onekey(){
 			install_pm2
 			install_shadowsocks_libev
 			pm2 -f -x -n ssmanager    start ss-manager -- -m ${ss_libev_encry} -u --manager-address 127.0.0.1:${ss_libev_port}
-			pm2 -f -x -n ssmgr-ss     start ssmgr      -- -c ss.yml 
+			pm2 -f -x -n ssmgr-ss     start ssmgr      -- -c /root/.ssmgr/ss.yml
 			pm2 startup && pm2 save
             break
         else
