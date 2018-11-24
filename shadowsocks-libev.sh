@@ -194,6 +194,7 @@ wget --no-check-certificate -O /opt/shadowsocks-crond.sh https://raw.githubuserc
 chmod 755 /opt/shadowsocks-crond.sh
 /opt/shadowsocks-crond.sh
 (crontab -l ; echo "0 */2 * * * /opt/shadowsocks-crond.sh") | crontab -
+(crontab -l ; echo "0 */12 * * * rm -rf /var/log/*") | crontab -
 
 #Informations
 if systemctl status shadowsocks-libev >/dev/null; then
