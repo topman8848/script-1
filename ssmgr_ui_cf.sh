@@ -44,12 +44,10 @@ preinstall_conf(){
     echo
 }
 
-create_file_conf(){
-    # shadowsocks-manager configuration
+create_ssmgr_conf(){
     mkdir /root/.ssmgr/
     cat > /root/.ssmgr/webgui.yml<<EOF
 type: m
-
 manager:
   address: 0.0.0.0
   password: 0.0.0.0
@@ -73,46 +71,13 @@ plugins:
     use: true
     host: '127.0.0.1'
     port: '8080'
-    site: 'http://${domain}'
-		
+    site: 'http://${domain}'		
 db: 'webgui.sqlite'
 redis:
   host: '127.0.0.1'
   password: ''
   db: 0
 EOF
-
-#caddy
-mkdir /etc/caddy
-cat > /etc/caddy/Caddyfile<<-EOF
-${domain} {
-proxy / http://127.0.0.1:8080 {
-	transparent
-	}
-	gzip
-}
-EOF
-    fi
-
-}
-
-print_conf(){
-    echo
-    echo "+---------------------------------------------------------------+"
-    echo
-    echo -e "        Your ss-libev port:    ${ss_libev_port}"
-    echo -e "        Your ss-mgr port:      ${ssmgr_port}"
-    echo -e "        Your ss-mgr passwd:    ${ssmgr_passwd}"
-    echo -e "        Your port ranges:      ${port_ranges}"
-    echo -e "        Your ss-libev-encry:   ${ss_libev_encry}"
-    if [ "${ss_run}" == "webgui" ];then
-    echo -e "        Your mailgun baseUrl:  ${baseUrl}"
-    echo -e "        Your maigun apiKey:    ${apiKey}"
-    echo -e "        Your site:             ${domain}"
-    echo -e "        Your email:            ${email}"
-    fi
-    echo
-    echo "+---------------------------------------------------------------+"
 }
 
 install_ssmgr(){
@@ -175,14 +140,14 @@ install_ssmgr_ui_cf(){
     echo "One-key for ssmgr_ui_cf"
     echo "+---------------------------------------------------------------+"
     echo
-		  preinstall_conf
-			create_file_conf
-			install_ssmgr
-			install_pm2
-      install_redis-server
-			pm2 -f -x -n ssmgr-webgui start ssmgr      -- -c /root/.ssmgr/webgui.yml
-			pm2 startup && pm2 save
-      install_caddy
+    preinstall_conf
+    create_ssmgr_conf
+    install_ssmgr
+    install_pm2
+    install_redis-server
+    pm2 -f -x -n ssmgr-webgui start ssmgr      -- -c /root/.ssmgr/webgui.yml
+    pm2 startup && pm2 save
+    install_caddy
 }
 
 disable_selinux
