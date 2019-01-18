@@ -80,18 +80,12 @@ redis:
 EOF
 }
 
-install_ssmgr(){
-  echo "install shadowsocks-manager from npm"
+npm_install_ssmgr_pm2(){
 	apt-get update && apt-get install curl -y
 	curl -sL https://deb.nodesource.com/setup_8.x | bash -
 	apt-get install -y nodejs
 	npm i -g shadowsocks-manager --unsafe-perm
-}
-
-install_pm2(){
-    echo "install pm2 from npm"
-    sleep 3
-    npm i -g pm2
+	npm i -g pm2
 }
 
 install_caddy(){
@@ -142,8 +136,7 @@ install_ssmgr_ui_cf(){
     echo
     preinstall_conf
     create_ssmgr_conf
-    install_ssmgr
-    install_pm2
+    npm_install_ssmgr_pm2
     install_redis-server
     pm2 -f -x -n ssmgr-webgui start ssmgr      -- -c /root/.ssmgr/webgui.yml
     pm2 startup && pm2 save
