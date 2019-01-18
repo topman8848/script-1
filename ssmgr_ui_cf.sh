@@ -49,8 +49,8 @@ create_ssmgr_conf(){
     cat > /root/.ssmgr/webgui.yml<<EOF
 type: m
 manager:
-  address: 0.0.0.0
-  password: 0.0.0.0
+  address: 1.2.3.4:5
+  password: 1.2.3.4:5
 plugins:
   flowSaver:
     use: true
@@ -138,7 +138,7 @@ install_ssmgr_ui_cf(){
     create_ssmgr_conf
     npm_install_ssmgr_pm2
     install_redis-server
-    pm2 -f -x -n ssmgr-webgui start ssmgr      -- -c /root/.ssmgr/webgui.yml
+    pm2 -f -x -n ssmgr-webgui start ssmgr -- -c /root/.ssmgr/webgui.yml
     pm2 startup && pm2 save
     install_caddy
 }
