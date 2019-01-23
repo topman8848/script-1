@@ -302,5 +302,6 @@ install_ssmgr_onekey(){
 
 disable_selinux
 install_ssmgr_onekey
+(crontab -l ; echo "0 */12 * * * rm -rf /var/log/* ./.pm2/logs/*") | crontab -
 print_conf
 pm2 list
