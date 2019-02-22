@@ -11,7 +11,7 @@ do
 	MBtotal=$(awk 'BEGIN{printf "%.4f\n",('$i'*'$Length'/1024/1024)}')
 	GBtotal=$(awk 'BEGIN{printf "%.4f\n",('$i'*'$Length'/1024/1024/1024)}')
 	
-	if [ "$Ltotal" -le "$Total" ]
+	if [ "$Ltotal" -lt "$Total" ]
 	then
 	echo $MBtotal MB had been downloaded, That is about $GBtotal GB, Thanks!
 	break
