@@ -14,8 +14,8 @@ do
 	if [ "$Ltotal" -le "$Total" ]
 	then
 	echo $MBtotal MB had been downloaded, That is about $GBtotal GB, Thanks!
-	break ;
+	break
 	fi
 	echo $MBtotal MB had been downloaded, That is about $GBtotal GB.
 	
-done 
+done
