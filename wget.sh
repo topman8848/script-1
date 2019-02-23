@@ -41,4 +41,4 @@ do
 	echo $s $mBtotal MB \($gBtotal GB\) had been downloaded. Accomplished $j.
 done
 
-echo `date` Download accomplished, $FMB MB \($FGB GB\) had been downloaded. Thanks!
+echo `date` Accomplished, $FMB MB \($FGB GB\) had been downloaded. Thanks!
