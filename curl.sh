@@ -36,7 +36,7 @@ fi
 
 for((j = 1; j <= t; j++))
 do
-	echo -e ".\c"
+	echo -n .
 	curl -s -o /dev/null $url
 done
 
@@ -44,6 +44,7 @@ if [ "$t" -gt 0 ]; then
 total=$(awk 'BEGIN{printf ('$t'*'$length')}')
 mBtotal=$(awk 'BEGIN{printf "%.4f\n",('$t'*'$length'/1024/1024)}')
 gBtotal=$(awk 'BEGIN{printf "%.4f\n",('$t'*'$length'/1024/1024/1024)}')
+echo
 echo `date` $mBtotal MB \($gBtotal GB\) had been downloaded. Accomplished $t.
 fi
 
