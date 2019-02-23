@@ -22,7 +22,7 @@ do
 	Total=$(awk 'BEGIN{printf ('$i'*'$Length')}')
 	MBtotal=$(awk 'BEGIN{printf "%.4f\n",('$i'*'$Length'/1024/1024)}')
 	GBtotal=$(awk 'BEGIN{printf "%.4f\n",('$i'*'$Length'/1024/1024/1024)}')
-	echo $i accomplished, $MBtotal MB \($GBtotal GB\) had been downloaded.
+	echo $MBtotal MB \($GBtotal GB\) had been downloaded. Accomplished $i.
 	echo
 done
 
@@ -37,4 +37,4 @@ do
 done
 
 echo
-echo All accomplished, $FMB MB \($FGB GB\) had been downloaded. Thanks!
+echo $FMB MB \($FGB GB\) had been downloaded. All thanks!
