@@ -15,6 +15,10 @@ t=$(awk 'BEGIN{printf int('$MBlimit'%'$Length'/'$length')}')
 FMB=$(awk 'BEGIN{printf "%.4f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/1024/1024)}')
 FGB=$(awk 'BEGIN{printf "%.4f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/1024/1024/1024)}')
 
+if [ "$T" -gt 0 ]; then
+	echo `date` Start downloading $Url ...
+fi
+
 for((i = 1; i <= T; i++))
 do
 	echo 
@@ -27,7 +31,7 @@ do
 done
 
 if [ "$t" -gt 0 ]; then
-echo -e "Still downloading\c"
+echo -n `date` Still downloading $url
 fi
 
 for((j = 1; j <= t; j++))
