@@ -17,18 +17,24 @@ FGB=$(awk 'BEGIN{printf "%.4f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/
 
 for((i = 1; i <= T; i++))
 do
-	echo Downloading $i...
+	echo 
 	curl -o /dev/null $Url
 	Total=$(awk 'BEGIN{printf ('$i'*'$Length')}')
 	MBtotal=$(awk 'BEGIN{printf "%.4f\n",('$i'*'$Length'/1024/1024)}')
 	GBtotal=$(awk 'BEGIN{printf "%.4f\n",('$i'*'$Length'/1024/1024/1024)}')
-	echo $MBtotal MB had been downloaded, That is about $GBtotal GB.
+	echo $i accomplished, $MBtotal MB \($GBtotal GB\) had been downloaded.
+	echo
 done
+
+if [ "$t" -gt 0 ]; then
+echo -e "Still downloading\c"
+fi
 
 for((j = 1; j <= t; j++))
 do
-	echo Still downloading...
+	echo -e ".\c"
 	curl -s -o /dev/null $url
 done
 
-echo $FMB MB had been downloaded, That is about $FGB GB. All thanks!
+echo
+echo All accomplished, $FMB MB \($FGB GB\) had been downloaded. Thanks!
