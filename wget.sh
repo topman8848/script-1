@@ -17,8 +17,8 @@ FGB=$(awk 'BEGIN{printf "%.4f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/
 
 for((i = 1; i <= T; i++))
 do
-	echo $i downloading...
-	wget -q -O /dev/null $Url
+	echo -e "$i downloading...\c"
+	N=$(wget -SO- $Url 2>&1 >/dev/null | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
 	Total=$(awk 'BEGIN{printf ('$i'*'$Length')}')
 	MBtotal=$(awk 'BEGIN{printf "%.4f\n",('$i'*'$Length'/1024/1024)}')
 	GBtotal=$(awk 'BEGIN{printf "%.4f\n",('$i'*'$Length'/1024/1024/1024)}')
@@ -32,7 +32,7 @@ fi
 for((j = 1; j <= t; j++))
 do
 	echo -e ".\c"
-	wget -q -O /dev/null $url
+	n=$(wget -SO- $url 2>&1 >/dev/null | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
 done
 
 echo
