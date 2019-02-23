@@ -38,5 +38,4 @@ do
 	echo $s Accomplished $j.
 done
 
-echo
 echo $FMB MB \($FGB GB\) had been downloaded. All thanks!
