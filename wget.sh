@@ -35,7 +35,10 @@ fi
 for((j = 1; j <= t; j++))
 do
 	s=$(wget -SO- $url 2>&1 >/dev/null | grep -E "written to stdout" | awk -F"[written]" '{print $1}')
-	echo $s Accomplished $j.
+	total=$(awk 'BEGIN{printf ('$j'*'$length')}')
+	mBtotal=$(awk 'BEGIN{printf "%.4f\n",('$j'*'$length'/1024/1024)}')
+	gBtotal=$(awk 'BEGIN{printf "%.4f\n",('$j'*'$length'/1024/1024/1024)}')
+	echo $s $mBtotal MB \($gBtotal GB\) had been downloaded. Accomplished $j.
 done
 
-echo $FMB MB \($FGB GB\) had been downloaded. All thanks!
+echo `date` Download accomplished, $FMB MB \($FGB GB\) had been downloaded. Thanks!
