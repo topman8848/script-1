@@ -1,11 +1,11 @@
 #!/bin/bash
 # Usage:
 #   curl https://raw.githubusercontent.com/mixool/script/master/download.sh | bash
-##############################
+###Total download depends on MBlimit,speed depends on Url,precision depends on url，change them if necessary.
+MBlimit=1024
 Url=http://download.alicdn.com/wireless/taobao4android/latest/702757.apk
 url=http://cesu.cqwin.com/ddb_update/clientdownload/DTestClientSetupCQ.zip
-MBlimit=1024
-##############################
+#############################################################################################################
 
 MBlimit=$(awk 'BEGIN{printf "%.f\n",('$MBlimit'*1024*1024)}')
 Length=$(curl -s -I $Url | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
