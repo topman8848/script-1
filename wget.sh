@@ -17,13 +17,12 @@ FGB=$(awk 'BEGIN{printf "%.4f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/
 
 for((i = 1; i <= T; i++))
 do
-	echo 
-	wget -O /dev/null $Url
+	echo $i downloading...
+	wget -q -O /dev/null $Url
 	Total=$(awk 'BEGIN{printf ('$i'*'$Length')}')
 	MBtotal=$(awk 'BEGIN{printf "%.4f\n",('$i'*'$Length'/1024/1024)}')
 	GBtotal=$(awk 'BEGIN{printf "%.4f\n",('$i'*'$Length'/1024/1024/1024)}')
 	echo $MBtotal MB \($GBtotal GB\) had been downloaded. Accomplished $i.
-	echo
 done
 
 if [ "$t" -gt 0 ]; then
