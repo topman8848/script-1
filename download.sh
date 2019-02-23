@@ -28,7 +28,7 @@ done
 for((j = 1; j <= t; j++))
 do
 	echo Still downloading...
-	wget -O /dev/null $url
+	wget -q -O /dev/null $url
 done
 
 echo $FMB MB had been downloaded, It is about $FGB GB. Thanks!
