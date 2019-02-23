@@ -31,4 +31,4 @@ do
 	curl -s -o /dev/null $url
 done
 
-echo $FMB MB had been downloaded, It is about $FGB GB. Thanks!
+echo $FMB MB had been downloaded, That is about $FGB GB. All thanks!
