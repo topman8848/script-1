@@ -1,7 +1,8 @@
 #!/bin/bash
 # Usage:
-#   wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/wget.sh && chmod +x wget.sh && ./wget.sh
-###Total download depends on MBlimit,speed depends on Url,precision depends on url，change them if necessary.
+#   curl https://raw.githubusercontent.com/mixool/script/master/wget.sh | bash
+##  wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/wget.sh && chmod +x wget.sh && ./wget.sh
+### Total download depends on MBlimit,speed depends on Url,precision depends on url，change them if necessary.
 MBlimit=1024
 Url=http://download.alicdn.com/wireless/taobao4android/latest/702757.apk
 url=http://cesu.cqwin.com/ddb_update/clientdownload/DTestClientSetupCQ.zip
