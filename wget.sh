@@ -15,24 +15,27 @@ t=$(awk 'BEGIN{printf int('$MBlimit'%'$Length'/'$length')}')
 FMB=$(awk 'BEGIN{printf "%.4f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/1024/1024)}')
 FGB=$(awk 'BEGIN{printf "%.4f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/1024/1024/1024)}')
 
+if [ "$T" -gt 0 ]; then
+	echo `date` Start downloading $Url ...
+fi
+
 for((i = 1; i <= T; i++))
 do
-	echo -e "$i downloading...\c"
-	N=$(wget -SO- $Url 2>&1 >/dev/null)
+	S=$(wget -SO- $Url 2>&1 >/dev/null | grep -E "written to stdout" | awk -F"[written]" '{print $1}')
 	Total=$(awk 'BEGIN{printf ('$i'*'$Length')}')
 	MBtotal=$(awk 'BEGIN{printf "%.4f\n",('$i'*'$Length'/1024/1024)}')
 	GBtotal=$(awk 'BEGIN{printf "%.4f\n",('$i'*'$Length'/1024/1024/1024)}')
-	echo $MBtotal MB \($GBtotal GB\) had been downloaded. Accomplished $i.
+	echo $S $MBtotal MB \($GBtotal GB\) had been downloaded. Accomplished $i.
 done
 
 if [ "$t" -gt 0 ]; then
-echo -e "Still downloading\c"
+	echo `date` Start downloading $url ...
 fi
 
 for((j = 1; j <= t; j++))
 do
-	echo -e ".\c"
-	n=$(wget -SO- $url 2>&1 >/dev/null)
+	s=$(wget -SO- $url 2>&1 >/dev/null | grep -E "written to stdout" | awk -F"[written]" '{print $1}')
+	echo $s Accomplished $j.
 done
 
 echo
