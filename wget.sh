@@ -5,7 +5,7 @@
 ### Total download depends on MBlimit, precision depends on url, speed depends on Url, change them if necessary.
 MBlimit=1024
 url=http://gxiami.alicdn.com/xiami-desktop/update/XiamiMac-01311741.dmg
-Url=http://download.alicdn.com/wireless/dingtalk/latest/rimet_10002068.apk
+Url=http://download.alicdn.com/dingtalk-desktop/mac_dmg/Release/DingTalk_v4.6.13.1.dmg
 #url=http://cesu.cqwin.com/ddb_update/clientdownload/DTestClientSetupCQ.zip
 #############################################################################################################
 
@@ -43,4 +43,4 @@ do
 	echo $S $j - Downloaded $MBtotal MB \($GBtotal GB\)
 done
 
-echo `date` Accomplished $FMB MB \($FGB GB\). Thanks!
+echo `date` Mission $MBlimit, Accomplished $FMB MB \($FGB GB\). Thanks!
