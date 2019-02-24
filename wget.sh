@@ -4,8 +4,9 @@
 ##  wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/wget.sh && chmod +x wget.sh && ./wget.sh
 ### Total download depends on MBlimit,speed depends on Url,precision depends on url，change them if necessary.
 MBlimit=1024
-Url=http://download.alicdn.com/wireless/taobao4android/latest/702757.apk
-url=http://cesu.cqwin.com/ddb_update/clientdownload/DTestClientSetupCQ.zip
+Url=http://download.alicdn.com/wireless/dingtalk/latest/rimet_10002068.apk
+url=http://gxiami.alicdn.com/xiami-desktop/update/XiamiMac-01311741.dmg
+#url=http://cesu.cqwin.com/ddb_update/clientdownload/DTestClientSetupCQ.zip
 #############################################################################################################
 
 MBlimit=$(awk 'BEGIN{printf "%.f\n",('$MBlimit'*1024*1024)}')
