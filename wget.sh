@@ -9,8 +9,8 @@ Url=http://download.alicdn.com/dingtalk-desktop/mac_dmg/Release/DingTalk_v4.6.13
 #url=http://cesu.cqwin.com/ddb_update/clientdownload/DTestClientSetupCQ.zip
 #############################################################################################################
 
+MB=$MBlimit
 MBlimit=$(awk 'BEGIN{printf "%.f\n",('$MBlimit'*1024*1024)}')
-MB=$(awk 'BEGIN{printf "%.f\n",('$MBlimit'/1024/1024)}')
 length=$(wget --spider $url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
 Length=$(wget --spider $Url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
 t=$(awk 'BEGIN{printf int('$MBlimit'%'$Length'/'$length')}')
@@ -44,6 +44,4 @@ do
 	echo $S $j - Downloaded $MBtotal MB \($GBtotal GB\)
 done
 
-MBlimit=$(awk 'BEGIN{printf "%.f\n",('$MBlimit'/1024/1024)}')
-
-echo `date` Mission $MB MB, Accomplished $FMB MB \($FGB GB\). Thanks!
+echo `date` Mission $MB MB. Accomplished $FMB MB \($FGB GB\). Thanks!
