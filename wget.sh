@@ -4,8 +4,10 @@
 ##  wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/wget.sh && chmod +x wget.sh && ./wget.sh
 ### Total download depends on MBlimit, precision depends on url, speed depends on Url, change them if necessary.
 MBlimit=1024
-url=http://gxiami.alicdn.com/xiami-desktop/update/XiamiMac-01311741.dmg
-Url=http://download.alicdn.com/dingtalk-desktop/mac_dmg/Release/DingTalk_v4.6.13.1.dmg
+url=http://partner.iread.wo.com.cn/wonderfulapp/10118/apps/yuexianghui.apk
+Url=http://iread.wo.com.cn/download/channelclient/113/624/woreader_28000000.apk
+#url=http://gxiami.alicdn.com/xiami-desktop/update/XiamiMac-01311741.dmg
+#Url=http://download.alicdn.com/dingtalk-desktop/mac_dmg/Release/DingTalk_v4.6.13.1.dmg
 #url=http://cesu.cqwin.com/ddb_update/clientdownload/DTestClientSetupCQ.zip
 #############################################################################################################
 
