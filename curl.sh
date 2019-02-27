@@ -1,6 +1,7 @@
 #!/bin/bash
 # Usage:
-#   curl https://raw.githubusercontent.com/mixool/script/master/curl.sh | bash
+#   bash <(curl -s https://raw.githubusercontent.com/mixool/script/master/curl.sh)
+##  wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/curl.sh && chmod +x curl.sh && ./curl.sh
 ### Total download depends on MBlimit, precision depends on url, speed depends on Url, change them if necessary.
 MBlimit=1024
 url=http://gxiami.alicdn.com/xiami-desktop/update/XiamiMac-01311741.dmg
