@@ -21,22 +21,20 @@ FGB=$(awk 'BEGIN{printf "%.3f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/
 
 if [ "$t" -gt 0 ]; then
 	echo $(date) $(echo $url | awk -F"/" '{print $NF}') - $(awk 'BEGIN{printf "%.1f\n",('$length'/1024/1024)}') MB will be downloaded $t times...
+	for((i = 1; i <= t; i++))
+	do
+		s=$(wget -U "$UA" -SO- $url 2>&1 >/dev/null | grep -E "written to stdout" | awk -F"[written]" '{print $1}')
+		echo $s $i - $(awk 'BEGIN{printf "%.1f\n",('$i'*'$length'/1024/1024)}') MB
+	done
 fi
-
-for((i = 1; i <= t; i++))
-do
-	s=$(wget -U "$UA" -SO- $url 2>&1 >/dev/null | grep -E "written to stdout" | awk -F"[written]" '{print $1}')
-	echo $s $i - $(awk 'BEGIN{printf "%.1f\n",('$i'*'$length'/1024/1024)}') MB
-done
 
 if [ "$T" -gt 0 ]; then
 	echo $(date) $(echo $Url | awk -F"/" '{print $NF}') - $(awk 'BEGIN{printf "%.1f\n",('$Length'/1024/1024)}') MB will be downloaded $T times...
+	for((j = 1; j <= T; j++))
+	do
+		S=$(wget -U "$UA" -SO- $Url 2>&1 >/dev/null | grep -E "written to stdout" | awk -F"[written]" '{print $1}')
+		echo $S $j - $(awk 'BEGIN{printf "%.1f\n",('$j'*'$Length'/1024/1024)}') MB
+	done
 fi
-
-for((j = 1; j <= T; j++))
-do
-	S=$(wget -U "$UA" -SO- $Url 2>&1 >/dev/null | grep -E "written to stdout" | awk -F"[written]" '{print $1}')
-	echo $S $j - $(awk 'BEGIN{printf "%.1f\n",('$j'*'$Length'/1024/1024)}') MB
-done
 
 echo $(date) Mission $(awk 'BEGIN{printf "%.f\n",('$MBlimit'/1024/1024)}') MB. Accomplished $FMB MB \($FGB GB\) . Thanks! 
