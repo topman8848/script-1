@@ -21,7 +21,7 @@ FMB=$(awk 'BEGIN{printf "%.4f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/
 FGB=$(awk 'BEGIN{printf "%.4f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/1024/1024/1024)}')
 
 if [ "$t" -gt 0 ]; then
-	echo `date` - `echo $(echo $url | awk -F"/" '{print $NF}')` downloading...
+	echo `date` - `echo $(echo $url | awk -F"/" '{print $NF}')` will be downloaded $t times...
 fi
 
 for((i = 1; i <= t; i++))
@@ -34,7 +34,7 @@ do
 done
 
 if [ "$T" -gt 0 ]; then
-	echo `date` - `echo $(echo $Url | awk -F"/" '{print $NF}')` downloading...
+	echo `date` - `echo $(echo $Url | awk -F"/" '{print $NF}')` will be downloaded $T times...
 fi
 
 for((j = 1; j <= T; j++))
