@@ -1,10 +1,13 @@
 #!/bin/bash
 # Usage:
 #   curl https://raw.githubusercontent.com/mixool/script/master/curl.sh | bash
-###Total download depends on MBlimit,speed depends on Url,precision depends on url，change them if necessary.
-MBlimit=300
-Url=http://download.alicdn.com/wireless/taobao4android/latest/702757.apk
-url=http://cesu.cqwin.com/ddb_update/clientdownload/DTestClientSetupCQ.zip
+### Total download depends on MBlimit, precision depends on url, speed depends on Url, change them if necessary.
+MBlimit=1024
+url=http://gxiami.alicdn.com/xiami-desktop/update/XiamiMac-01311741.dmg
+Url=http://download.alicdn.com/dingtalk-desktop/mac_dmg/Release/DingTalk_v4.6.13.1.dmg
+UA="Mozilla/5.0 (Linux; Android 5.1; OPPO R9m Build/LMY47I; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/72.0.3626.105 Mobile Safari/537.36"
+#url=http://partner.iread.wo.com.cn/wonderfulapp/10118/apps/yuexianghui.apk
+#Url=http://iread.wo.com.cn/download/channelclient/113/624/woreader_28000000.apk
 #############################################################################################################
 
 MBlimit=$(awk 'BEGIN{printf "%.f\n",('$MBlimit'*1024*1024)}')
