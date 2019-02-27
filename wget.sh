@@ -30,7 +30,7 @@ do
 	total=$(awk 'BEGIN{printf ('$i'*'$length')}')
 	mBtotal=$(awk 'BEGIN{printf "%.4f\n",('$i'*'$length'/1024/1024)}')
 	gBtotal=$(awk 'BEGIN{printf "%.4f\n",('$i'*'$length'/1024/1024/1024)}')
-	echo $s $i - Downloaded $mBtotal MB \($gBtotal GB\)
+	echo $s $i - $mBtotal MB \($gBtotal GB\)
 done
 
 if [ "$T" -gt 0 ]; then
@@ -43,7 +43,7 @@ do
 	Total=$(awk 'BEGIN{printf ('$j'*'$Length')}')
 	MBtotal=$(awk 'BEGIN{printf "%.4f\n",('$j'*'$Length'/1024/1024)}')
 	GBtotal=$(awk 'BEGIN{printf "%.4f\n",('$j'*'$Length'/1024/1024/1024)}')
-	echo $S $j - Downloaded $MBtotal MB \($GBtotal GB\)
+	echo $S $j - $MBtotal MB \($GBtotal GB\)
 done
 
 echo `date` Mission $MB MB. Accomplished $FMB MB \($FGB GB\). Thanks!
