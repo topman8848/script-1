@@ -1,66 +1,52 @@
-#!/usr/bin/python
-#encoding=utf-8
-import requests
-from bs4 import BeautifulSoup
-import re
-import sys
-import datetime
-uid="111111" 
-pwd="111111"
-http = requests.Session()
-http.headers.update({
-    'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36'
-    ,'Accept-Language':"zh-CN,zh;q=0.8,ko;q=0.6,zh-TW;q=0.4"
-})
-#http.proxies = {"http":"http://127.0.0.1:8080","https":"http://127.0.0.1:8080"}
-res=http.get("http://www.hostloc.com/member.php?mod=logging&action=login&infloat=yes&handlekey=login&inajax=1&ajaxtarget=fwin_content_login")
-match=re.search(r'name="formhash" value="(\S+)"',res.text)
-if(match):
-    formhash=match.group(1)
-else:
-    exit(0)
-    
-form={
-    "formhash":formhash
-    ,"referer":"http://www.hostloc.com/thread-12949-1-1.html"
-    ,"loginfield":"username"
-    ,"username":uid
-    ,"password":pwd
-    ,"questionid":0
-    ,"answer":""
-    ,"loginsubmit":"true"
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
+from urllib import request
+from http import cookiejar
+
+account_dict = {
+    '0': {'username': 'xxxxx', 'password': 'xxxxx'},
+    '1': {'username': 'yyyyy', 'password': 'yyyyy'},
+    '2': {'username': 'zzzzz', 'password': 'zzzzz'},
 }
-res=http.post("http://www.hostloc.com/member.php?mod=logging&action=login&loginsubmit=yes&handlekey=login&loginhash=LWKbr&inajax=1",data=form)
-match=re.search(r"'uid':'",res.text)
-if(match):
-    print("登陆成功")
-else:
-    print("登陆失败")
-    exit(0)
-res=http.get("http://www.hostloc.com/home.php?mod=spacecp&ac=credit&op=log&suboperation=creditrulelog")
-bs=BeautifulSoup(res.text,"html.parser")
-td=bs.find('td',string="访问别人空间")
-if(td==None): 
-    print("信息获取失败")
-    exit(0)
-tds=td.parent.find_all("td")
-today_view_count=int(tds[2].text)   
-last_view_date=tds[5].text        
-need_view=last_view_date.find(datetime.datetime.now().strftime("%Y-%m-%d"))==-1    
-if(today_view_count>=10 and (not need_view)):      
-    print("今日累了，明日再翻！")
-    exit(0)
-res=http.get("http://www.hostloc.com/forum-45-1.html")
-users   =re.findall("(space-uid\S+)\"",res.text)
-viewed=set()
-num=0
-while num <13:
-    url = users.pop()
-    if(url in viewed):continue
-    viewed.add(url)
-    print(url)
-    res=http.get('http://www.hostloc.com/'+url)
-    users.extend(re.findall("(space-uid\S+)\"",res.text))
-    num+=1
-   
-print("今日累了，明日再翻！")
+
+
+def Login(URL, UserData):
+    __cookies = ''
+    __cookie = cookiejar.CookieJar()
+    __handler = request.HTTPCookieProcessor(__cookie)
+    __req = request.Request(URL, data=str(UserData).encode('utf-8'))
+    request.build_opener(__handler).open(__req)
+    for cookie in __cookie:
+        __cookies += cookie.name + '=' + cookie.value + ';'
+    return __cookies
+
+
+def GetPage(URL, Header_Cookies):
+    __Header = {'Cookie': str(Header_Cookies)}
+    __req = request.Request(URL, headers=__Header)
+    return request.urlopen(__req).read().decode('utf-8')
+
+
+def GetCredit(username, password):
+    Login_URL = 'https://www.hostloc.com/member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes&inajax=1'
+    My_Home = 'https://www.hostloc.com/home.php?mod=spacecp&inajax=1'
+
+    user_data = 'username=' + str(username) + '&' + 'password=' + str(password)
+    My_Cookies = Login(Login_URL, user_data)
+
+    if '<td>' + str(username) + '</td>' not in GetPage(My_Home, My_Cookies):
+        isLogin = False
+        print('[%s] Login Fail!' % username)
+    else:
+        isLogin = True
+        print('[%s] Login Success!' % username)
+
+    if isLogin:
+        for __x in range(25397, 25410):
+            __url = 'https://www.hostloc.com/space-uid-{}.html'.format(__x)
+            GetPage(__url, My_Cookies)
+
+if __name__ == '__main__':
+    for __i in range(0, len(account_dict)):
+        GetCredit(account_dict[str(__i)]['username'], account_dict[str(__i)]['password'])
