@@ -52,16 +52,6 @@ manager:
   address: 1.2.3.4:5
   password: 1.2.3.4:5
 plugins:
-  flowSaver:
-    use: true
-  user:
-    use: true
-  account:
-    use: true
-  macAccount:
-    use: true
-  group:
-    use: true
   email:
     use: true
     type: 'mailgun'
