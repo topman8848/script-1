@@ -29,8 +29,8 @@ fi
 
 #Set China Mobile url Url by parameter $2: bash wget.sh 2048 yd
 if [ "$2" = "yd" ]; then
-	url=http://gxiami.alicdn.com/xiami-desktop/update/XiamiMac-01311741.dmg
-	Url=http://pc.miguvideo.com/MiguApi/download/MiguVideo3.3.0.105.exe
+	url=http://pc.miguvideo.com/MiguApi/download/MiguVideo3.3.0.105.exe
+	Url=http://wlanwm.12530.com/newcms/quku/fbpt_rsync_apps/local/signed/MobileMusic671/MobileMusic671_014000D.apk
 fi
 
 #Set China Telecom url Url by parameter $2: bash wget.sh 2048 dx
