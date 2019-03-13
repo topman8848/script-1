@@ -40,12 +40,17 @@ if [ "$2" = "dx" ]; then
 fi
 
 main(){
-	length=$(wget --spider -U "$UA" $url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
-	Length=$(wget --spider -U "$UA" $Url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
-	t=$(awk 'BEGIN{printf int('$MBlimit'%'$Length'/'$length')}')
-	T=$(awk 'BEGIN{printf int('$MBlimit'/'$Length')}')
-	FMB=$(awk 'BEGIN{printf "%.2f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/1024/1024)}')
-	FGB=$(awk 'BEGIN{printf "%.3f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/1024/1024/1024)}')
+	length=$(wget --spider -U "$UA"  -t 3 $url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
+	Length=$(wget --spider -U "$UA"  -t 3 $Url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
+	if [ $length -gt 1000000 -a $Length -gt 1000000 ] >/dev/null; then
+		t=$(awk 'BEGIN{printf int('$MBlimit'%'$Length'/'$length')}')
+		T=$(awk 'BEGIN{printf int('$MBlimit'/'$Length')}')
+	else
+	echo Error...
+	echo `wget --spider -U "$UA" -t 1 $url`
+	echo `wget --spider -U "$UA" -t 1 $Url`
+	exit 1
+	fi
 
 	echo $(date) Mission $(awk 'BEGIN{printf "%.f\n",('$MBlimit'/1024/1024)}') MB. Starting...
 
@@ -66,7 +71,9 @@ main(){
 			echo $S $j - $(awk 'BEGIN{printf "%.1f\n",('$j'*'$Length'/1024/1024)}') MB
 		done
 	fi
-
+	
+	FMB=$(awk 'BEGIN{printf "%.2f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/1024/1024)}')
+	FGB=$(awk 'BEGIN{printf "%.3f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/1024/1024/1024)}')
 	echo $(date) Mission $(awk 'BEGIN{printf "%.f\n",('$MBlimit'/1024/1024)}') MB. Accomplished $FMB MB \($FGB GB\). Thanks!
 }
 
