@@ -1,20 +1,31 @@
 #!/bin/bash
 # Usage:
-#   bash <(curl -s https://raw.githubusercontent.com/mixool/script/master/wget.sh) 1024
-##  wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/wget.sh && chmod +x wget.sh && ./wget.sh 2048
-### Total download depends on MBlimit, precision depends on url, speed depends on Url, change them if necessary.
+#   bash <(curl -s https://raw.githubusercontent.com/mixool/script/master/wget.sh)
+##  wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/wget.sh && chmod +x wget.sh && ./wget.sh
+### Total download depends on MBlimit, precision depends on url, speed depends on Url, use parameters or change them if necessary. 
 MBlimit=1024
 url=http://gxiami.alicdn.com/xiami-desktop/update/XiamiMac-01311741.dmg
 Url=http://download.alicdn.com/dingtalk-desktop/mac_dmg/Release/DingTalk_v4.6.13.1.dmg
 UA="Mozilla/5.0 (Linux; Android 9; Nokia X6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Mobile Safari/537.36"
-#url=http://partner.iread.wo.com.cn/wonderfulapp/10118/apps/yuexianghui.apk
-#Url=http://iread.wo.com.cn/download/channelclient/113/624/woreader_28000000.apk
 #############################################################################################################
 
+#Usage: bash wget.sh 512
 if grep '^[1-9][0-9]*$' <<< "$1" >/dev/null;then  
 MBlimit=$(awk 'BEGIN{printf "%.f\n",('$1'*1024*1024)}')
 else
 MBlimit=$(awk 'BEGIN{printf "%.f\n",('$MBlimit'*1024*1024)}')
+fi
+
+#Usage: bash wget.sh 1024 lt
+if [ "$2" = "lt" ]; then
+url=http://partner.iread.wo.com.cn/wonderfulapp/10118/apps/yuexianghui.apk
+Url=http://iread.wo.com.cn/download/channelclient/113/624/woreader_28000000.apk
+fi
+
+#Usage: bash wget.sh 2048 yd
+if [ "$2" = "yd" ]; then
+url=https://wap.cmread.com/r/p/pg/212/CMREADBC_Android/CMREADBC_Android.apk
+Url=http://pc.miguvideo.com/MiguApi/download/MiguVideo3.3.0.105.exe
 fi
 
 length=$(wget --spider -U "$UA" $url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
