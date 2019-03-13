@@ -6,7 +6,7 @@
 MBlimit=1024
 url=http://gxiami.alicdn.com/xiami-desktop/update/XiamiMac-01311741.dmg
 Url=http://download.alicdn.com/dingtalk-desktop/mac_dmg/Release/DingTalk_v4.6.13.1.dmg
-UA="Mozilla/5.0 (Linux; Android 5.1; OPPO R9m Build/LMY47I; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/72.0.3626.105 Mobile Safari/537.36"
+UA="Mozilla/5.0 (Linux; Android 9; Nokia X6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Mobile Safari/537.36"
 #url=http://partner.iread.wo.com.cn/wonderfulapp/10118/apps/yuexianghui.apk
 #Url=http://iread.wo.com.cn/download/channelclient/113/624/woreader_28000000.apk
 #############################################################################################################
@@ -18,6 +18,8 @@ t=$(awk 'BEGIN{printf int('$MBlimit'%'$Length'/'$length')}')
 T=$(awk 'BEGIN{printf int('$MBlimit'/'$Length')}')
 FMB=$(awk 'BEGIN{printf "%.2f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/1024/1024)}')
 FGB=$(awk 'BEGIN{printf "%.3f\n",(('$MBlimit'-('$MBlimit'%'$Length'%'$length'))/1024/1024/1024)}')
+
+echo $(date) Mission $(awk 'BEGIN{printf "%.f\n",('$MBlimit'/1024/1024)}') MB. Starting...
 
 if [ "$t" -gt 0 ]; then
 	echo $(date) $(echo $url | awk -F"/" '{print $NF}') - $(awk 'BEGIN{printf "%.1f\n",('$length'/1024/1024)}') MB will be downloaded $t times...
