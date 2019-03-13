@@ -40,15 +40,15 @@ if [ "$2" = "dx" ]; then
 fi
 
 main(){
-	length=$(wget --spider -U "$UA"  -t 3 $url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
-	Length=$(wget --spider -U "$UA"  -t 3 $Url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
-	if [ $length -gt 1000000 -a $Length -gt 1000000 ] >/dev/null; then
+	length=$(wget --spider -U "$UA"  -T 3 -t 3 $url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
+	Length=$(wget --spider -U "$UA"  -T 3 -t 3 $Url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
+	if [ $length -gt 100000 -a $Length -gt 100000 ] >/dev/null; then
 		t=$(awk 'BEGIN{printf int('$MBlimit'%'$Length'/'$length')}')
 		T=$(awk 'BEGIN{printf int('$MBlimit'/'$Length')}')
 	else
 	echo Error...
-	echo `wget --spider -U "$UA" -t 1 $url`
-	echo `wget --spider -U "$UA" -t 1 $Url`
+	echo `wget --spider -U "$UA" -T 3 -t 1 $url`
+	echo `wget --spider -U "$UA" -T 3 -t 1 $Url`
 	exit 1
 	fi
 
