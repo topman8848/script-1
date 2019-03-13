@@ -15,7 +15,7 @@ Url=http://download.alicdn.com/dingtalk-desktop/mac_dmg/Release/DingTalk_v4.6.13
 UA="Mozilla/5.0 (Linux; Android 9; Nokia X6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Mobile Safari/537.36"
 
 #Set MBlimit by parameter $1: bash wget.sh 512
-if grep '^[1-9][0-9]*$' <<< "$1" >/dev/null;then  
+if grep '^[1-9][0-9]*$' <<< "$1" >/dev/null 2>&1;then  
 	MBlimit=$(awk 'BEGIN{printf "%.f\n",('$1'*1024*1024)}')
 else
 	MBlimit=$(awk 'BEGIN{printf "%.f\n",('$MBlimit'*1024*1024)}')
@@ -42,7 +42,7 @@ fi
 main(){
 	length=$(wget --spider -U "$UA"  -T 3 -t 3 $url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
 	Length=$(wget --spider -U "$UA"  -T 3 -t 3 $Url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
-	if [ $length -gt 100000 -a $Length -gt 100000 ] >/dev/null; then
+	if [ $length -gt 100000 -a $Length -gt 100000 ] >/dev/null 2>&1; then
 		t=$(awk 'BEGIN{printf int('$MBlimit'%'$Length'/'$length')}')
 		T=$(awk 'BEGIN{printf int('$MBlimit'/'$Length')}')
 	else
