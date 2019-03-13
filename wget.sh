@@ -29,7 +29,7 @@ fi
 
 #Set China Mobile url Url by parameter $2: bash wget.sh 2048 yd
 if [ "$2" = "yd" ]; then
-	url=http://pc.miguvideo.com/MiguApi/download/MiguVideo3.3.0.105.exe
+	url=http://dlrcs.fetion-portal.com/mobile/RCS_V6.2.8.0129_20190130.apk
 	Url=http://wlanwm.12530.com/newcms/quku/fbpt_rsync_apps/local/signed/MobileMusic671/MobileMusic671_014000D.apk
 fi
 
