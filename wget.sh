@@ -16,27 +16,27 @@ UA="Mozilla/5.0 (Linux; Android 9; Nokia X6) AppleWebKit/537.36 (KHTML, like Gec
 
 #Set MBlimit by parameter $1: bash wget.sh 512
 if grep '^[1-9][0-9]*$' <<< "$1" >/dev/null;then  
-MBlimit=$(awk 'BEGIN{printf "%.f\n",('$1'*1024*1024)}')
+	MBlimit=$(awk 'BEGIN{printf "%.f\n",('$1'*1024*1024)}')
 else
-MBlimit=$(awk 'BEGIN{printf "%.f\n",('$MBlimit'*1024*1024)}')
+	MBlimit=$(awk 'BEGIN{printf "%.f\n",('$MBlimit'*1024*1024)}')
 fi
 
 #Set China Unicom url Url by parameter $2: bash wget.sh 1024 lt
 if [ "$2" = "lt" ]; then
-url=http://partner.iread.wo.com.cn/wonderfulapp/10118/apps/yuexianghui.apk
-Url=http://iread.wo.com.cn/download/channelclient/113/624/woreader_28000000.apk
+	url=http://partner.iread.wo.com.cn/wonderfulapp/10118/apps/yuexianghui.apk
+	Url=http://iread.wo.com.cn/download/channelclient/113/624/woreader_28000000.apk
 fi
 
 #Set China Mobile url Url by parameter $2: bash wget.sh 2048 yd
 if [ "$2" = "yd" ]; then
-url=http://m.miguxue.com/client/file/apkfile/OTT_V2.3.1_J002001F_mgxtwww.apk
-Url=http://pc.miguvideo.com/MiguApi/download/MiguVideo3.3.0.105.exe
+	url=http://gxiami.alicdn.com/xiami-desktop/update/XiamiMac-01311741.dmg
+	Url=http://pc.miguvideo.com/MiguApi/download/MiguVideo3.3.0.105.exe
 fi
 
 #Set China Telecom url Url by parameter $2: bash wget.sh 2048 dx
 if [ "$2" = "dx" ]; then
-url=http://189newestmailclient.oos-sh.ctyunapi.cn/189mail.apk
-Url=http://www.189.cn/down/CtClientL.apk
+	url=http://189newestmailclient.oos-sh.ctyunapi.cn/189mail.apk
+	Url=http://www.189.cn/down/CtClientL.apk
 fi
 
 main(){
