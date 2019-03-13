@@ -41,6 +41,6 @@ if [ "$T" -gt 0 ]; then
 fi
 
 timer_end=`date "+%Y-%m-%d %H:%M:%S"`
-duration=`echo $(($(date +%s -d "${timer_end}") - $(date +%s -d "${timer_start}"))) | awk '{t=split("60 S 60 M 24 H 999 D",a);for(n=1;n<t;n+=2){if($1==0)break;S=$1%a[n]a[n+1]S;$1=int($1/a[n])}print S}'`
+duration=`echo $(($(date +%s -d "${timer_end}") - $(date +%s -d "${timer_start}"))) | awk '{t=split("60 s 60 m 24 h 999 d",a);for(n=1;n<t;n+=2){if($1==0)break;s=$1%a[n]a[n+1]s;$1=int($1/a[n])}print s}'`
 
 echo $(date) Mission $(awk 'BEGIN{printf "%.f\n",('$MBlimit'/1024/1024)}') MB. Accomplished $FMB MB \($FGB GB\) in $duration. Thanks! 
