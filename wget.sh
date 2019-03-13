@@ -11,7 +11,15 @@ UA="Mozilla/5.0 (Linux; Android 5.1; OPPO R9m Build/LMY47I; wv) AppleWebKit/537.
 #Url=http://iread.wo.com.cn/download/channelclient/113/624/woreader_28000000.apk
 #############################################################################################################
 
+X=$(awk 'BEGIN{printf "%.f\n",int('$1')}')
+if [ $X -gt 0 ]; then
+MBlimit=$(awk 'BEGIN{printf "%.f\n",('$X'*1024*1024)}')
+echo $(date) Mission $(awk 'BEGIN{printf "%.f\n",('$MBlimit'/1024/1024)}') MB. Starting...
+else
+echo $(date) Mission $MBlimit MB. Starting...
 MBlimit=$(awk 'BEGIN{printf "%.f\n",('$MBlimit'*1024*1024)}')
+fi
+
 length=$(wget --spider -U "$UA" $url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
 Length=$(wget --spider -U "$UA" $Url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
 t=$(awk 'BEGIN{printf int('$MBlimit'%'$Length'/'$length')}')
