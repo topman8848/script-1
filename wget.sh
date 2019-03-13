@@ -33,6 +33,12 @@ url=http://m.miguxue.com/client/file/apkfile/OTT_V2.3.1_J002001F_mgxtwww.apk
 Url=http://pc.miguvideo.com/MiguApi/download/MiguVideo3.3.0.105.exe
 fi
 
+#Set China Telecom url Url by parameter $2: bash wget.sh 2048 dx
+if [ "$2" = "dx" ]; then
+url=http://189newestmailclient.oos-sh.ctyunapi.cn/189mail.apk
+Url=http://www.189.cn/down/CtClientL.apk
+fi
+
 main(){
 	length=$(wget --spider -U "$UA" $url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
 	Length=$(wget --spider -U "$UA" $Url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
