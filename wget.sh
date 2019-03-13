@@ -11,7 +11,12 @@ UA="Mozilla/5.0 (Linux; Android 9; Nokia X6) AppleWebKit/537.36 (KHTML, like Gec
 #Url=http://iread.wo.com.cn/download/channelclient/113/624/woreader_28000000.apk
 #############################################################################################################
 
+if grep '^[1-9][0-9]*$' <<< "$1" >/dev/null;then  
+MBlimit=$(awk 'BEGIN{printf "%.f\n",('$1'*1024*1024)}')
+else
 MBlimit=$(awk 'BEGIN{printf "%.f\n",('$MBlimit'*1024*1024)}')
+fi
+
 length=$(wget --spider -U "$UA" $url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
 Length=$(wget --spider -U "$UA" $Url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
 t=$(awk 'BEGIN{printf int('$MBlimit'%'$Length'/'$length')}')
