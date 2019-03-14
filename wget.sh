@@ -21,23 +21,24 @@ else
 	MBlimit=$(awk 'BEGIN{printf "%.f\n",('$MBlimit'*1024*1024)}')
 fi
 
-#Set China Unicom url Url by parameter $2: bash wget.sh 1024 lt
-if [ "$2" = "lt" ]; then
-	url=http://partner.iread.wo.com.cn/wonderfulapp/10118/apps/yuexianghui.apk
-	Url=http://iread.wo.com.cn/download/channelclient/113/624/woreader_28000000.apk
-fi
-
-#Set China Mobile url Url by parameter $2: bash wget.sh 2048 yd
-if [ "$2" = "yd" ]; then
-	url=http://dlrcs.fetion-portal.com/mobile/RCS_V6.2.8.0129_20190130.apk
-	Url=http://wlanwm.12530.com/newcms/quku/fbpt_rsync_apps/local/signed/MobileMusic671/MobileMusic671_014000D.apk
-fi
-
-#Set China Telecom url Url by parameter $2: bash wget.sh 2048 dx
-if [ "$2" = "dx" ]; then
-	url=http://189newestmailclient.oos-sh.ctyunapi.cn/189mail.apk
-	Url=http://www.189.cn/down/CtClientL.apk
-fi
+#Set url Url by parameter $2: bash wget.sh 1024 lt
+case $2 in
+	lt)
+		#Set China Unicom url Url
+		url=http://partner.iread.wo.com.cn/wonderfulapp/10118/apps/yuexianghui.apk
+		Url=http://iread.wo.com.cn/download/channelclient/113/624/woreader_28000000.apk
+	;;
+	yd)
+		#Set China Mobile url Url
+		url=http://dlrcs.fetion-portal.com/mobile/RCS_V6.2.8.0129_20190130.apk
+		Url=http://wlanwm.12530.com/newcms/quku/fbpt_rsync_apps/local/signed/MobileMusic671/MobileMusic671_014000D.apk
+	;;
+	dx)
+		#Set China Telecom url Url
+		url=http://189newestmailclient.oos-sh.ctyunapi.cn/189mail.apk
+		Url=http://www.189.cn/down/CtClientL.apk
+	;;
+esac
 
 main(){
 	length=$(wget --spider -U "$UA"  -T 3 -t 3 $url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
