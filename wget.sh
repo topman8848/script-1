@@ -4,41 +4,46 @@
 #  wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/wget.sh && chmod +x wget.sh && ./wget.sh
 #  Total download depends on MBlimit, precision depends on url, speed depends on Url, use parameters or change them if necessary. 
 
-#Set MBlimit (default)
+# Set MBlimit Alicdn url Url default
 MBlimit=1024
-
-#Alicdn url Url (default)
 url=http://gxiami.alicdn.com/xiami-desktop/update/XiamiMac-01311741.dmg
 Url=http://download.alicdn.com/dingtalk-desktop/mac_dmg/Release/DingTalk_v4.6.13.1.dmg
 
-#User-Agent
+# User-Agent
 UA="Mozilla/5.0 (Linux; Android 9; Nokia X6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Mobile Safari/537.36"
 
-#Set MBlimit by parameter $1: bash wget.sh 512
-if grep '^[1-9][0-9]*$' <<< "$1" >/dev/null 2>&1;then  
-	MBlimit=$(awk 'BEGIN{printf "%.f\n",('$1'*1024*1024)}')
-else
-	MBlimit=$(awk 'BEGIN{printf "%.f\n",('$MBlimit'*1024*1024)}')
-fi
+# Pre-processing MBlimit|via
+MBlimit=$(awk 'BEGIN{printf "%.f\n",('$MBlimit'*1024*1024)}')
+via="Alicdn"
 
-#Set url Url by parameter $2: bash wget.sh 1024 lt
-case $2 in
-	lt)
-		#Set China Unicom url Url
+#Set [MBlimit|Url|url] by parameters. Usage: bash wget.sh 512 yd
+while [[ $# > 0 ]];do
+	if grep '^[1-9][0-9]*$' <<< "$1" >/dev/null;then
+		MBlimit=$(awk 'BEGIN{printf "%.f\n",('$1'*1024*1024)}')
+		shift
+	fi
+	case $1 in
+	lt|cu|LT|CU)
+		#China Unicom url Url
 		url=http://partner.iread.wo.com.cn/wonderfulapp/10118/apps/yuexianghui.apk
 		Url=http://iread.wo.com.cn/download/channelclient/113/624/woreader_28000000.apk
+		via="China Unicom"
 	;;
-	yd)
-		#Set China Mobile url Url
+	yd|cm|YD|CM)
+		#China Mobile url Url
 		url=http://dlrcs.fetion-portal.com/mobile/RCS_V6.2.8.0129_20190130.apk
 		Url=http://wlanwm.12530.com/newcms/quku/fbpt_rsync_apps/local/signed/MobileMusic671/MobileMusic671_014000D.apk
+		via="China Mobile"
 	;;
-	dx)
-		#Set China Telecom url Url
+	dx|ct|DX|CT)
+		#China Telecom url Url
 		url=http://189newestmailclient.oos-sh.ctyunapi.cn/189mail.apk
-		Url=http://www.189.cn/down/CtClientL.apk
+		Url=http://www.189.cn/down/CtClientL.ap
+		via="China Telecom"
 	;;
-esac
+    	esac
+    	shift
+done
 
 main(){
 	length=$(wget --spider -U "$UA"  -T 3 -t 3 $url -SO- /dev/null 2>&1 | grep -oE "Content-Length: [0-9]+" | grep -oE "[0-9]+")
@@ -53,7 +58,7 @@ main(){
 	exit 1
 	fi
 
-	echo $(date) Mission $(awk 'BEGIN{printf "%.f\n",('$MBlimit'/1024/1024)}') MB. Starting...
+	echo $(date) Mission $(awk 'BEGIN{printf "%.f\n",('$MBlimit'/1024/1024)}') MB via $via. Starting...
 
 	if [ "$t" -gt 0 ]; then
 		echo $(date) $(echo $url | awk -F"/" '{print $NF}') - $(awk 'BEGIN{printf "%.1f\n",('$length'/1024/1024)}') MB will be downloaded $t times...
