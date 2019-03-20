@@ -71,6 +71,7 @@ plugins:
 db: 'webgui.sqlite'
 redis:
   host: '127.0.0.1'
+  port: 6379
   password: ''
   db: 0
 EOF
@@ -121,7 +122,7 @@ systemctl enable caddy && systemctl start caddy
 
 install_redis-server(){
 apt-get install redis-server -y
-systemctl enable redis-server && systemctl start redis-server
+systemctl enable redis-server && service redis-server start
 }
 
 install_ssmgr_ui_cf(){
