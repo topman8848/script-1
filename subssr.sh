@@ -3,13 +3,18 @@
 #  bash <(curl -s https://raw.githubusercontent.com/mixool/script/master/subssr.sh)
 #  wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/subssr.sh && chmod +x subssr.sh && ./subssr.sh
 
-SUB_URL=("https://raw.githubusercontent.com/ImLaoD/sub/master/ssrshare.com" \
-		 "https://raw.githubusercontent.com/AmazingDM/sub/master/ssrshare.com")
+SUB_URL=( \
+	"https://raw.githubusercontent.com/ImLaoD/sub/master/ssrshare.com" \
+	"https://raw.githubusercontent.com/AmazingDM/sub/master/ssrshare.com" \
+	)
+	
 GROUP="FREE"
 
 #ADD YOUR SSR (Must set the same $GROUP)
-MY_SSR=("ssr://dXMuamtpLmFwcDo5Om9yaWdpbjphZXMtMTkyLWN0cjpwbGFpbjpRVE15TkRJek5ESTAvP29iZnNwYXJhbT0mZ3JvdXA9UmxKRlJR" \
-	"ssr://cy51a2kuYXBwOjk6b3JpZ2luOnJjNDpwbGFpbjpRVE15TkRJek5ESTAvP29iZnNwYXJhbT0mZ3JvdXA9UmxKRlJR")
+MY_SSR=( \
+	"ssr://dXMuamtpLmFwcDo5Om9yaWdpbjphZXMtMTkyLWN0cjpwbGFpbjpRVE15TkRJek5ESTAvP29iZnNwYXJhbT0mZ3JvdXA9UmxKRlJR" \
+	"ssr://cy51a2kuYXBwOjk6b3JpZ2luOnJjNDpwbGFpbjpRVE15TkRJek5ESTAvP29iZnNwYXJhbT0mZ3JvdXA9UmxKRlJR" \
+	)
 
 #base64_safe_url_no_n
 BASE_CHARS="+/="
