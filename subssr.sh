@@ -10,13 +10,13 @@ SUB_URL=( \
 	
 GROUP="FREE"
 
-#ADD YOUR SSR (Must set the same $GROUP)
+#add your ssr (must set the same $GROUP)
 MY_SSR=( \
 	"ssr://dXMuamtpLmFwcDo5Om9yaWdpbjphZXMtMTkyLWN0cjpwbGFpbjpRVE15TkRJek5ESTAvP29iZnNwYXJhbT0mZ3JvdXA9UmxKRlJR" \
 	"ssr://cy51a2kuYXBwOjk6b3JpZ2luOnJjNDpwbGFpbjpRVE15TkRJek5ESTAvP29iZnNwYXJhbT0mZ3JvdXA9UmxKRlJR" \
 	)
 
-#base64_safe_url_no_n
+#base64_safe_url_base64_no_n
 BASE_CHARS="+/="
 SAFE_CHARS="-_ "
 function base_safe {
