@@ -1,4 +1,8 @@
 #!/bin/bash
+# Usage:
+#  bash <(curl -s https://raw.githubusercontent.com/mixool/script/master/subssr.sh)
+#  wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/subssr.sh && chmod +x subssr.sh && ./subssr.sh
+
 SUB_URL=("https://raw.githubusercontent.com/ImLaoD/sub/master/ssrshare.com" \
 		 "https://raw.githubusercontent.com/AmazingDM/sub/master/ssrshare.com")
 GROUP="FREE"
