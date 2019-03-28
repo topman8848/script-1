@@ -28,7 +28,7 @@ function no_n_base {
 
 function main {
 	for(( i=0;i<${#SUB_URL[@]};i++)) do
-		SUB_CONF[i]="$(wget -T 3 -t 3 -q -O - ${SUB_URL[i]} | safe_base | base64 -d | awk -F"://" '{print $2}')"
+		SUB_CONF[i]="$(wget -t 5 -T 5 -q -O - ${SUB_URL[i]} | safe_base | base64 -d | awk -F"://" '{print $2}')"
 	done
 
 	CONF_SSR="$(echo "${SUB_CONF[*]}")"
