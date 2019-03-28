@@ -6,7 +6,7 @@
 declare -A SUB_URL_DIC
 declare -A MY_SSR_DIC
 
-######################################################## EDIT Below ########################################################
+######################################################## EDIT BELOW ########################################################
 #group name
 GROUP="FREE"
 
@@ -20,7 +20,7 @@ SUB_URL_DIC=( \
 		[ImLaoD]="https://raw.githubusercontent.com/ImLaoD/sub/master/ssrshare.com" \
 		[AmazingDM]="https://raw.githubusercontent.com/AmazingDM/sub/master/ssrshare.com" \
 	)
-######################################################## EDIT Above ########################################################
+######################################################## EDIT ABOVE ########################################################
 
 #base64_safe_url_base64_no_n
 BASE_CHARS="+/="
