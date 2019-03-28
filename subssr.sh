@@ -7,6 +7,10 @@ SUB_URL=("https://raw.githubusercontent.com/ImLaoD/sub/master/ssrshare.com" \
 		 "https://raw.githubusercontent.com/AmazingDM/sub/master/ssrshare.com")
 GROUP="FREE"
 
+#ADD YOUR SSR (Must set the same $GROUP)
+MY_SSR=("ssr://dXMuamtpLmFwcDo5Om9yaWdpbjphZXMtMTkyLWN0cjpwbGFpbjpRVE15TkRJek5ESTAvP29iZnNwYXJhbT0mZ3JvdXA9UmxKRlJR" \
+	"ssr://cy51a2kuYXBwOjk6b3JpZ2luOnJjNDpwbGFpbjpRVE15TkRJek5ESTAvP29iZnNwYXJhbT0mZ3JvdXA9UmxKRlJR")
+
 #base64_safe_url_no_n
 BASE_CHARS="+/="
 SAFE_CHARS="-_ "
@@ -41,7 +45,8 @@ function main {
 		ERR_CONF_SSR[i]="$(echo "ssr://${DRR_CONF_SSR[i]}")"
 	done
 
-	SUB_SSR="$(echo -n "${ERR_CONF_SSR[*]}" | base64 | no_n_base | base_safe)"
+	FRR_CONF_SSR=(${ERR_CONF_SSR[*]}  ${MY_SSR[*]})
+	SUB_SSR="$(echo -n "${FRR_CONF_SSR[*]}" | base64 | no_n_base | base_safe)"
 }
 
 main
