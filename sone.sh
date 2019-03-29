@@ -61,11 +61,11 @@ get_ipv6(){
     done
     
 #BBR
-modprobe tcp_bbr
-echo "tcp_bbr" >> /etc/modules-load.d/modules.conf
-echo "net.core.default_qdisc = fq" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_congestion_control = bbr" >> /etc/sysctl.conf
-sysctl -p
+#modprobe tcp_bbr
+#echo "tcp_bbr" >> /etc/modules-load.d/modules.conf
+#echo "net.core.default_qdisc = fq" >> /etc/sysctl.conf
+#echo "net.ipv4.tcp_congestion_control = bbr" >> /etc/sysctl.conf
+#sysctl -p
 
 # shadowsocks-libev and simple-obfs and haveged install 
 echo "install shadowsocks-libev from jessie-backports-sloppy"
@@ -88,12 +88,10 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
     "server":${server_value},
     "server_port":${shadowsocksport},
     "password":"${shadowsockspwd}",
-    "method":"chacha20-ietf-poly1305",
+    "method":"chacha20",
     "reuse-port":true,
     "fast-open":true,
-    "no-delay":true,
-    "plugin":"obfs-server",
-    "plugin_opts":"obfs=tls"
+    "no-delay":true
 }
 EOF
 
@@ -106,7 +104,7 @@ if systemctl status shadowsocks-libev >/dev/null; then
     echo -e "Server IP        : \033[41;37m $(get_ip) \033[0m"
     echo -e "Server Port      : \033[41;37m ${shadowsocksport} \033[0m"
     echo -e "Password         : \033[41;37m ${shadowsockspwd} \033[0m"
-    echo -e "Encryption Method: \033[41;37m chacha20-ietf-poly1305 \033[0m"
+    echo -e "Encryption Method: \033[41;37m chacha20 \033[0m"
     echo -e "SS Config File   : \033[41;37m /etc/shadowsocks-libev/config.json \033[0m"
     echo  
     echo -e "Command          : \033[41;37m systemctl status/start/stop/restart shadowsocks-libev \033[0m"
