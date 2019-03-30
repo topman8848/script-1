@@ -2,49 +2,51 @@
 # Usage:
 #   curl https://raw.githubusercontent.com/mixool/script/master/gost.sh | bash
 
-export green='\033[0;32m'
-export plain='\033[0m'
-
-export URL="https://raw.githubusercontent.com/mixool/script/source/gost"
-export NAME="gost"
-export DO="-L=mws://:80"
+METHOD="-L=mwss://:443"
 
 if [ "$(id -u)" != "0" ]; then
     echo "ERROR: Please run as root"
     exit 1
 fi
 
-echo -e "${green}Clean up $NAME${plain}"
-systemctl disable $NAME.service
-killall -9 $NAME
-rm -rf /root/$NAME /etc/systemd/system/$NAME.service
+VER="$(wget -qO- https://github.com/ginuerzh/gost/tags | grep -oE "/ginuerzh/gost/releases/tag/v.*" | sed -n '1p' | sed 's/".*//' | sed 's/^.*v//')"
+VER=${VER:=2.7.2}
+URL="https://github.com/ginuerzh/gost/releases/download/v${VER}/gost_${VER}_linux_amd64.tar.gz"
 
-echo "Download $NAME from $URL"
-curl -L "${URL}" >/root/$NAME
-chmod +x /root/$NAME
+echo "Download gost from $URL"
+wget -O /root/gost_${VER}_linux_amd64.tar.gz $URL
+tar -zxvf /root/gost_${VER}_linux_amd64.tar.gz && cd /root/gost_${VER}_linux_amd64 && mv gost /root/gost && cd
+rm -rf /root/gost_${VER}_linux_amd64*
+chmod +x /root/gost
 
-echo "Generate /etc/systemd/system/$NAME.service"
-cat <<EOF > /etc/systemd/system/$NAME.service
+
+export green='\033[0;32m'
+export plain='\033[0m'
+echo -e "${green}Clean up gost${plain}"
+systemctl disable gost.service
+killall -9 gost
+rm -rf /root/gost
+
+echo "Generate /etc/systemd/system/gost.service"
+cat <<EOF > /etc/systemd/system/gost.service
 [Unit]
-Description=$NAME
+Description=gost
 [Service]
-ExecStart=/root/$NAME $DO
+ExecStart=/root/gost $DO
 Restart=always
 User=root
 [Install]
 WantedBy=multi-user.target
 EOF
 
-echo "Enable $NAME Service"
-systemctl enable $NAME.service
+echo "Enable gost service"
+systemctl enable gost.service && systemctl start gost.service
 
-echo "Start $NAME Service"
-systemctl start $NAME.service
-
-if systemctl status $NAME >/dev/null; then
-	echo "$NAME started."
-	echo -e "${green}vi /etc/systemd/system/$NAME.service${plain} as needed."
-	echo -e "${green}systemctl daemon-reload && systemctl restart $NAME.service${plain} for restart."
+if systemctl status gost >/dev/null; then
+	echo "gost started."
+	echo -e "${green}vi /etc/systemd/system/gost.service${plain} as needed."
+	echo -e "${green}systemctl daemon-reload && systemctl restart gost.service${plain} for restart."
 else
-	echo "$NAME start failed."
+	echo "gost start failed."
+	systemctl status gost -l	
 fi
