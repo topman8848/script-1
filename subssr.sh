@@ -11,23 +11,24 @@ declare -A SUB_URL_DIC
 #group name
 GROUP="FREE"
 
-#ss  !!! PLUGINS AND ENCYPTIONS NOT SUPPORTED BY SSR WILL NOT WORK !!!
-MY_SS_DIC=( \
-		[t]="ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpwMVR6blplR091aDJMdEJSZFZoMVdjbTg1S04vN1loSnRPZFR2Qyt1ZlpkSCtqTW41UXpySnp5SUhuVlV2ZitoQDE3Mi4yNDUuMTU4LjExOTo4NTMw#streisand" \
-		[s]="ss://Y2hhY2hhMjA6VEVTVE1FQDIxMy4xOTAuMjAuNjU6MTM4MDA=#anch" \
-		[c]="ss://Y2hhY2hhMjA6bS5zbGllci5uZXQ@50.3.66.49:443/?plugin=obfs-local%3bobfs%3dtls#phonix-tls" \
-	)	
+#subscriptions
+SUB_URL_DIC=( \
+		[ImLaoD]="https://raw.githubusercontent.com/ImLaoD/sub/master/ssrshare.com" \
+		[AmazingDM]="https://raw.githubusercontent.com/AmazingDM/sub/master/ssrshare.com" \
+	)
+	
 #ssr !!! MUST SET THE SAME $GROUP !!!
 MY_SSR_DIC=( \
 		[ap]="ssr://MjMuNC4xNzcuMTA6MTM4MzI6b3JpZ2luOmNoYWNoYTIwOnBsYWluOmRHVnpkQS8_b2Jmc3BhcmFtPSZyZW1hcmtzPWJubGomZ3JvdXA9UmxKRlJR" \
 		[us]="ssr://MTUzLjE2LjIzLjE3OjE3MDE6b3JpZ2luOmNoYWNoYTIwOjpkR1Z6ZEEvP29iZnNwYXJhbT0mcmVtYXJrcz1jMmMmZ3JvdXA9UmxKRlJR" \
 	)
 
-#subscriptions
-SUB_URL_DIC=( \
-		[ImLaoD]="https://raw.githubusercontent.com/ImLaoD/sub/master/ssrshare.com" \
-		[AmazingDM]="https://raw.githubusercontent.com/AmazingDM/sub/master/ssrshare.com" \
-	)
+#ss  !!! PLUGINS AND ENCYPTIONS NOT SUPPORTED BY SSR WILL NOT WORK !!!
+MY_SS_DIC=( \
+		[t]="ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpwMVR6blplR091aDJMdEJSZFZoMVdjbTg1S04vN1loSnRPZFR2Qyt1ZlpkSCtqTW41UXpySnp5SUhuVlV2ZitoQDE3Mi4yNDUuMTU4LjExOTo4NTMw#streisand" \
+		[s]="ss://Y2hhY2hhMjA6VEVTVE1FQDIxMy4xOTAuMjAuNjU6MTM4MDA=#anch" \
+		[c]="ss://Y2hhY2hhMjA6bS5zbGllci5uZXQ@0.0.0.0:443/?plugin=obfs-local%3bobfs%3dtls#phonix-tls" \
+	)	
 ######################################################## EDIT ABOVE ########################################################
 
 #base64_safe_url_base64_no_n
