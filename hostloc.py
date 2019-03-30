@@ -3,6 +3,7 @@
 
 from urllib import request
 from http import cookiejar
+import time
 
 account_dict = {
     '0': {'username': 'xxxxx', 'password': 'xxxxx'},
@@ -45,6 +46,7 @@ def GetCredit(username, password):
     if isLogin:
         for __x in range(25397, 25410):
             __url = 'https://www.hostloc.com/space-uid-{}.html'.format(__x)
+            time.sleep( 10 )
             GetPage(__url, My_Cookies)
 
 if __name__ == '__main__':
