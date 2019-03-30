@@ -11,7 +11,6 @@ account_dict = {
     '2': {'username': 'zzzzz', 'password': 'zzzzz'},
 }
 
-
 def Login(URL, UserData):
     __cookies = ''
     __cookie = cookiejar.CookieJar()
@@ -22,12 +21,10 @@ def Login(URL, UserData):
         __cookies += cookie.name + '=' + cookie.value + ';'
     return __cookies
 
-
 def GetPage(URL, Header_Cookies):
     __Header = {'Cookie': str(Header_Cookies)}
     __req = request.Request(URL, headers=__Header)
     return request.urlopen(__req).read().decode('utf-8')
-
 
 def GetCredit(username, password):
     Login_URL = 'https://www.hostloc.com/member.php?mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes&inajax=1'
