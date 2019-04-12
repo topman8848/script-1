@@ -1,6 +1,6 @@
 ### Some scripts collection  for Debian 8 64
 ```bash
-wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/sources.sh && chmod +x sources.sh && ./sources.sh && apt-get install curl -y
+wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/sources.sh && chmod +x sources.sh && ./sources.sh
 ```  
 ---  
 #### VPS BBR  
