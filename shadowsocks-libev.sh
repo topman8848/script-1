@@ -143,8 +143,9 @@ get_ipv6(){
 
 # shadowsocks-libev and simple-obfs install 
 echo "install shadowsocks-libev from jessie-backports-sloppy"
-sh -c 'printf "deb http://deb.debian.org/debian jessie-backports main\n" > /etc/apt/sources.list.d/jessie-backports.list'
-sh -c 'printf "deb http://deb.debian.org/debian jessie-backports-sloppy main" >> /etc/apt/sources.list.d/jessie-backports.list'
+
+sh -c 'printf "deb http://archive.debian.org/debian jessie-backports main\n" > /etc/apt/sources.list.d/jessie-backports.list'
+sh -c 'printf "deb http://archive.debian.org/debian jessie-backports-sloppy main" >> /etc/apt/sources.list.d/jessie-backports.list'
 apt update
 apt -t jessie-backports-sloppy install shadowsocks-libev simple-obfs -y
 
