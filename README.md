@@ -6,7 +6,7 @@
 bash <(wget -qO - https://raw.githubusercontent.com/mixool/script/master/sources.sh)
 ```  
   
-#### VPS BBR  
+#### RINETD BBR  
 `curl https://raw.githubusercontent.com/mixool/script/master/rinetd.sh | bash`  
   
 #### GOST PROXY 
