@@ -2,6 +2,9 @@
 # Usage:
 #   curl https://raw.githubusercontent.com/mixool/script/master/shadowsocks-libev.sh | bash
 
+# Make sure only root can run this script
+[[ $EUID -ne 0 ]] && echo "Error, This script must be run as root!" && exit 1
+
 # Stream Ciphers
 ciphers=(
 aes-256-gcm
@@ -28,12 +31,6 @@ rc4-md5
 red='\033[0;31m'
 green='\033[0;32m'
 plain='\033[0m'
-
-# Make sure only root can run this script
-if [ "$(id -u)" != "0" ]; then
-    echo "ERROR: Please run as root"
-    exit 1
-fi
 
 # Disable selinux
 disable_selinux(){
@@ -143,11 +140,10 @@ get_ipv6(){
 
 # shadowsocks-libev and simple-obfs install 
 echo "install shadowsocks-libev from jessie-backports-sloppy"
-
 sh -c 'printf "deb http://archive.debian.org/debian jessie-backports main\n" > /etc/apt/sources.list.d/jessie-backports.list'
 sh -c 'printf "deb http://archive.debian.org/debian jessie-backports-sloppy main" >> /etc/apt/sources.list.d/jessie-backports.list'
-apt update
-apt -t jessie-backports-sloppy install shadowsocks-libev simple-obfs -y
+apt -o Acquire::Check-Valid-Until=false update
+apt -t jessie-backports-sloppy install haveged shadowsocks-libev simple-obfs -y
 
 # Config shadowsocks
 server_value="\"0.0.0.0\""
@@ -169,7 +165,9 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
 EOF
 
 # start ss-server
-systemctl enable shadowsocks-libev && systemctl start shadowsocks-libev && systemctl restart shadowsocks-libev
+systemctl enable haveged shadowsocks-libev
+systemctl start haveged shadowsocks-libev
+systemctl restart haveged shadowsocks-libev
 
 #start obfs-server
 setcap cap_net_bind_service+ep /usr/bin/obfs-server
@@ -186,7 +184,9 @@ User=root
 WantedBy=multi-user.target
 EOF
 
-systemctl enable obfs-server.service && systemctl start obfs-server.service && systemctl restart obfs-server.service
+systemctl enable obfs-server.service
+systemctl start obfs-server.service
+systemctl restart obfs-server.service
 
 #Monitor
 apt-get install cron -y
