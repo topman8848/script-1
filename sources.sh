@@ -12,5 +12,5 @@ deb http://security.debian.org jessie/updates main
 deb-src http://security.debian.org jessie/updates main
 EOF
 
-apt-get clean
-apt-get update
+apt-get clean && apt-get update
+apt-get install wget curl vim -y
