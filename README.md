@@ -1,8 +1,12 @@
 ### Some scripts collection  for Debian 8 64
+
+---  
+#### Edit sources.list then install wget/curl/vim. 
+> [解决Debian 8运行apt get update时候的404错误](https://github.com/mixool/mixool.github.io/wiki/%E8%A7%A3%E5%86%B3Debian-8%E8%BF%90%E8%A1%8Capt-get-update%E6%97%B6%E5%80%99%E7%9A%84404%E9%94%99%E8%AF%AF)
 ```bash
 wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/sources.sh && chmod +x sources.sh && ./sources.sh
 ```  
----  
+  
 #### VPS BBR  
 `curl https://raw.githubusercontent.com/mixool/script/master/rinetd.sh | bash`  
   
