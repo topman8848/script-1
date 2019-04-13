@@ -7,9 +7,12 @@
 cat <<EOF > /etc/apt/sources.list
 deb http://archive.debian.org/debian/ jessie main
 deb-src http://archive.debian.org/debian/ jessie main
-
 deb http://security.debian.org jessie/updates main
 deb-src http://security.debian.org jessie/updates main
+EOF
+
+cat <<EOF > /etc/apt/apt.conf.d/10no--check-valid-until
+Acquire::Check-Valid-Until "0";
 EOF
 
 apt-get clean && apt-get update
