@@ -15,22 +15,6 @@ apt-get -t jessie-backports install linux-image-amd64 -y
 
 echo "net.core.default_qdisc = fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control = bbr" >> /etc/sysctl.conf
-sysctl -p >/dev/null 2>&1
+sysctl -p
 
-uname -r
-
-cat /etc/sysctl.conf
-
-sysctl net.ipv4.tcp_available_congestion_control
-
-sysctl net.ipv4.tcp_congestion_control
-
-read -p "The system needs to reboot.Do you want to restart system? [y/n]" is_reboot </dev/tty
-
-if [[ ${is_reboot} == "y" || ${is_reboot} == "Y" ]]; then
-        echo "Rebooting..."
-        reboot
-    else
-        echo "Reboot has been canceled..."
-        exit 0
-    fi
+echo "OK!!! Then please reboot system to enable BBR."
