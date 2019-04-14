@@ -1,4 +1,4 @@
-### Some scripts collection  for Debian 8 64
+### Some scripts collection  for Debian 9 64
 ```bash
 apt update && apt install curl -y
 ```  
