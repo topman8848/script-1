@@ -1,6 +1,6 @@
 ### Some scripts collection  for Debian 9 64
 ```bash
-apt update && apt install curl -y
+apt update && apt install curl vim wget -y
 ```  
 ---  
 ## Only for myself.  
