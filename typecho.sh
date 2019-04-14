@@ -31,11 +31,12 @@ install_main(){
 	apt update
 	apt autoremove apache2 -y
 	apt install php7.0-cgi php7.0-fpm php7.0-curl php7.0-gd php7.0-mbstring php7.0-xml php7.0-sqlite3 sqlite3 -y
+	ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 }
 
 install_typecho(){
 	wget -O /tmp/typecho.tar.gz https://github.com/typecho/typecho/releases/download/v1.1-17.10.30-release/1.1.17.10.30.-release.tar.gz
-	[[ ! -d "/var/www/typecho" ]] && mkdir /var/www/typecho || rm -rf /var/www/typecho/*
+	[[ ! -d "/var/www/typecho" ]] && mkdir -p /var/www/typecho || rm -rf /var/www/typecho/*
 	tar zxvf /tmp/typecho.tar.gz -C /var/www/typecho/ && mv /var/www/typecho/build/* /var/www/typecho
 	rm -rf /tmp/typecho.tar.gz /var/www/typecho/build
 	chmod -Rf 755 /var/www/typecho/* 
