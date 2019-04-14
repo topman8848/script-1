@@ -2,7 +2,7 @@
 # Usage:
 #   curl https://raw.githubusercontent.com/mixool/script/debian-9/shadowsocks-libev.sh | bash
 
-# Make sure only root can run this script
+# Only root can run this script
 [[ $EUID -ne 0 ]] && echo "Error, This script must be run as root!" && exit 1
 
 get_ipv6(){
@@ -15,7 +15,7 @@ get_ipv6(){
 }
 
 # Set password
-	read -p "Please input password for shadowsocks-libev:" shadowsockspwd </dev/tty
+    read -p "Please input password for shadowsocks-libev:" shadowsockspwd </dev/tty
     echo
     echo "---------------------------"
     echo "password = ${shadowsockspwd}"
@@ -23,8 +23,8 @@ get_ipv6(){
     echo
 
 # Set port
-	while true
-	do
+    while true
+    do
     echo -e "Please input port for shadowsocks-libev [1-65535]:"
     read -p "(Default port: 8443):" shadowsocksport </dev/tty
     [ -z "$shadowsocksport" ] && shadowsocksport="8443"
@@ -38,15 +38,14 @@ get_ipv6(){
             echo
             break
         else
-            echo -e "Input error, please input a number between 1 and 65535"
+            echo "Input error, please input a number between 1 and 65535"
         fi
     else
-        echo -e "Input error, please input a number between 1 and 65535"
+        echo "Input error, please input a number between 1 and 65535"
     fi
     done
     
-# shadowsocks-libev and haveged install 
-echo "install shadowsocks-libev from jessie-backports-sloppy"
+# Install shadowsocks-libev and haveged from stretch-backports
 sh -c 'printf "deb http://deb.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/stretch-backports.list'
 apt update
 apt -t stretch-backports install shadowsocks-libev haveged -y
@@ -70,8 +69,8 @@ cat > /etc/shadowsocks-libev/config.json<<-EOF
 }
 EOF
 
-# start haveged and ss-server
+# Start haveged and ss-server
 systemctl enable haveged shadowsocks-libev && systemctl start haveged shadowsocks-libev
 
-#Informations of shadowsocks-libev
+# Informations of shadowsocks-libev
 systemctl status shadowsocks-libev
