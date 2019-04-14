@@ -46,7 +46,7 @@ install_caddy(){
 	curl https://getcaddy.com | bash -s personal tls.dns.cloudflare
 	[[ ! -d "/etc/caddy" ]] && mkdir /etc/caddy
 
-	cat <<EOF > /etc/caddy/Caddyfile
+cat > /etc/caddy/Caddyfile<<-EOF
 ${domain} {
 	gzip
 	root /var/www/typecho
@@ -61,7 +61,7 @@ ${domain} {
 	}
 EOF
 
-	cat <<EOF > /etc/systemd/system/caddy.service
+cat <<EOF > /etc/systemd/system/caddy.service
 [Unit]
 Description=Caddy HTTP/2 web server
 Documentation=https://caddyserver.com/docs
