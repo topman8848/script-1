@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 # Usage:
-# curl https://raw.githubusercontent.com/mixool/script/debian-9/typecho.sh | bash
+# wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/debian-9/typecho.sh && chmod +x typecho.sh && bash typecho.sh
 
 preinstall_conf(){
     # set domain and email for caddyfile
@@ -44,17 +44,16 @@ install_typecho(){
 
 install_caddy(){
 	curl https://getcaddy.com | bash -s personal tls.dns.cloudflare
-	mkdir /etc/caddy
+	[[ ! -d "/etc/caddy" ]] && mkdir /etc/caddy
 
-cat <<EOF > /etc/caddy/Caddyfile
-http://${domain} {
-	redir https://${domain}{url}
-	}
-https://${domain} {
+	cat <<EOF > /etc/caddy/Caddyfile
+${domain} {
 	gzip
-	tls ${email}
 	root /var/www/typecho
 	fastcgi / /run/php/php7.0-fpm.sock php
+	tls {
+  		dns cloudflare
+  	    }
 	rewrite {
 		if {path} not_match ^\/admin
 		to {path} {path}/ /index.php?{query}
@@ -62,7 +61,7 @@ https://${domain} {
 	}
 EOF
 
-cat <<EOF > /etc/systemd/system/caddy.service
+	cat <<EOF > /etc/systemd/system/caddy.service
 [Unit]
 Description=Caddy HTTP/2 web server
 Documentation=https://caddyserver.com/docs
