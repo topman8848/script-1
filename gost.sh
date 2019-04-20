@@ -1,50 +1,30 @@
 #!/bin/bash
 # Usage:
-#   curl https://raw.githubusercontent.com/mixool/script/master/gost.sh | bash
+#   curl https://raw.githubusercontent.com/mixool/script/debian-9/gost.sh | bash
 
-export green='\033[0;32m'
-export plain='\033[0m'
+METHOD="-L=mwss://:443 -L=http2://:444"
 
-export URL="https://raw.githubusercontent.com/mixool/script/source/gost"
-export NAME="gost"
-export DO="-L=mws://:80"
+VER="$(wget -qO- https://github.com/ginuerzh/gost/tags | grep -oE "/tag/v.*" | sed -n '1p' | sed 's/\".*//;s/^.*v//')"
+VER=${VER:=2.7.2}
+URL="https://github.com/ginuerzh/gost/releases/download/v${VER}/gost_${VER}_linux_amd64.tar.gz"
 
-if [ "$(id -u)" != "0" ]; then
-    echo "ERROR: Please run as root"
-    exit 1
-fi
+echo "Downloading gost_${VER} to /root/gost from $URL"
+rm -rf /root/gost
+wget -O /root/gost_${VER}_linux_amd64.tar.gz $URL
+tar -zxvf /root/gost_${VER}_linux_amd64.tar.gz && cd /root/gost_${VER}_linux_amd64 && mv gost /root/gost && cd
+rm -rf /root/gost_${VER}_linux_amd64*
+chmod +x /root/gost
 
-echo -e "${green}Clean up $NAME${plain}"
-systemctl disable $NAME.service
-killall -9 $NAME
-rm -rf /root/$NAME /etc/systemd/system/$NAME.service
-
-echo "Download $NAME from $URL"
-curl -L "${URL}" >/root/$NAME
-chmod +x /root/$NAME
-
-echo "Generate /etc/systemd/system/$NAME.service"
-cat <<EOF > /etc/systemd/system/$NAME.service
+echo "Generate /etc/systemd/system/gost.service"
+cat <<EOF > /etc/systemd/system/gost.service
 [Unit]
-Description=$NAME
+Description=gost
 [Service]
-ExecStart=/root/$NAME $DO
+ExecStart=/root/gost $METHOD
 Restart=always
 User=root
 [Install]
 WantedBy=multi-user.target
 EOF
 
-echo "Enable $NAME Service"
-systemctl enable $NAME.service
-
-echo "Start $NAME Service"
-systemctl start $NAME.service
-
-if systemctl status $NAME >/dev/null; then
-	echo "$NAME started."
-	echo -e "${green}vi /etc/systemd/system/$NAME.service${plain} as needed."
-	echo -e "${green}systemctl daemon-reload && systemctl restart $NAME.service${plain} for restart."
-else
-	echo "$NAME start failed."
-fi
+systemctl enable gost.service && systemctl daemon-reload && systemctl restart gost.service && systemctl status gost -l
