@@ -2,7 +2,7 @@
 # Usage:
 #   curl https://raw.githubusercontent.com/mixool/script/master/gost.sh | bash
 
-METHOD="-L=mwss://:443"
+METHOD="-L=mwss://:443 -L=http2://:444"
 
 VER="$(wget -qO- https://github.com/ginuerzh/gost/tags | grep -oE "/tag/v.*" | sed -n '1p' | sed 's/\".*//;s/^.*v//')"
 VER=${VER:=2.7.2}
