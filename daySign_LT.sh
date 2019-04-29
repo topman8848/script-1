@@ -8,7 +8,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 username="$1"
 password="$2"
 
-# deviceId: if you failed to login , maybe you need to change it.
+# deviceId: if you failed to login , maybe you need to change it to your IMEI.
 deviceId="213313966308801"
 
 # urls
