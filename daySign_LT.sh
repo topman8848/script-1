@@ -57,16 +57,16 @@ function daySign() {
   curl -s -b ./cookie_D.txt -c ./cookie_E.txt --data "token=$token" $query_url >/dev/null
 
   # goldTotal_before
-  echo goldTotal_before：$(curl -s -b ./cookie_E.txt $gold_url) ; sleep 3
+  echo goldTotal_before：$(curl -s -b ./cookie_E.txt $gold_url)
 
   # daySign_status
-  echo daySign_status： $(curl -s -b ./cookie_E.txt $sign_url) ; sleep 3
+  echo daySign_status： $(curl -s -b ./cookie_E.txt $sign_url)
   
   # weiboSign_status
-  echo weiboSign_status：$(curl -s -b ./cookie_E.txt --data "transId=$timestamp.$(date +%s%N)&userNumber=$username&taskCode=TA590934984&finishTime=$timestamp&taskType=DAILY_TASK" https://act.10010.com/signinAppH/commonTask) ; sleep 3
+  echo weiboSign_status：$(curl -s -b ./cookie_E.txt --data "transId=$timestamp.$(date +%s%N)&userNumber=$username&taskCode=TA590934984&finishTime=$timestamp&taskType=DAILY_TASK" https://act.10010.com/signinAppH/commonTask)
 
   # goldTotal_now
-  echo goldTotal_now：$(curl -s -b ./cookie_E.txt $gold_url) ; sleep 3
+  echo goldTotal_now：$(curl -s -b ./cookie_E.txt $gold_url)
 }
 
 function doubleball() {
