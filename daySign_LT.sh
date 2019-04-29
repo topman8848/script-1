@@ -49,14 +49,14 @@ function daySign() {
   echo $(date) starting daySign...
   curl -s -b ./cookie_D.txt -c ./cookie_E.txt --data "token=$token" $query_url >/dev/null
 
-  # goldTotal_yesterday
-  echo goldTotal_yesterday：$(curl -s -b ./cookie_E.txt $gold_url)
+  # goldTotal_before
+  echo goldTotal_before：$(curl -s -b ./cookie_E.txt $gold_url)
 
   # daySign_status
   echo daySign_status： $(curl -s -b ./cookie_E.txt $sign_url)
 
-  # goldTotal_today
-  echo goldTotal_today：$(curl -s -b ./cookie_E.txt $gold_url)
+  # goldTotal_now
+  echo goldTotal_now：$(curl -s -b ./cookie_E.txt $gold_url)
 }
 
 function doubleball() {
