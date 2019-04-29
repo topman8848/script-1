@@ -35,6 +35,7 @@ function urlencode() {
 }
 
 function daySign() {
+  echo 
   echo $(date) starting daySign...
   crypt_username=$(rsaencrypt $username)
   crypt_password=$(rsaencrypt $password)
@@ -64,6 +65,7 @@ function daySign() {
 function doubleball() {
   # doubleball: 3 times free each day.
   usernumberofjsp=$(curl -s -b ./cookie_E.txt  -c ./cookie_F.txt http://m.client.10010.com/dailylottery/static/textdl/userLogin | grep -oE "encryptmobile=\w*" | awk -F"encryptmobile=" '{print $2}')
+  echo 
   echo $(date) starting doubleball...
   echo 1： $(curl -s -b ./cookie_F.txt --data "usernumberofjsp=$usernumberofjsp" http://m.client.10010.com/dailylottery/static/doubleball/choujiang) ; sleep 3
   echo 2： $(curl -s -b ./cookie_F.txt --data "usernumberofjsp=$usernumberofjsp" http://m.client.10010.com/dailylottery/static/doubleball/choujiang) ; sleep 3
@@ -77,4 +79,5 @@ doubleball
 rm ./cookie_D.txt ./cookie_E.txt ./cookie_F.txt
 
 # exit
+echo 
 echo $(date) Accomplished daySign_LT.sh. Thanks! && exit 0
