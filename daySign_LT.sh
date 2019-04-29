@@ -35,7 +35,7 @@ function urlencode() {
 }
 
 function daySign() {
-  echo starting daySign...
+  echo $(date) starting daySign...
   crypt_username=$(rsaencrypt $username)
   crypt_password=$(rsaencrypt $password)
 
@@ -47,7 +47,8 @@ function daySign() {
   curl -s -D ./cookie_D.txt --data "isRemberPwd=true&deviceId=$deviceId&password=$urlencode_password&netWay=Wifi&mobile=$urlencode_username&yw_code=&timestamp=$timestamp&appId=dda726c5e6aa1ee96e62a88ecae46f11635696d85fc21cff4333b0eded85fc21dd4177d8ee50e52b977ee1d25e032b961585631b4fc010c2f1ac8c8e04a6791e&keyVersion=&deviceBrand=Oneplus&pip=123.147.248.206&provinceChanel=general&version=android%406.0100&deviceModel=oneplus%20a5010&deviceOS=android6.0.1&deviceCode=$deviceId" $login_url >/dev/null
 
   token=$(cat ./cookie_D.txt | grep -oE "a_token=.*" | awk -F"a_token=" '{print $2}')
-
+  [[ "$token" = "" ]] && echo "Error,Login failed." && exit 1
+  
   curl -s -b ./cookie_D.txt -c ./cookie_E.txt --data "token=$token" $query_url >/dev/null
 
   # goldTotal_yesterday
@@ -63,7 +64,7 @@ function daySign() {
 function doubleball() {
   # doubleball: 3 times free each day.
   usernumberofjsp=$(curl -s -b ./cookie_E.txt  -c ./cookie_F.txt http://m.client.10010.com/dailylottery/static/textdl/userLogin | grep -oE "encryptmobile=\w*" | awk -F"encryptmobile=" '{print $2}')
-  echo starting doubleball...
+  echo $(date) starting doubleball...
   echo 1： $(curl -s -b ./cookie_F.txt --data "usernumberofjsp=$usernumberofjsp" http://m.client.10010.com/dailylottery/static/doubleball/choujiang) ; sleep 3
   echo 2： $(curl -s -b ./cookie_F.txt --data "usernumberofjsp=$usernumberofjsp" http://m.client.10010.com/dailylottery/static/doubleball/choujiang) ; sleep 3
   echo 3： $(curl -s -b ./cookie_F.txt --data "usernumberofjsp=$usernumberofjsp" http://m.client.10010.com/dailylottery/static/doubleball/choujiang) ; sleep 3
@@ -74,3 +75,6 @@ doubleball
 
 # clean
 rm ./cookie_D.txt ./cookie_E.txt ./cookie_F.txt
+
+# exit
+echo $(date) Accomplished daySign_LT.sh. Thanks! && exit 0
