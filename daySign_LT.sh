@@ -18,9 +18,17 @@ sign_url="https://act.10010.com/SigninApp/signin/daySign.do"
 gold_url="https://act.10010.com/SigninApp/signin/goldTotal.do"
 
 function rsaencrypt() {
-  apiurl="http://api.bejson.com/btools/tools/enc/rsa/buildRSAEncryptByPublicKey"
-  pubkey="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDc%2BCZK9bBA9IU%2BgZUOc6FUGu7yO9WpTNB0PzmgFBh96Mg1WrovD1oqZ%2BeIF4LjvxKXGOdI79JRdve9NPhQo07%2BuqGQgE4imwNnRx7PFtCRryiIEcUoavuNtuRVoBAm6qdB0SrctgaqGfLgKvZHOnwTjyNqjBUxzMeQlEC2czEMSwIDAQAB"
-  echo $(curl -s -d "key=$pubkey&data=${1}&rsaType=rsa" $apiurl | awk -F'["]' '{print $6}')
+  cat > /tmp/rsa_public.key <<-EOF
+-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDc+CZK9bBA9IU+gZUOc6
+FUGu7yO9WpTNB0PzmgFBh96Mg1WrovD1oqZ+eIF4LjvxKXGOdI79JRdve9
+NPhQo07+uqGQgE4imwNnRx7PFtCRryiIEcUoavuNtuRVoBAm6qdB0Srctg
+aqGfLgKvZHOnwTjyNqjBUxzMeQlEC2czEMSwIDAQAB
+-----END PUBLIC KEY-----
+EOF
+
+  crypt_username=$(echo -n $username | openssl rsautl -encrypt -inkey /tmp/rsa_public.key -pubin -out >(base64 | tr "\n" " " | sed s/[[:space:]]//g))
+  crypt_password=$(echo -n $password | openssl rsautl -encrypt -inkey /tmp/rsa_public.key -pubin -out >(base64 | tr "\n" " " | sed s/[[:space:]]//g))
 }
 
 function urlencode() {
@@ -35,14 +43,13 @@ function urlencode() {
 }
 
 function daySign() {
-  crypt_username=$(rsaencrypt $username)
-  crypt_password=$(rsaencrypt $password)
   urlencode_username=$(urlencode $crypt_username)
   urlencode_password=$(urlencode $crypt_password)
   timestamp=$(date +"%Y-%m-%d_%H-%M-%S" | awk -F'[-_-]' '{print $1$2$3$4$5$6}')
+  random_weibo_stamp=$(shuf -i 1533965577286299-9533965577286299 -n 1)
 
   # querySigninActivity cookies
-  curl -s -D ./cookie_D.txt --data "isRemberPwd=true&deviceId=$deviceId&password=$urlencode_password&netWay=Wifi&mobile=$urlencode_username&yw_code=&timestamp=$timestamp&appId=dda726c5e6aa1ee96e62a88ecae46f11635696d85fc21cff4333b0eded85fc21dd4177d8ee50e52b977ee1d25e032b961585631b4fc010c2f1ac8c8e04a6791e&keyVersion=&deviceBrand=Oneplus&pip=123.147.248.206&provinceChanel=general&version=android%406.0100&deviceModel=oneplus%20a5010&deviceOS=android6.0.1&deviceCode=$deviceId" $login_url >/dev/null
+  curl -s -D ./cookie_D.txt --data "isRemberPwd=true&deviceId=$deviceId&password=$urlencode_password&netWay=Wifi&mobile=$urlencode_username&yw_code=&timestamp=$timestamp&appId=dda726c5e6aa1ee96e62a88ecae46f11635696d85fc21cff4333b0eded85fc21dd4177d8ee50e52b977ee1d25e032b961585631b4fc010c2f1ac8c8e04a6791e&keyVersion=&deviceBrand=Oneplus&pip=10.0.10.10&provinceChanel=general&version=android%406.0100&deviceModel=oneplus%20a5010&deviceOS=android6.0.1&deviceCode=$deviceId" $login_url >/dev/null
   token=$(cat ./cookie_D.txt | grep -oE "a_token=.*" | awk -F"a_token=" '{print $2}')
   [[ "$token" = "" ]] && echo "Error, starting daySign failed." && exit 1
   echo 
@@ -50,13 +57,16 @@ function daySign() {
   curl -s -b ./cookie_D.txt -c ./cookie_E.txt --data "token=$token" $query_url >/dev/null
 
   # goldTotal_before
-  echo goldTotal_before：$(curl -s -b ./cookie_E.txt $gold_url)
+  echo goldTotal_before：$(curl -s -b ./cookie_E.txt $gold_url) ; sleep 3
 
   # daySign_status
-  echo daySign_status： $(curl -s -b ./cookie_E.txt $sign_url)
+  echo daySign_status： $(curl -s -b ./cookie_E.txt $sign_url) ; sleep 3
+  
+  # weiboSign_status
+  echo weiboSign_status：$(curl -s -b ./cookie_E.txt --data "transId=$timestamp.$(date +%s%N)&userNumber=$username&taskCode=TA590934984&finishTime=$timestamp&taskType=DAILY_TASK" https://act.10010.com/signinAppH/commonTask) ; sleep 3
 
   # goldTotal_now
-  echo goldTotal_now：$(curl -s -b ./cookie_E.txt $gold_url)
+  echo goldTotal_now：$(curl -s -b ./cookie_E.txt $gold_url) ; sleep 3
 }
 
 function doubleball() {
@@ -71,11 +81,12 @@ function doubleball() {
   echo 3rd： $(curl -s -b ./cookie_F.txt --data "usernumberofjsp=$usernumberofjsp" http://m.client.10010.com/dailylottery/static/doubleball/choujiang) ; sleep 3
 }
 
+rsaencrypt
 daySign
 doubleball
 
 # clean
-rm ./cookie_D.txt ./cookie_E.txt ./cookie_F.txt
+rm /tmp/rsa_public.key ./cookie_D.txt ./cookie_E.txt ./cookie_F.txt
 
 # exit
 echo 
