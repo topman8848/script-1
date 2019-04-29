@@ -8,8 +8,8 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 username="$1"
 password="$2"
 
-# deviceId: if you failed to login , you need to change it.
-deviceId="008796756028082"
+# deviceId: if you failed to login , maybe you need to change it.
+deviceId="213313966308801"
 
 # urls
 login_url="http://m.client.10010.com/mobileService/login.htm"
