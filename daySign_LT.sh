@@ -104,7 +104,7 @@ daySign
 doubleball
 
 # clean
-rm /tmp/rsa_public.key ./cookie_D.txt ./cookie_E.txt ./cookie_F.txt
+rm /tmp/rsa_public.key　/tmp/signdata　./cookie_D.txt ./cookie_E.txt ./cookie_F.txt
 
 # exit
 echo 
