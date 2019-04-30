@@ -48,8 +48,27 @@ function daySign() {
   timestamp=$(date +"%Y-%m-%d_%H-%M-%S" | awk -F'[-_-]' '{print $1$2$3$4$5$6}')
   random_weibo_stamp=$(shuf -i 1533965577286299-9533965577286299 -n 1)
 
+    cat > /tmp/signdata <<-EOF
+isRemberPwd=true
+&deviceId=$deviceId
+&password=$urlencode_password
+&netWay=Wifi
+&mobile=$urlencode_username
+&yw_code: 
+&timestamp=$timestamp
+&appId=dda726c5e6aa1ee96e62a88ecae46f11635696d85fc21cff4333b0eded85fc21dd4177d8ee50e52b977ee1d25e032b961585631b4fc010c2f1ac8c8e04a6791e
+&keyVersion:
+&deviceBrand=Oneplus
+&pip=10.0.10.10
+&provinceChanel=general
+&version=android%406.0100
+&deviceModel=oneplus%20a5010
+&deviceOS=android6.0.1
+&deviceCode=$deviceId
+EOF
+
   # querySigninActivity cookies
-  curl -s -D ./cookie_D.txt --data "isRemberPwd=true&deviceId=$deviceId&password=$urlencode_password&netWay=Wifi&mobile=$urlencode_username&yw_code=&timestamp=$timestamp&appId=dda726c5e6aa1ee96e62a88ecae46f11635696d85fc21cff4333b0eded85fc21dd4177d8ee50e52b977ee1d25e032b961585631b4fc010c2f1ac8c8e04a6791e&keyVersion=&deviceBrand=Oneplus&pip=10.0.10.10&provinceChanel=general&version=android%406.0100&deviceModel=oneplus%20a5010&deviceOS=android6.0.1&deviceCode=$deviceId" $login_url >/dev/null
+  curl -s -D ./cookie_D.txt -d @/tmp/signdata $login_url >/dev/null
   token=$(cat ./cookie_D.txt | grep -oE "a_token=.*" | awk -F"a_token=" '{print $2}')
   [[ "$token" = "" ]] && echo "Error, starting daySign failed." && exit 1
   echo 
