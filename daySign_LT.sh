@@ -96,7 +96,7 @@ EOF
 function doubleball() {
   # doubleball: 3 times free each day.
   usernumberofjsp=$(curl -s -b $workdir/cookie_B.txt -c $workdir/cookie_C.txt http://m.client.10010.com/dailylottery/static/textdl/userLogin | grep -oE "encryptmobile=\w*" | awk -F"encryptmobile=" '{print $2}')
-  [[ "$usernumberofjsp" = "" ]] && echo "Error, starting doubleball failed." && exit 1
+  [[ "$usernumberofjsp" = "" ]] && echo "Error, starting doubleball failed." && return 1
   echo 
   echo $(date) starting doubleball...
   echo 1st： $(curl -s -b $workdir/cookie_C.txt --data "usernumberofjsp=$usernumberofjsp" http://m.client.10010.com/dailylottery/static/doubleball/choujiang) ; sleep 3
