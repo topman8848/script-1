@@ -82,7 +82,7 @@ EOF
   echo daySign_status： $(curl -s -b ./cookie_E.txt $sign_url)
   
   # weiboSign_status
-  echo weiboSign_status：$(curl -s -b ./cookie_E.txt --data "transId=$timestamp.$(date +%s%N)&userNumber=$username&taskCode=TA590934984&finishTime=$timestamp&taskType=DAILY_TASK" https://act.10010.com/signinAppH/commonTask)
+  echo weiboSign_status：$(curl -s -b ./cookie_E.txt --data "transId=$timestamp$random_weibo_stamp&userNumber=$username&taskCode=TA590934984&finishTime=$timestamp&taskType=DAILY_TASK" https://act.10010.com/signinAppH/commonTask)
 
   # goldTotal_now
   echo goldTotal_now：$(curl -s -b ./cookie_E.txt $gold_url)
