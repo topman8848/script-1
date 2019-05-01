@@ -108,7 +108,7 @@ function tree() {
   echo 
   echo $(date) starting arbor day...
   curl -s -b $workdir/cookie_B.txt -c $workdir/cookie_D.txt --data "timestamp=$timestamp&desmobile=$username&version=android%406.0100" https://m.client.10010.com/mactivity/arborday/index >/dev/null ; sleep 3
-  curl -s -b $workdir/cookie_D.txt -c $workdir/cookie_E.txt --data "transId=$timestamp$(shuf -i 100-600 -n 1)&phoneNum=$username&serviceCode=takeActivityInfo&channel=mobileClient&url=https%3A%2F%2Fm.client.10010.com%2Fmactivity%2Farborday%2Findex&city=831" https://m.client.10010.com/freegift-interface/appUrlShare/takeActivityInfo ; sleep 3
+  curl -s -b $workdir/cookie_D.txt -c $workdir/cookie_E.txt --data "transId=$timestamp$(shuf -i 123-987 -n 1)&phoneNum=$username&serviceCode=takeActivityInfo&channel=mobileClient&url=https%3A%2F%2Fm.client.10010.com%2Fmactivity%2Farborday%2Findex&city=831" https://m.client.10010.com/freegift-interface/appUrlShare/takeActivityInfo ; sleep 3
   curl -s -b $workdir/cookie_E.txt -c $workdir/cookie_H.txt --data "thirdUrl=https%3A%2F%2Fm.client.10010.com%2Fmactivity%2Farborday%2Findex" https://m.client.10010.com/mobileService/customer/getShareRedisInfo.htm  ; sleep 3 
   curl -s -b $workdir/cookie_H.txt https://m.client.10010.com/mactivity/arborday/arbor/1/0/1/grow
 }
