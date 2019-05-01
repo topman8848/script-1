@@ -50,7 +50,6 @@ function daySign() {
   urlencode_username=$(urlencode $crypt_username)
   urlencode_password=$(urlencode $crypt_password)
   timestamp=$(date +"%Y-%m-%d_%H-%M-%S" | awk -F'[-_-]' '{print $1$2$3$4$5$6}')
-  random_weibo_stamp=$(shuf -i 1234567890123456-9876543210123456 -n 1)
 
     cat > $workdir/signdata <<-EOF
 isRemberPwd=true
@@ -86,6 +85,8 @@ EOF
   echo daySign_status： $(curl -s -b $workdir/cookie_B.txt $sign_url)
   
   # weiboSign_status
+  timestamp=$(date +"%Y-%m-%d_%H-%M-%S" | awk -F'[-_-]' '{print $1$2$3$4$5$6}')
+  random_weibo_stamp=$(shuf -i 1234567890123456-9876543210123456 -n 1)
   echo weiboSign_status：$(curl -s -b $workdir/cookie_B.txt --data "transId=$timestamp.$random_weibo_stamp&userNumber=$username&taskCode=TA590934984&finishTime=$timestamp&taskType=DAILY_TASK" https://act.10010.com/signinAppH/commonTask)
 
   # goldTotal_now
@@ -107,6 +108,7 @@ function doubleball() {
 function tree() {
   echo 
   echo $(date) starting arbor day...
+  timestamp=$(date +"%Y-%m-%d_%H-%M-%S" | awk -F'[-_-]' '{print $1$2$3$4$5$6}')
   curl -s -b $workdir/cookie_B.txt -c $workdir/cookie_D.txt --data "timestamp=$timestamp&desmobile=$username&version=android%406.0100" https://m.client.10010.com/mactivity/arborday/index >/dev/null ; sleep 3
   curl -s -b $workdir/cookie_D.txt -c $workdir/cookie_E.txt --data "transId=$timestamp$(shuf -i 123-987 -n 1)&phoneNum=$username&serviceCode=takeActivityInfo&channel=mobileClient&url=https%3A%2F%2Fm.client.10010.com%2Fmactivity%2Farborday%2Findex&city=831" https://m.client.10010.com/freegift-interface/appUrlShare/takeActivityInfo ; sleep 3
   curl -s -b $workdir/cookie_E.txt -c $workdir/cookie_H.txt --data "thirdUrl=https%3A%2F%2Fm.client.10010.com%2Fmactivity%2Farborday%2Findex" https://m.client.10010.com/mobileService/customer/getShareRedisInfo.htm  ; sleep 3 
