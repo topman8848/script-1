@@ -46,7 +46,7 @@ function daySign() {
   urlencode_username=$(urlencode $crypt_username)
   urlencode_password=$(urlencode $crypt_password)
   timestamp=$(date +"%Y-%m-%d_%H-%M-%S" | awk -F'[-_-]' '{print $1$2$3$4$5$6}')
-  random_weibo_stamp=$(shuf -i 1533965577286299-9533965577286299 -n 1)
+  random_weibo_stamp=$(shuf -i 1234567890123456-9876543210123456 -n 1)
 
     cat > /tmp/signdata <<-EOF
 isRemberPwd=true
