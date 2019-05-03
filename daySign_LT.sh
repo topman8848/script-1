@@ -123,12 +123,39 @@ function wangzuan() {
   echo wangzuan_status：$(curl -X POST -s -b $workdir/cookie_wa.txt https://wangzuan.10010.com/api/activity/lottery)
 }
 
+function member() {
+  # newsId share and incrComment 3 times free each day. need cookie_a
+  echo 
+  echo $(date) starting member points...
+  newsId=$(curl -s -b $workdir/cookie_a https://m.client.10010.com/mobileService/customer/getQuickNewsInfo.htm | grep -oE "id=\w*" | awk -F"id=" '{print $2}' | sed -n '1p')
+  echo newsId_1st：$(curl -s -b $workdir/cookie_a --data "newsId=$newsId" "http://m.client.10010.com/mobileService/customer/quickNews/shareSuccess.htm") ; sleep 3
+  echo incrComment_1st：$(curl -s -b $workdir/cookie_a --data "target=$newsId" https://m.client.10010.com/mobileService/customer/query/quickNews/incrCommentTimes.htm); sleep 3
+  
+  newsId=$(curl -s -b $workdir/cookie_a https://m.client.10010.com/mobileService/customer/getQuickNewsInfo.htm | grep -oE "id=\w*" | awk -F"id=" '{print $2}' | sed -n '2p')
+  echo newsId_2nd：$(curl -s -b $workdir/cookie_a --data "newsId=$newsId" "http://m.client.10010.com/mobileService/customer/quickNews/shareSuccess.htm") ; sleep 3
+  echo incrComment_2nd：$(curl -s -b $workdir/cookie_a --data "target=$newsId" https://m.client.10010.com/mobileService/customer/query/quickNews/incrCommentTimes.htm); sleep 3
+  
+  newsId=$(curl -s -b $workdir/cookie_a https://m.client.10010.com/mobileService/customer/getQuickNewsInfo.htm | grep -oE "id=\w*" | awk -F"id=" '{print $2}' | sed -n '3p')
+  echo newsId_3rd：$(curl -s -b $workdir/cookie_a --data "newsId=$newsId" "http://m.client.10010.com/mobileService/customer/quickNews/shareSuccess.htm") ; sleep 3
+  echo incrComment_3rd：$(curl -s -b $workdir/cookie_a --data "target=$newsId" https://m.client.10010.com/mobileService/customer/query/quickNews/incrCommentTimes.htm); sleep 3
+}
+
+function openChg() {
+  # openChg for dingding 1 time each month. need cookie_a.
+  [[ $(date | awk '{print $3}') -eq 1 ]] || return 0
+  echo 
+  echo $(date) starting dingding OpenChg...
+  curl -s -b $workdir/cookie_a --data "querytype=02&opertag=0" "https://m.client.10010.com/mobileService/businessTransact/serviceOpenCloseChg.htm" >/dev/null
+}
+
 function main() {
   rsaencrypt
   daySign
   doubleball
   arborday
   wangzuan
+  member
+  openChg
   
   # clean
   rm -rf $workdir
