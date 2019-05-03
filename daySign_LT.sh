@@ -163,7 +163,7 @@ function main() {
 
   # exit
   echo 
-  echo $(date) Accomplished. Thanks!
+  echo $(date) $username Accomplished.  Thanks!
 }
 
 main
