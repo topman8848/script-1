@@ -48,6 +48,7 @@ function urlencode() {
 }
 
 function daySign() {
+    rsaencrypt
     cat > $workdir/signdata <<-EOF
 isRemberPwd=true
 &deviceId=$deviceId
@@ -149,7 +150,6 @@ function openChg() {
 }
 
 function main() {
-  rsaencrypt
   daySign
   doubleball
   arborday
