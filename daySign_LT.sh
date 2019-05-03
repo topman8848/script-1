@@ -151,6 +151,7 @@ function openChg() {
 }
 
 function main() {
+  sleep $(shuf -i 1-10800 -n 1)
   daySign
   doubleball
   arborday
