@@ -36,7 +36,7 @@ function view() {
   for((i = 6610; i <= 6620; i++))
   do
   echo -n .
-  curl -s -H "$UA" -b $workdir/cookie_loc.txt "https://www.hostloc.com/space-uid-$i.html" >/dev/null; sleep 30
+  curl -s -H "$UA" -b $workdir/cookie_loc.txt "https://www.hostloc.com/space-uid-$i.html" >/dev/null; sleep 10
   [[ $i -eq 6620 ]] && echo 
   done
   echo -n $(date) 完成
