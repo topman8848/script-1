@@ -88,4 +88,4 @@ main(){
 }
 
 main
-echo ${SUB_SSR[*]}
+echo ${SUB_SSR[*]} >/var/www/subssr/RlJFRQ
