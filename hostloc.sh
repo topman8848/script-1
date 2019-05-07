@@ -32,12 +32,12 @@ function credit() {
 
 function view() {
   echo  
-  echo -n $(date) 访问空间...
-  for((i = 6610; i <= 6626; i++))
+  echo -n $(date) 访问空间
+  for((i = 6610; i <= 6630; i++))
   do
   echo -n .
-  curl -s -H "$UA" -b $workdir/cookie_loc.txt "https://www.hostloc.com/space-uid-$i.html" >/dev/null; sleep 10
-  [[ $i -eq 6620 ]] && echo 
+  curl -s -H "$UA" -b $workdir/cookie_loc.txt "https://www.hostloc.com/space-uid-$i.html" | grep -o "最近访客" >/dev/null && count[i]=$i
+  sleep 10 && [[ ${#count[*]} -eq 10 ]] && echo && break 
   done
   echo -n $(date) 完成
 }
