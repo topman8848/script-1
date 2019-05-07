@@ -20,13 +20,13 @@ function login() {
   echo 
   echo -n $(date) 登陆...
   data="mod=logging&action=login&loginsubmit=yes&infloat=yes&lssubmit=yes&inajax=1&fastloginfield=username&username=$username&cookietime=$(shuf -i 1234567-7654321 -n 1)&password=$password&quickforward=yes&handlekey=ls"
-  curl -s -H "$UA" -c $workdir/cookie_loc.txt --data "$data" "https://www.hostloc.com/member.php" | grep -o "www.hostloc.com" && echo -n $(date) 成功 || status="1"
+  curl -s -H "$UA" -c $workdir/cookie_$username --data "$data" "https://www.hostloc.com/member.php" | grep -o "www.hostloc.com" && echo -n $(date) 成功 || status="1"
   [[ $status -eq 1 ]] && echo -n $(date) 失败 && exit 1
 }
 
 function credit() {
   echo  
-  creditall=$(curl -s -H "$UA" -b $workdir/cookie_loc.txt "https://www.hostloc.com/home.php?mod=spacecp&ac=credit&op=base" | grep -oE "积分: </em>\w*" | awk -F'[>]' '{print $2}')
+  creditall=$(curl -s -H "$UA" -b $workdir/cookie_$username "https://www.hostloc.com/home.php?mod=spacecp&ac=credit&op=base" | grep -oE "积分: </em>\w*" | awk -F'[>]' '{print $2}')
   echo $(date) 目前积分为：$creditall
 }
 
@@ -36,7 +36,7 @@ function view() {
   for((i = 6610; i <= 6630; i++))
   do
   echo -n .
-  curl -s -H "$UA" -b $workdir/cookie_loc.txt "https://www.hostloc.com/space-uid-$i.html" | grep -o "最近访客" >/dev/null && count[i]=$i
+  curl -s -H "$UA" -b $workdir/cookie_$username "https://www.hostloc.com/space-uid-$i.html" | grep -o "最近访客" >/dev/null && count[i]=$i
   sleep 10 && [[ ${#count[*]} -eq 10 ]] && echo && break 
   done
   echo -n $(date) 完成
