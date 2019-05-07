@@ -13,7 +13,7 @@ GROUP="FREE"
 
 #subscriptions
 SUB_URL_DIC=( \
-	    [ImLaoD]="https://raw.githubusercontent.com/ImLaoD/sub/master/ssrshare.com" \
+	    [yingyun]="https://yingyun.me/link/YTeaipnI9NplCCHw" \
 	    [AmazingDM]="https://raw.githubusercontent.com/AmazingDM/sub/master/ssrshare.com" \
 	)
 	
