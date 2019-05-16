@@ -5,7 +5,7 @@ export PATH
 
 declare -A account_list
 
-# user info: change them to yours or use parameters instead.
+# user info: change them to your account username and password
 account_list=([user1]="password1" [user2]="password2" [user_n]="password_n")
 
 #
