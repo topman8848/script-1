@@ -7,7 +7,7 @@ export PATH
 declare -A account_list
 
 # user info: change them to yours or use parameters instead.
-account_list=([$1]="$2" [user1]="password1" [user2]="password2" [user_n]="password_n")
+account_list=([user1]="password1" [user2]="password2" [user_n]="password_n")
 
 #
 UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"
