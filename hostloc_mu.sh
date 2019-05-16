@@ -32,8 +32,8 @@ function main() {
 	
     echo $(date) 目前积分为：$(curl -s -H "$UA" -b $workdir/cookie_$username "https://www.hostloc.com/home.php?mod=spacecp&ac=credit&op=base" | grep -oE "积分: </em>\w*" | awk -F'[>]' '{print $2}')
 	
-	times=$[10 - $(curl -s -H "$UA" -b $workdir/cookie_$username "https://www.hostloc.com/home.php?mod=spacecp&ac=credit&op=log&suboperation=creditrulelog" | grep -A 2 "rid=16" | awk -F'[><]' 'NR==3{print $3}')]
-	[[ $times -eq 0 ]] && echo $(date) 已完成 && continue
+    times=$[10 - $(curl -s -H "$UA" -b $workdir/cookie_$username "https://www.hostloc.com/home.php?mod=spacecp&ac=credit&op=log&suboperation=creditrulelog" | grep -A 2 "rid=16" | awk -F'[><]' 'NR==3{print $3}')]
+    [[ $times -eq 0 ]] && echo $(date) 已完成 && continue
 	
     echo -n $(date) 访问空间
 	
@@ -41,15 +41,15 @@ function main() {
     echo -n .
     curl -s -H "$UA" -b $workdir/cookie_$username "https://www.hostloc.com/space-uid-$j.html" | grep -o "最近访客" >/dev/null && count[j]=$j
     sleep $(shuf -i 12-21 -n 1)
-	[[ ${#count[*]} -eq $times ]] && unset count && break
+    [[ ${#count[*]} -eq $times ]] && unset count && break
     done
 	
-	echo; echo $(date) 完成
+    echo; echo $(date) 完成
     echo $(date) 目前积分为：$(curl -s -H "$UA" -b $workdir/cookie_$username "https://www.hostloc.com/home.php?mod=spacecp&ac=credit&op=base" | grep -oE "积分: </em>\w*" | awk -F'[>]' '{print $2}')
   done
 
   # clean
-  #rm -rf $workdir
+  rm -rf $workdir
 
   # status
   [[ -n ${username_fail[*]} ]] && echo && echo $(date) $(echo  ${username_fail[*]}) Login Failed.
