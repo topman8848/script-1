@@ -21,7 +21,7 @@ function main() {
   account_pswd=($(echo  ${account_list[*]}))
 
   for ((i=0; i<${#account_list[*]}; i++)); do
-    [[ $i -eq 0 ]] && echo; echo $(date) Mission start...
+    [[ $i -eq 0 ]] && echo && echo $(date) Mission start...
     [[ $i -gt 0 ]] && sleep $(shuf -i 123-321 -n 1)
     username="${account_name[i]}"
     password="${account_pswd[i]}"
