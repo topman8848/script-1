@@ -11,10 +11,13 @@ declare -A my_sub_dic
 # group name
 GROUP="FREE"
 
-# only process ssr links that remarks contain keywords in the subscription. set obfsparam. set url_ip true or anything.
-words=()
-obfsparam=""
-url_ip=""
+# only process ssr links that remarks in/no keywords in the subscription. set others or keep it null.
+in_words=()
+no_words=(维护 剩余 过期 官网)
+obfsparam="cloudflare.com"
+url_ip="true"
+remarks=""
+sub_ssr_random_show="20"
 
 # subscriptions
 my_sub_dic=( \
@@ -23,13 +26,15 @@ my_sub_dic=( \
 	
 # ssr !!! MUST SET THE SAME $GROUP !!!
 my_ssr_dic=( \
-	    [Norway]="ssr://MTg1LjEyNS4xNzEuMjAwOjEwNTAxOm9yaWdpbjpjaGFjaGEyMDpwbGFpbjpiV1V1YzJ4cFpYSXVibVYwLz9vYmZzcGFyYW09JnJlbWFya3M9Ym04Jmdyb3VwPVJsSkZSUQ"
+	    [Norway]="ssr://MTg1LjE1LjE3MS4zOjEwNTAxOm9yaWdpbjpjaGFjaGEyMDpwbGFpbjpkR1Z6ZEEvP29iZnNwYXJhbT0mZ3JvdXA9UmxKRlJR" \
 	)
 
 # ss  !!! PLUGINS AND ENCYPTIONS NOT SUPPORTED BY SSR WILL NOT WORK !!!
-my_ss_dic=([Norway]="ss://Y2hhY2hhMjA6bWUuc2xpZXIubmV0QDE4NS4xMjUuMTcxLjIwMDoxMDUwMQ")
+my_ss_dic=( \
+        [Norway]="ss://Y2hhY2hhMjA6dGVzdEAxODUuMTUuMTcxLjM6MTA1MDE" \
+    )
 
-# web server file
+# result to web server file
 file="/var/www/subssr/free"
 ######################################################## EDIT ABOVE ########################################################
 
@@ -50,7 +55,7 @@ function no_n_base(){
 
 function ss_ssr(){
 	my_ss_list=($(echo ${my_ss_dic[*]}))
-	group_base="$(echo group=$(echo -n "$GROUP" | base64 | no_n_base | base_safe))"
+	group_base="$(echo -n group=$(echo -n "$GROUP" | base64 | no_n_base | base_safe))"
   
 	for(( i=0;i<${#my_ss_list[@]};i++)) do
 		sub_ss_list[i]="$(echo "${my_ss_list[i]}" | awk -F'[/@#]+' '{print $2}' | safe_base | base64 -d)"
@@ -66,7 +71,6 @@ function ss_ssr(){
 function sub_ssr(){
 	my_sub_list=($(echo ${my_sub_dic[*]}))
 	group_base="$(echo group=$(echo -n "$GROUP" | base64 | no_n_base | base_safe))"
-	obfsparam_base="$(echo -n "$obfsparam" | base64 | no_n_base | base_safe)"
 	
 	for(( i=0;i<${#my_sub_list[@]};i++)); do
 		sub_conf[i]="$(wget -t 5 -T 5 -q -O - ${my_sub_list[i]} | safe_base | base64 -d | awk -F"://" '{print $2}')"
@@ -81,43 +85,58 @@ function sub_ssr(){
 	for(( i=0;i<${#b_conf_ssr[@]};i++)); do
 		c_conf_ssr[i]="$(echo "${b_conf_ssr[i]}" | awk '{gsub(/group=.*/, "'$group_base'", $0); print $1}')"
 		
-		if [ "$url_ip" == "true" ]; then
-			url[i]="$(echo "${c_conf_ssr[i]}" | awk -F'[:]' '{print $1}')"
-			ip[i]="$(echo "${url[i]}" | xargs ping -c 1 | awk -F'[()]' 'NR==1{print $2}')"
-			c_conf_ssr[i]="$(echo "${c_conf_ssr[i]}" | awk '{gsub("'${url[i]}'", "'${ip[i]}'", $0); print $1}')"
-		fi
-		
-		[[ -n "$obfsparam_base" ]] && c_conf_ssr[i]="$(echo "${c_conf_ssr[i]}" | awk '{gsub(/obfsparam=[^&]*/, "'obfsparam=${obfsparam_base}'", $0); print $1}')"
-			
-		if [ -n "$words" ]; then
-			for(( j=0;j<${#words[@]};j++)); do
-				key=$(echo "${c_conf_ssr[i]}" | grep -oE "remarks=.*" | awk -F'[=&]' '{print $2}' | safe_base | base64 -d | grep -oE "${words[j]}")
-				if [ -n "$key" ]; then
-					d_conf_ssr[i]="$(echo -n "${c_conf_ssr[i]}" | base64 | no_n_base | base_safe)"
-					my_sub_ssr[i]="$(echo "ssr://${d_conf_ssr[i]}")"
-				fi
+		if [ -n "$in_words" ]; then
+			for(( j=0;j<${#in_words[@]};j++)); do
+				key=$(echo "${c_conf_ssr[i]}" | grep -oE "remarks=.*" | awk -F'[=&]' '{print $2}' | safe_base | base64 -d | grep -oE "${in_words[j]}")
+				if [ -n "$key" ]; then d_conf_ssr[i]=${c_conf_ssr[i]}; fi
 			done
 		else
-			d_conf_ssr[i]="$(echo -n "${c_conf_ssr[i]}" | base64 | no_n_base | base_safe)"
-			my_sub_ssr[i]="$(echo "ssr://${d_conf_ssr[i]}")"
+			d_conf_ssr[i]=${c_conf_ssr[i]}
+		fi
+
+		if [ -n "$no_words" ]; then
+			for(( k=0;k<${#no_words[@]};k++)); do
+				yek=$(echo "${c_conf_ssr[i]}" | grep -oE "remarks=.*" | awk -F'[=&]' '{print $2}' | safe_base | base64 -d | grep -oE "${no_words[k]}")
+				if [ -n "$yek" ]; then unset d_conf_ssr[i]; fi
+			done
 		fi
 		
+		if [ ! "$url_ip" = "" ]; then
+			url[i]="$(echo "${d_conf_ssr[i]}" | awk -F'[:]' '{print $1}')"
+			ip[i]="$(echo "${url[i]}" | xargs ping -c 1 2>&1 | awk -F'[()]' 'NR==1{print $2}')"
+			d_conf_ssr[i]="$(echo "${d_conf_ssr[i]}" | awk '{gsub("'${url[i]}'", "'${ip[i]}'", $0); print $1}')"
+		fi
+
+		if [ ! "$obfsparam" = "" ]; then
+			obfsparam_base="$(echo -n "$obfsparam" | base64 | no_n_base | base_safe)"
+			d_conf_ssr[i]="$(echo "${d_conf_ssr[i]}" | awk '{gsub(/obfsparam=[^&]*/, "'obfsparam=${obfsparam_base}'", $0); print $1}')"
+		fi
+
+		if [ ! "$remarks" = "" ]; then
+			remarks_base="$(echo -n "$remarks" | base64 | no_n_base | base_safe)"
+			d_conf_ssr[i]="$(echo "${d_conf_ssr[i]}" | awk '{gsub(/remarks=[^&]*/, "'remarks=${remarks_base}'", $0); print $1}')"
+		fi
+
+		e_conf_ssr[i]="$(echo -n "${d_conf_ssr[i]}" | base64 | no_n_base | base_safe)"
+		my_sub_ssr[i]="$(echo "ssr://${e_conf_ssr[i]}")"
 	done
+	
+	if [ "$sub_ssr_random_show" -gt 0 ] 2>/dev/null; then
+		my_sub_ssr=($(echo "$(shuf -e "${my_sub_ssr[@]}" -n $sub_ssr_random_show)"))
+	fi
 }
 
 function main(){
-	my_ssr_list=($(echo ${my_ssr_dic[*]}))
+	echo $(date) Mission Starting...
+	
 	ss_ssr
 	sub_ssr
+	my_ssr_list=($(echo ${my_ssr_dic[*]}))
 	all_ssr_list=(${my_ss_ssr[*]} ${my_ssr_list[*]} ${my_sub_ssr[*]})
-	
-	# show all
-	#subscription_raw="$(echo -n "${all_ssr_list[@]}" | base64 | no_n_base | base_safe)"
-	
-	# random show ssr n=20
-	subscription_raw="$(echo -n "$(shuf -e "${all_ssr_list[@]}" -n 20)" | base64 | no_n_base | base_safe)"
-	
+	subscription_raw="$(echo -n "${all_ssr_list[@]}" | base64 | no_n_base | base_safe)"
 	echo "$subscription_raw" >${file}
+	
+	echo $(date) Mission Accomplished.
 }
 
 main
