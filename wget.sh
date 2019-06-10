@@ -31,14 +31,14 @@ while [[ $# > 0 ]];do
 	;;
 	yd|cm|YD|CM)
 		#China Mobile url Url
-		url=http://dlrcs.fetion-portal.com/mobile/RCS_V6.2.8.0129_20190130.apk
+		url=https://app.10086.cn/downfile/apk/ChinaMobile10086.apk
 		Url=http://wlanwm.12530.com/newcms/quku/fbpt_rsync_apps/local/signed/MobileMusic671/MobileMusic671_014000D.apk
 		via="China Mobile"
 	;;
 	dx|ct|DX|CT)
 		#China Telecom url Url
 		url=http://189newestmailclient.oos-sh.ctyunapi.cn/189mail.apk
-		Url=http://www.189.cn/down/CtClientL.ap
+		Url=http://cupdate.client.189.cn:8006/client/ctclientchannel129.apk
 		via="China Telecom"
 	;;
     	esac
