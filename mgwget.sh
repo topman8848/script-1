@@ -40,7 +40,6 @@ for((i = 1; i >= 1; i++))
 		s=$(wget -U "$UA" -T 1 -t 3 -SO- "$url" 2>&1 >/dev/null | grep -E "written to stdout" | awk -F"[written]" '{print $1}' | awk -F"[\(\)]" '{print $((NF-1))}')
 		[[ $s == "" ]] && continue
 		limit=$[$limit-$siz]
-		#echo $s $(awk 'BEGIN{printf "%.1f\n",('$siz'/1024/1024)}') MB -- $(awk 'BEGIN{printf "%.2f\n",(('$Limit'-'$limit')/1024/1024)}') MB Accomplished.
 		printf "%-20s %-20s %-20s\n" $(awk 'BEGIN{printf "%.1f\n",('$siz'/1024/1024)}') "$s" $(awk 'BEGIN{printf "%.1f\n",(('$Limit'-'$limit')/1024/1024)}')
 done
 
