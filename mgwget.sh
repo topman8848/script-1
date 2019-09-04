@@ -1,6 +1,7 @@
 #!/bin/bash
 # Usage:
-#  bash <(curl -s https://raw.githubusercontent.com/mixool/script/master/mgwget.sh)
+#  bash <(curl -s https://raw.githubusercontent.com/mixool/script/master/mgwget.sh) 512
+#  wget --no-check-certificate https://raw.githubusercontent.com/mixool/script/master/mgwget.sh && chmod +x mgwget.sh && ./mgwget.sh
 
 # Set MBlimit
 MBlimit=1024
