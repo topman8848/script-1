@@ -3,7 +3,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 # Usage: warp.plus referrer  !!!!replace "23320584-5625-4f47-89a8-c760a29b0a1e " to yours!!!!
 ## apt update && apt instal parallel -y
-#### bash ./examples.sh 10 100
+#### bash ./warp_plus.sh 10 100
 
 # thread && loopss && defaut is 20 && 5
 export thread="$1"
