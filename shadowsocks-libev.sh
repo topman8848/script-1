@@ -13,7 +13,7 @@ apt -t stretch-backports install shadowsocks-libev -y
 # shadowsocks-libev config
 cat >/etc/shadowsocks-libev/config.json<<-EOF
 {
-    "server":["::0", "0.0.0.0"],
+    "server":["::", "0.0.0.0"],
     "mode":"tcp_and_udp",
     "server_port":$(shuf -i 10000-65535 -n1),
     "local_port":1080,
