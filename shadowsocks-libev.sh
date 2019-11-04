@@ -2,19 +2,10 @@
 # Usage:
 #   curl https://raw.githubusercontent.com/mixool/script/debian-9/shadowsocks-libev.sh | bash
 
-# Only root can run this script
+# only root can run this script
 [[ $EUID -ne 0 ]] && echo "Error, This script must be run as root!" && exit 1
 
-get_ipv6(){
-    local ipv6=$(wget -qO- -t1 -T2 ipv6.icanhazip.com)
-    if [ -z ${ipv6} ]; then
-        return 1
-    else
-        return 0
-    fi
-}
-
-# Set password
+# set password
     read -p "Please input password for shadowsocks-libev:" shadowsockspwd </dev/tty
     echo
     echo "---------------------------"
@@ -22,7 +13,7 @@ get_ipv6(){
     echo "---------------------------"
     echo
 
-# Set port
+# set port
     while true
     do
     echo -e "Please input port for shadowsocks-libev [1-65535]:"
@@ -45,32 +36,23 @@ get_ipv6(){
     fi
     done
     
-# Install shadowsocks-libev and haveged from stretch-backports
+# install shadowsocks-libev from stretch-backports
 sh -c 'printf "deb http://deb.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/stretch-backports.list'
 apt update
-apt -t stretch-backports install shadowsocks-libev haveged -y
+apt -t stretch-backports install shadowsocks-libev -y
 
-# Config shadowsocks with encrypt_method chacha20-ietf
-server_value="\"0.0.0.0\""
-if get_ipv6; then
-        server_value="[\"[::0]\",\"0.0.0.0\"]"
-fi
-
-if [ ! -d /etc/shadowsocks-libev ]; then
-        mkdir -p /etc/shadowsocks-libev
-fi
-
-cat > /etc/shadowsocks-libev/config.json<<-EOF
+# shadowsocks-libev config
+cat >/etc/shadowsocks-libev/config.json<<-EOF
 {
-    "server":${server_value},
+    "server":["::0", "0.0.0.0"],
+    "mode":"tcp_and_udp",
     "server_port":${shadowsocksport},
+    "local_port":1080,
     "password":"${shadowsockspwd}",
-    "method":"chacha20-ietf"
+    "timeout":60,
+    "method":"chacha20-ietf-poly1305"
 }
 EOF
 
-# Start haveged and ss-server
-systemctl enable haveged shadowsocks-libev && systemctl start haveged shadowsocks-libev
-
-# Informations of shadowsocks-libev
-systemctl status shadowsocks-libev
+# systemctl shadowsocks-libev informations
+systemctl restart shadowsocks-libev && systemctl status shadowsocks-libev
