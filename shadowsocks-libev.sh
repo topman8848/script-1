@@ -24,4 +24,4 @@ cat >/etc/shadowsocks-libev/config.json<<-EOF
 EOF
 
 # systemctl shadowsocks-libev informations
-systemctl restart shadowsocks-libev && systemctl status shadowsocks-libe
+systemctl restart shadowsocks-libev && systemctl status shadowsocks-libev
