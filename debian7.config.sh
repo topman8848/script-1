@@ -11,6 +11,10 @@ apt-get clean
 
 
 ### Generate /etc/systemd/system/gost.service
+wget https://github.com/ginuerzh/gost/releases/download/v2.8.1/gost_2.8.1_linux_386.tar.gz
+tar -zxvf gost_2.8.1_linux_386.tar.gz
+mv /root/gost_2.8.1_linux_386/gost /root/gost && chmod +x /root/gost
+rm -rf /root/gost_2.8.1_linux_386  /root/gost_2.8.1_linux_386.tar.gz
 cat <<EOF > /etc/systemd/system/gost.service
 [Unit]
 Description=gost
