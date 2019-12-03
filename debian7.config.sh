@@ -6,9 +6,11 @@ EOF
 apt-get update
 apt-get install debian-archive-keyring
 apt-key update
-apt-get install wget curl vim systemd-sysv --force-yes
+apt-get install wget curl vim -y
+apt-get install systemd-sysv
 apt-get clean
 
+reboot
 
 ### Generate /etc/systemd/system/gost.service
 wget https://github.com/ginuerzh/gost/releases/download/v2.8.1/gost_2.8.1_linux_386.tar.gz
@@ -29,17 +31,14 @@ EOF
 systemctl enable gost.service && systemctl restart gost.service && systemctl status gost.service
 
 
-# SSSSHHHHHHHHHHHHHHKEY
-read -p "Please input ssh port:" port </dev/tty
-read -p "Please input the public key:" key </dev/tty
 
+# SSSSHHHHHHHHHHHHHHKEY
 
 mkdir -p ~/.ssh && chmod 700 ~/.ssh
+read -p "Please input the public key:" key </dev/tty
 echo $key >> ~/.ssh/authorized_keys
 
-
 cp /etc/ssh/sshd_config /etc/ssh/sshd_config_bak
-echo -e "Port ${port}" >> /etc/ssh/sshd_config
 sed -i "s/PermitRootLogin.*/PermitRootLogin without-password/g" /etc/ssh/sshd_config
 
 systemctl reload sshd.service
