@@ -6,7 +6,7 @@ EOF
 apt-get update
 apt-get install debian-archive-keyring
 apt-key update
-apt-get install wget curl vim systemd-sysv -y 
+apt-get install wget curl vim systemd-sysv --force-yes
 apt-get clean
 
 
