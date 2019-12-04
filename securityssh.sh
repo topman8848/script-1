@@ -25,7 +25,7 @@ fi
 # custom rsa_pub_key login
 RSA_PUB_KEY=${RSA_PUB_KEY:-n}
 while ! [[ ${RSA_PUB_KEY} =~ ssh-rsa* ]]; do
-    read -p "Please input the public key: " RSA_PUB_KEY </dev/tty
+    read -p "Please paste your public key: " RSA_PUB_KEY </dev/tty
 done
 
 [[ ! -d "~/.ssh" ]] && mkdir -p "~/.ssh" && chmod 700 ~/.ssh
