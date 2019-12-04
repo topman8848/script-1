@@ -8,7 +8,7 @@
 echo "Securing your SSH server with custom port..."
 SSH_PORT=${SSH_PORT:-n}
 while ! [[ ${SSH_PORT} =~ ^[0-9]+$ ]]; do
-    read -p "Custom SSH port (default SSH port is 22): " -e SSH_PORT
+    read -p "Custom SSH port (default SSH port is 22): " -e SSH_PORT </dev/tty
 done
 
 if [[ ${SSH_PORT} =~ ^[0-9]+$ ]]; then
@@ -25,7 +25,7 @@ fi
 # custom rsa_pub_key login
 RSA_PUB_KEY=${RSA_PUB_KEY:-n}
 while ! [[ ${RSA_PUB_KEY} =~ ssh-rsa* ]]; do
-    read -p ": " -e RSA_PUB_KEY
+    read -p ": " -e RSA_PUB_KEY </dev/tty
 done
 
 [[ ! -d "~/.ssh" ]] && mkdir -p "~/.ssh" && chmod 700 ~/.ssh
