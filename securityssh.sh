@@ -4,6 +4,10 @@
 
 [[ "$(id -u)" != "0" ]] && echo "ERROR: Please run as root" && exit 1
 
+# Backup
+bakname=$(date +%N)
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config_$bakname
+
 # custom port
 echo "Securing your SSH server with custom port..."
 SSH_PORT=${SSH_PORT:-n}
@@ -11,16 +15,12 @@ while ! [[ ${SSH_PORT} =~ ^[0-9]+$ ]]; do
     read -p "Custom SSH port: " SSH_PORT </dev/tty
 done
 
-if [[ ${SSH_PORT} =~ ^[0-9]+$ ]]; then
-    if grep -qwE "^Port\ [0-9]*" /etc/ssh/sshd_config; then
-        sed -i "s/^Port\ [0-9]*/Port\ ${SSH_PORT}/g" /etc/ssh/sshd_config
-    else
-        sed -i "/^#Port\ [0-9]*/a Port\ ${SSH_PORT}" /etc/ssh/sshd_config
-    fi
-	echo "SSH port updated to ${SSH_PORT}."
+if grep -qwE "^Port\ [0-9]*" /etc/ssh/sshd_config; then
+    sed -i "s/^Port\ [0-9]*/Port\ ${SSH_PORT}/g" /etc/ssh/sshd_config
 else
-    echo "Unable to update SSH port."
+    sed -i "/^#Port\ [0-9]*/a Port\ ${SSH_PORT}" /etc/ssh/sshd_config
 fi
+
 
 # custom rsa_pub_key login
 RSA_PUB_KEY=${RSA_PUB_KEY:-n}
@@ -34,3 +34,7 @@ sed -i "s/PermitRootLogin.*/PermitRootLogin without-password/g" /etc/ssh/sshd_co
 
 # Active
 service ssh restart
+
+# Info	
+echo "ssh port updated to ${SSH_PORT}, please login with authorized_keys"
+echo "if login failed, backup file: /etc/ssh/sshd_config_$bakname"
