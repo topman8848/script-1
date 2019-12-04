@@ -23,6 +23,7 @@ fi
 
 
 # custom rsa_pub_key login
+echo "Securing your SSH server with authorized_keys..."
 RSA_PUB_KEY=${RSA_PUB_KEY:-n}
 while ! [[ ${RSA_PUB_KEY} =~ ssh-rsa* ]]; do
     read -p "Custom public key: " RSA_PUB_KEY </dev/tty
