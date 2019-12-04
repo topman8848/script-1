@@ -12,7 +12,7 @@ cp /etc/ssh/sshd_config /etc/ssh/sshd_config_$bakname
 echo "Securing your SSH server with custom port..."
 SSH_PORT=${SSH_PORT:-n}
 while ! [[ ${SSH_PORT} =~ ^[0-9]+$ ]]; do
-    read -p "Custom SSH port: " SSH_PORT </dev/tty
+    read -p "Custom ssh port: " SSH_PORT </dev/tty
 done
 
 if grep -qwE "^Port\ [0-9]*" /etc/ssh/sshd_config; then
@@ -25,7 +25,7 @@ fi
 # custom rsa_pub_key login
 RSA_PUB_KEY=${RSA_PUB_KEY:-n}
 while ! [[ ${RSA_PUB_KEY} =~ ssh-rsa* ]]; do
-    read -p "Please paste your public key: " RSA_PUB_KEY </dev/tty
+    read -p "Custom public key: " RSA_PUB_KEY </dev/tty
 done
 
 [[ ! -d "~/.ssh" ]] && mkdir -p "~/.ssh" && chmod 700 ~/.ssh
