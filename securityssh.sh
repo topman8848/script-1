@@ -30,7 +30,7 @@ while ! [[ ${RSA_PUB_KEY} =~ ssh-rsa* ]]; do
 done
 
 [[ ! -d "/root/.ssh" ]] && mkdir -p "/root/.ssh" && chmod 700 /root/.ssh
-echo $key >> ~/.ssh/authorized_keys
+echo $key >> /root/.ssh/authorized_keys
 sed -i "s/PermitRootLogin.*/PermitRootLogin without-password/g" /etc/ssh/sshd_config
 
 # Active
