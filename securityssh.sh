@@ -29,7 +29,7 @@ while ! [[ ${RSA_PUB_KEY} =~ ssh-rsa* ]]; do
     read -p "Custom public key: " RSA_PUB_KEY </dev/tty
 done
 
-[[ ! -d "~/.ssh" ]] && mkdir -p "~/.ssh" && chmod 700 ~/.ssh
+[[ ! -d "/root/.ssh" ]] && mkdir -p "/root/.ssh" && chmod 700 /root/.ssh
 echo $key >> ~/.ssh/authorized_keys
 sed -i "s/PermitRootLogin.*/PermitRootLogin without-password/g" /etc/ssh/sshd_config
 
