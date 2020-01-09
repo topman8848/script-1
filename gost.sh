@@ -6,14 +6,10 @@ METHOD="-L=mwss://:443 -L=http2://:444"
 
 VER="$(wget -qO- https://github.com/ginuerzh/gost/tags | grep -oE "/tag/v.*" | sed -n '1p' | sed 's/\".*//;s/^.*v//')"
 VER=${VER:=2.7.2}
-URL="https://github.com/ginuerzh/gost/releases/download/v${VER}/gost_${VER}_linux_amd64.tar.gz"
+URL="https://github.com/ginuerzh/gost/releases/download/v${VER}/gost-linux-amd64-${VER}.gz"
 
-echo "Downloading gost_${VER} to /root/gost from $URL"
-rm -rf /root/gost
-wget -O /root/gost_${VER}_linux_amd64.tar.gz $URL
-tar -zxvf /root/gost_${VER}_linux_amd64.tar.gz && cd /root/gost_${VER}_linux_amd64 && mv gost /root/gost && cd
-rm -rf /root/gost_${VER}_linux_amd64*
-chmod +x /root/gost
+echo "Downloading gost-linux-amd64-${VER}.gz to /root/gost from $URL"
+wget -O - $URL | gzip -d > /root/gost && chmod +x /root/gost
 
 echo "Generate /etc/systemd/system/gost.service"
 cat <<EOF > /etc/systemd/system/gost.service
