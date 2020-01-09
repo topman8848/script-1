@@ -1,6 +1,6 @@
 #!/bin/bash
 # Usage:
-#   curl https://raw.githubusercontent.com/mixool/script/debian-9/gost.sh | bash
+#   curl -s https://raw.githubusercontent.com/mixool/script/debian-9/gost.sh | bash
 
 METHOD="-L=mwss://:443 -L=http2://:444"
 
@@ -10,7 +10,7 @@ URL="https://github.com/ginuerzh/gost/releases/download/v${VER}/gost-linux-amd64
 
 echo "1. Downloading gost-linux-amd64-${VER}.gz to /root/gost from $URL" && echo
 [[ -f "/root/gost" ]] && rm -rf /root/gost
-wget -O - $URL | gzip -d > /root/gost && chmod +x /root/gost
+wget -qO - $URL | gzip -d > /root/gost && chmod +x /root/gost
 
 echo "2. Generate /etc/systemd/system/gost.service"
 cat <<EOF > /etc/systemd/system/gost.service
