@@ -72,6 +72,8 @@ Wants=network-online.target systemd-networkd-wait-online.service
 ExecStart=/usr/local/bin/caddy -log stdout -conf=/etc/caddy/Caddyfile -email=${email} -agree=true
 Restart=always
 User=root
+LimitNOFILE=1048576
+LimitNPROC=512
 Environment=CLOUDFLARE_EMAIL=${CLOUDFLARE_EMAIL}
 Environment=CLOUDFLARE_API_KEY=${CLOUDFLARE_API_KEY}
 [Install]
