@@ -8,10 +8,10 @@ VER="$(wget -qO- https://github.com/ginuerzh/gost/tags | grep -oE "/tag/v.*" | s
 VER=${VER:=2.7.2}
 URL="https://github.com/ginuerzh/gost/releases/download/v${VER}/gost-linux-amd64-${VER}.gz"
 
-echo "Downloading gost-linux-amd64-${VER}.gz to /root/gost from $URL"
-wget -O - $URL | gzip -d > /root/gost && chmod +x /root/gost
+echo "1. Downloading gost-linux-amd64-${VER}.gz to /root/gost from $URL"
+wget -qO - $URL | gzip -d > /root/gost && chmod +x /root/gost
 
-echo "Generate /etc/systemd/system/gost.service"
+echo "2. Generate /etc/systemd/system/gost.service"
 cat <<EOF > /etc/systemd/system/gost.service
 [Unit]
 Description=gost
