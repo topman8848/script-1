@@ -49,17 +49,17 @@ install_caddy(){
 
 cat > /etc/caddy/Caddyfile<<-EOF
 ${domain} {
-	gzip
-	root /var/www/typecho
-	fastcgi / /run/php/php7.0-fpm.sock php
-	tls {
-  		dns cloudflare
-  	    }
-	rewrite {
-		if {path} not_match ^\/admin\/
-		to {path} {path}/ /index.php?{query}
-		}
-	}
+    gzip
+    root /var/www/typecho
+    fastcgi / /run/php/php7.0-fpm.sock php
+    tls {
+        dns cloudflare
+    }
+    rewrite {
+        if {path} not_match (/usr/|/admin/)
+        to {path} {path}/ /index.php?{query}
+    }
+}
 EOF
 
 cat <<EOF > /etc/systemd/system/caddy.service
