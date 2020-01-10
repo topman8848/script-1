@@ -56,7 +56,7 @@ ${domain} {
   		dns cloudflare
   	    }
 	rewrite {
-		if {path} not_match ^\/admin
+		if {path} not_match ^\/admin\/
 		to {path} {path}/ /index.php?{query}
 		}
 	}
@@ -66,21 +66,26 @@ cat <<EOF > /etc/systemd/system/caddy.service
 [Unit]
 Description=Caddy HTTP/2 web server
 Documentation=https://caddyserver.com/docs
+ConditionFileIsExecutable=/usr/local/bin/caddy
 After=network-online.target
 Wants=network-online.target systemd-networkd-wait-online.service
+
 [Service]
+StartLimitInterval=5
+StartLimitBurst=10
 ExecStart=/usr/local/bin/caddy -log stdout -conf=/etc/caddy/Caddyfile -email=${email} -agree=true
 Restart=always
+RestartSec=120
 User=root
 LimitNOFILE=1048576
 LimitNPROC=512
+EnvironmentFile=-/etc/sysconfig/caddy
 Environment=CLOUDFLARE_EMAIL=${CLOUDFLARE_EMAIL}
 Environment=CLOUDFLARE_API_KEY=${CLOUDFLARE_API_KEY}
+
 [Install]
 WantedBy=multi-user.target
 EOF
-
-	systemctl enable caddy && systemctl start caddy
 }
 
 preinstall_conf
