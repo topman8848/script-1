@@ -2,7 +2,7 @@
 # Usage:
 #   curl https://raw.githubusercontent.com/mixool/script/debian-9/gost.sh | bash
 
-METHOD="-L=mwss://:443 -L=http2://:444"
+METHOD="-L=:41333 -m=aes-256-cfb -p=123456 -ws"
 
 VER="$(wget -qO- https://github.com/ginuerzh/gost/tags | grep -oE "/tag/v[^\"]*" | head -n1 | cut -dv -f2)"
 VER=${VER:=2.9.1}
